@@ -4,87 +4,118 @@ import json
 import glob
 import numpy as np
 
-def load_jsonl_files_and_adjust_time(directory_path):
+# Function to load JSONL files from a directory and adjust time
+def load_parsed_json_data(directory_path):
     all_data = []
-    for file_path in sorted(glob.glob(directory_path + '/*.jsonl')):
+    for file_path in sorted(glob.glob(directory_path + '/*.json')):
         with open(file_path, 'r') as file:
-            data = [json.loads(line) for line in file]
-            df = pd.DataFrame(data)
-            df['time'] = (df['milli'] - df['milli'].iloc[0]) / 1000
-            if (df['time'] < 0).any():
-                print(f"Negative time values found in {file_path}")
-                # Print the negative time values
-                print(df.loc[df['time'] < 0, 'time'])
-                continue
-            all_data.append(df)
-    combined_df = pd.concat(all_data, ignore_index=True)
-    return combined_df
+            for line in file:
+                try:
+                    data = json.loads(line)
+                    # Assuming 'timelines' contains the data we're interested in
+                    if 'timelines' in data:
+                        all_data.append(data['timelines'])
+                except json.JSONDecodeError as e:
+                    print(f"Error decoding JSON in file {file_path}: {e}")
+    return all_data
 
-def calculate_average_stats_fixed_points(df, items, num_points=10):
+def time_string_to_seconds(time_str):
+    minutes, seconds = map(int, time_str.split(':'))
+    return minutes * 60 + seconds * 1
+
+
+def calculate_action_frequencies_from_timelines(timelines, actions, num_points=10):
+    # This example assumes each timeline entry is a dict with item names as keys and lists of [time, quantity] pairs as values
     # Initialize a DataFrame to store the new time points and average quantities
-    avg_quantities = pd.DataFrame()
+    action_frequencies = pd.DataFrame()
     
-    # Create a regular grid of time points from the minimum to the maximum time in the dataset
-    min_time = df['time'].min()
-    max_time = df['time'].max()
+    # Example of converting timeline times to seconds and aggregating quantities
+    # This part needs to be adapted based on the exact structure of your timelines
+    min_time = 0  # Assuming time starts at 0
+    max_time = 0
+    count = 0
+    for item_timeline in timelines.values():
+        if count > 0:
+            break
+        count+=1  # Assuming timelines is a dict with items as keys
+        for timeline in item_timeline.values():  # Assuming each item has a dict of actions with lists of [time, quantity] pairs
+            for pair in timeline:
+                time_str, _ = pair  # Assuming pair is a list with [time, quantity]
+                time_value = time_string_to_seconds(time_str)
+                if time_value > max_time:
+                    max_time = time_value
     regular_time_points = np.linspace(min_time, max_time, num_points)
+    action_frequencies['time'] = regular_time_points
     
-    avg_quantities['time'] = regular_time_points
-    
-    # Explode the inventory lists to rows to facilitate easier aggregation
-    df_exploded = df.explode('stats')
-    
-    # Convert each inventory dict to a Series, then concatenate to the original DataFrame
-    inventory_details = df_exploded['stats'].apply(pd.Series)
-    df_detailed = pd.concat([df_exploded.drop('stats', axis=1), inventory_details], axis=1)
-    
-    for item in items:
-        item_quantities = []
-        for time_point in regular_time_points:
-            # Filter for entries close to the current time point and for the specific item
-            filtered_df = df_detailed[(df_detailed['time'] <= time_point) & (df_detailed['type'] == item)]
+    for action in actions:
+        action_counts = [0] * num_points  # Initialize with zeros to ensure correct length
+        for i, time_point in enumerate(regular_time_points):
+            counts_at_time = []
+            # Assuming timelines for each action are structured as a list of [time_str, count] pairs
+            for timeline in timelines.get('actions', {}).get(action, []):
+                time_str, count = timeline
+                time_seconds = time_string_to_seconds(time_str)
+                if time_seconds <= time_point:
+                    counts_at_time.append(count)
+            if counts_at_time:
+                action_counts[i] = np.sum(counts_at_time)  # Sum counts if data is available
             
-            # If there are no entries for this item at this time, carry forward the last known average
-            if filtered_df.empty:
-                avg_quantity = item_quantities[-1] if item_quantities else 0  # Default to 0 if no previous data
+        action_frequencies[action] = action_counts  # This should now always match the length of index
+    
+    return action_frequencies
+
+
+def aggregate_actions(parsed_data):
+    aggregated_timelines = {'actions': {}, 'inventory': {}}
+    for data in parsed_data:
+        for item, timeline in data.get('actions', {}).items():
+            item_name, time_Arr = timeline.values()
+            if item not in aggregated_timelines['actions']:
+                aggregated_timelines['actions'][item] = timeline
             else:
-                avg_quantity = filtered_df['quantity'].mean()
-            
-            item_quantities.append(avg_quantity)
-        
-        avg_quantities[item] = item_quantities
+                aggregated_timelines['actions'][item].extend(timeline)
+
     
-    return avg_quantities
+    return aggregated_timelines
 
 
-def plot_average_stats(avg_stats_df):
+
+
+def plot_action_counts(aggregated_actions):
     plt.figure(figsize=(10, 6))
-    line_styles = ['-', '--', '-.', ':']
-    colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k']
-    for i, column in enumerate(avg_stats_df.columns[1:]):  # Skip the 'time' column
-        line_style = line_styles[i % len(line_styles)]
-        color = colors[i % len(colors)]
-        plt.plot(avg_stats_df['time'], avg_stats_df[column], label=column, linestyle=line_style, color=color, linewidth=2.5, alpha=1)
-    plt.xlabel('Time (seconds)')
-    plt.ylabel('Average Value')
-    plt.title('Average Value of Stats Over Time')
-    plt.legend()
-    plt.grid(True)
+    actions, counts = zip(*aggregated_actions.items())  # Unpack actions and their counts
+    plt.bar(actions, counts, color='skyblue')
+    plt.xlabel('Action')
+    plt.ylabel('Total Count')
+    plt.title('Total Counts of Actions')
+    plt.xticks(rotation=45)
     plt.tight_layout()
     plt.show()
 
-# Directory containing JSONL files
-directory_path = 'D:\\University_Studies\\Project\\Task_10_only_json_test_100_merged'
 
-# Load and adjust time across all JSONL files
-df = load_jsonl_files_and_adjust_time(directory_path)
 
-# Specify the stats keys you're interested in
-stats_keys = ['minecraft.custom:minecraft.time_since_rest', 'minecraft.custom:minecraft.play_one_minute', 'minecraft.custom:minecraft.time_since_death']
 
-# Calculate average stats for specified keys
-avg_stats_df = calculate_average_stats_fixed_points(df, stats_keys)
+# Load parsed data
+directory_path = r'D:\University_Studies\Project\Parsed_Data'
+parsed_data = load_parsed_json_data(directory_path)
 
-# Plot the average stats over time
-plot_average_stats(avg_stats_df)
+# Assuming you aggregate or otherwise process the loaded data into a single 'timelines' dict
+# This step depends on how you want to handle multiple files and aggregate their data
+# For simplicity, let's assume we have a single 'timelines' dict to work with
+# timelines = parsed_data[0]  # Simplified assumption, you'll likely need to aggregate data from multiple files
+
+
+parsed_data = load_parsed_json_data(directory_path)
+aggregated_timelines = aggregate_actions(parsed_data)  # Aggregate data if necessary
+
+# Specify the actions you're interested in analyzing
+actions = ['walk one cm', 'sprint one cm', 'jump', 'fly one cm']  # Example actions
+
+# Calculate action frequencies over time
+action_frequencies_df = calculate_action_frequencies_from_timelines(aggregated_timelines, actions)
+
+# Plot the action frequencies over time
+plot_action_counts(action_frequencies_df)  # You might adjust this function for action frequencies
+
+
 
