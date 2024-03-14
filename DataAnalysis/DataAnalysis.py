@@ -3,21 +3,25 @@ import matplotlib.pyplot as plt
 import json
 import glob
 import numpy as np
+import os
 
-# Function to load JSONL files from a directory and adjust time
-def load_parsed_json_data(directory_path):
+def get_files_by_percentage(directory_path, percentage):
+    all_files = sorted([os.path.join(directory_path, f) for f in os.listdir(directory_path) if f.endswith('.json')])
+    num_files_to_process = int(len(all_files) * (percentage / 100))
+    return all_files[:num_files_to_process]
+
+def load_parsed_json_data(file_paths):
     all_data = []
-    for file_path in sorted(glob.glob(directory_path + '/*.json')):
+    for file_path in file_paths:
         with open(file_path, 'r') as file:
-            for line in file:
-                try:
-                    data = json.loads(line)
-                    # Assuming 'timelines' contains the data we're interested in
-                    if 'timelines' in data:
-                        all_data.append(data['timelines'])
-                except json.JSONDecodeError as e:
-                    print(f"Error decoding JSON in file {file_path}: {e}")
+            try:
+                data = json.loads(file.read())
+                if 'timelines' in data:
+                    all_data.append(data['timelines'])
+            except json.JSONDecodeError as e:
+                print(f"Error decoding JSON in file {file_path}: {e}")
     return all_data
+
 
 def time_string_to_seconds(time_str):
     minutes, seconds = map(int, time_str.split(':'))
@@ -89,48 +93,41 @@ def aggregate_timelines(parsed_data):
 
 
 
-def plot_average_quantities(avg_quantities_df):
-    plt.figure(figsize=(10, 6))
-    line_styles = ['-', '--', '-.', ':']  # Define a list of line styles
-    colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k']  # Define a list of colors
-    for i, column in enumerate(avg_quantities_df.columns[1:]):  # Skip the 'time' column
-        # Cycle through line styles and colors
-        line_style = line_styles[i % len(line_styles)]
-        color = colors[i % len(colors)]
-        # Increase linewidth for thicker lines and set alpha to 1 for bolder appearance
-        plt.plot(avg_quantities_df['time'], avg_quantities_df[column], label=column, linestyle=line_style, color=color, linewidth=2.5, alpha=1)
+def plot_inventory_frequencies(action_frequencies_df, percentage):
+    plt.figure(figsize=(12, 8))
+    for action in action_frequencies_df.columns[1:]:  # Skip the 'time' column
+        plt.plot(action_frequencies_df['time'], action_frequencies_df[action], label=action, marker='o', linestyle='-')
+    
     plt.xlabel('Time (seconds)')
-    plt.ylabel('Average Quantity')
-    plt.title('Average Quantity of Items Over Time')
+    plt.ylabel('Frequency')
+    plt.title(f'Action Frequencies Over Time - {percentage}% of Data')
     plt.legend()
-    plt.grid(True)  # Add grid for better readability
-    plt.tight_layout()  # Adjust layout to not cut off labels
-    plt.show()
+    plt.grid(True)
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    
+    # Save the figure with the percentage in the filename
+    plt.savefig(f'D:\\University_Studies\\Project\\Graphs\\inventory_frequencies_{percentage}pct.png')
+    plt.close()
 
 
 
-# Load parsed data
-directory_path = r'D:\University_Studies\Project\Parsed_Data'
-parsed_data = load_parsed_json_data(directory_path)
-
-# Assuming you aggregate or otherwise process the loaded data into a single 'timelines' dict
-# This step depends on how you want to handle multiple files and aggregate their data
-# For simplicity, let's assume we have a single 'timelines' dict to work with
-# timelines = parsed_data[0]  # Simplified assumption, you'll likely need to aggregate data from multiple files
 
 
-parsed_data = load_parsed_json_data(directory_path)
+
+percentage = 100  # Example: Process and plot for 10% of the data
+
+# Get the file paths for the specified percentage of data
+file_paths = get_files_by_percentage('D:\\University_Studies\\Project\\Parsed_Data', percentage)
+
+# Load and aggregate actions from the selected files
+parsed_data = load_parsed_json_data(file_paths)
 aggregated_timelines = aggregate_timelines(parsed_data)
-
-
-
-
-
 
 # Calculate average quantities for specified items
 items = ['white_tulip', 'stick', 'dark_oak_planks', 'gold_ore', 'dirt']
 avg_quantities_df = calculate_average_quantities_from_timelines(aggregated_timelines, items)
 
 # Plot the average quantities over time
-plot_average_quantities(avg_quantities_df)
+plot_inventory_frequencies(avg_quantities_df, percentage)
 

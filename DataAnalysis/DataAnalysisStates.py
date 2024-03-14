@@ -3,21 +3,25 @@ import matplotlib.pyplot as plt
 import json
 import glob
 import numpy as np
+import os
 
-# Function to load JSONL files from a directory and adjust time
-def load_parsed_json_data(directory_path):
+def get_files_by_percentage(directory_path, percentage):
+    all_files = sorted([os.path.join(directory_path, f) for f in os.listdir(directory_path) if f.endswith('.json')])
+    num_files_to_process = int(len(all_files) * (percentage / 100))
+    return all_files[:num_files_to_process]
+
+def load_parsed_json_data(file_paths):
     all_data = []
-    for file_path in sorted(glob.glob(directory_path + '/*.json')):
+    for file_path in file_paths:
         with open(file_path, 'r') as file:
-            for line in file:
-                try:
-                    data = json.loads(line)
-                    # Assuming 'timelines' contains the data we're interested in
-                    if 'timelines' in data:
-                        all_data.append(data['timelines'])
-                except json.JSONDecodeError as e:
-                    print(f"Error decoding JSON in file {file_path}: {e}")
+            try:
+                data = json.loads(file.read())
+                if 'timelines' in data:
+                    all_data.append(data['timelines'])
+            except json.JSONDecodeError as e:
+                print(f"Error decoding JSON in file {file_path}: {e}")
     return all_data
+
 
 def time_string_to_seconds(time_str):
     minutes, seconds = map(int, time_str.split(':'))
@@ -84,42 +88,45 @@ def aggregate_actions(parsed_data):
 
     return aggregated_actions
 
-def plot_action_frequencies(action_frequencies_df):
+def plot_action_frequencies(action_frequencies_df, percentage):
     plt.figure(figsize=(12, 8))
     for action in action_frequencies_df.columns[1:]:  # Skip the 'time' column
         plt.plot(action_frequencies_df['time'], action_frequencies_df[action], label=action, marker='o', linestyle='-')
     
     plt.xlabel('Time (seconds)')
     plt.ylabel('Frequency')
-    plt.title('Action Frequencies Over Time')
+    plt.title(f'Action Frequencies Over Time - {percentage}% of Data')
     plt.legend()
     plt.grid(True)
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.show()
+    
+    # Save the figure with the percentage in the filename
+    plt.savefig(f'D:\\University_Studies\\Project\\Graphs\\action_frequencies_{percentage}pct.png')
+    plt.close()
 
 
 
 
-# Load parsed data
-# Load parsed data
-directory_path = r'D:\University_Studies\Project\Parsed_Data'
-parsed_data = load_parsed_json_data(directory_path)
 
-# Aggregate actions data from parsed JSON files
-aggregated_actions = aggregate_actions(parsed_data)
+percentage = 100  # Example: Process and plot for 10% of the data
+
+# Get the file paths for the specified percentage of data
+file_paths = get_files_by_percentage('D:\\University_Studies\\Project\\Parsed_Data', percentage)
+
+# Load and aggregate actions from the selected files
+parsed_data = load_parsed_json_data(file_paths)
+aggregated_actions = aggregate_actions(parsed_data)  # Assuming this function is already correctly implemented
 
 # Specify the actions you're interested in analyzing
-specified_actions = [ "mines.stone", "mines.cobblestone", "mines.white tulip", "pick-ups.cobblestone", "pick-ups.poppy", "uses.wooden pickaxe", "uses.stone pickaxe", "physical.water one cm", "crafts.dark oak planks", "crafts.wooden pickaxe"]
+specified_actions = ["mines.stone", "mines.cobblestone", "pick-ups.cobblestone", "uses.stone pickaxe"]
 
 # Calculate action frequencies over time
 action_frequencies_df = calculate_action_frequencies_from_timelines(aggregated_actions, specified_actions)
 
-# Plot the action frequencies over time
-# Note: You might need to adjust or create a new plotting function based on the structure of action_frequencies_df
+# Plot the action frequencies over time and save the graph
+plot_action_frequencies(action_frequencies_df, percentage)
 
-# Plot the action frequencies over time
-plot_action_frequencies(action_frequencies_df)
 
 
 
