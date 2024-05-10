@@ -9,6 +9,8 @@
   "author": "ron",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "axios": "^1.6.8",
+    "express": "^4.19.2",
+    "express-zip": "^3.0.0"
   }
 }

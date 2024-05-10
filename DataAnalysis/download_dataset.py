@@ -68,7 +68,7 @@ def main(args):
         # except Exception as e:
         #     print(f"\tError downloading {url}: {e}. Moving on")
         #     continue
-
+        print(f"url: {url}")
         # Also download corresponding .jsonl file
         jsonl_url = url.replace(".mp4", ".jsonl")
         jsonl_filename = filename.replace(".mp4", ".jsonl")
