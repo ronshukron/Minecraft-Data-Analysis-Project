@@ -12,8 +12,14 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/views/index.html'));
 });
 
-app.get('/get-video-paths', (req, res) => {
-    const jsonFileName = req.query.jsonFile;
+
+
+//Single Game
+
+
+// Retrieving game list for task
+app.get('/single_game/games_list', (req, res) => { //changed api call 
+    const jsonFileName = req.query.task; //changed name of param
     if (!jsonFileName) {
         return res.status(400).send('JSON file name is required');
     }
@@ -39,6 +45,35 @@ app.get('/get-video-paths', (req, res) => {
         }
     });
 });
+
+
+// Retrieving filter lists for game 
+app.get('/single_game/inventory_actions' , (req, res)=> {
+    const gameName= req.query.name;
+    const task= req.query.task;
+    if (!gameName || !task) {
+        return res.status(400).send('Game name and Task are required');
+    }
+
+    const inventory = ['furnace', 'rotten_flesh', 'granite', 'white_bed', 'feather', 'dirt', 'light_gray_wool', 'acacia_planks', 'chicken', 'dark_oak_planks', 'bucket',
+     'coal', 'sugar_cane', 'bread', 'oak_log', 'gold_ore', 'porkchop', 'white_wool', 'oak_planks', 'poppy', 'cooked_porkchop'];
+    const actions = ['furnace', 'lapis_ore', 'tall_grass', 'stone', 'granite', 'coal_ore', 'dirt', 'dead_bush', 'sugar_cane', 'infested_stone', 'diamond_ore', 'oak_log', 
+    'birch_leaves', 'grass_block', 'gold_ore', 'poppy', 'torch', 'lilac', 'melon', 'dark_oak_log'];
+
+    const resFilters = {
+        inventory: inventory,
+        actions: actions
+    };
+
+    res.json(resFilters);
+
+});
+
+
+
+
+
+// Dataset
 
 app.get('/download', (req, res) => {
     const videoPath = req.query.videoPath;
@@ -126,6 +161,35 @@ app.get('/TimeSeriesStates', (req, res) => {
             res.status(500).send(`Error parsing JSON output: ${parseError.message}`);
         }
     });
+});
+
+
+// Retrieving filter lists for game 
+app.get('/dataset/keys_inventory_actions' , (req, res)=> {
+    const task= req.query.task;
+    const size= req.query.size;
+    if (!task || !size) {
+        return res.status(400).send('Task and Size are required');
+    }
+
+    const keys = ['key.keyboard.e', 'key.keyboard.q', 'key.keyboard.n', 'key.keyboard.b', 'key.keyboard.f2', 'key.keyboard.7', 'key.keyboard.r', 'key.keyboard.left.control',
+     'key.keyboard.w', 'key.keyboard.2', 'key.keyboard.m', 'key.keyboard.escape', 'key.keyboard.comma', 'key.keyboard.caps.lock', 'key.keyboard.a', 'key.keyboard.3',
+      'key.keyboard.f', 'key.keyboard.space', 'key.keyboard.1', 'key.keyboard.grave.accent'];
+
+    const inventory = ['furnace', 'rotten_flesh', 'granite', 'white_bed', 'feather', 'dirt', 'light_gray_wool', 'acacia_planks', 'chicken', 'dark_oak_planks', 'bucket',
+     'coal', 'sugar_cane', 'bread', 'oak_log', 'gold_ore', 'porkchop', 'white_wool', 'oak_planks', 'poppy', 'cooked_porkchop'];
+
+    const actions = ['furnace', 'lapis_ore', 'tall_grass', 'stone', 'granite', 'coal_ore', 'dirt', 'dead_bush', 'sugar_cane', 'infested_stone', 'diamond_ore', 'oak_log', 
+    'birch_leaves', 'grass_block', 'gold_ore', 'poppy', 'torch', 'lilac', 'melon', 'dark_oak_log'];
+
+    const resFilters = {
+        keys: keys,
+        inventory: inventory,
+        actions: actions
+    };
+
+    res.json(resFilters);
+
 });
 
 
