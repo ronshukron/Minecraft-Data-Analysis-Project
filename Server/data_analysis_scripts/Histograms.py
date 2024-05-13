@@ -13,6 +13,7 @@ import io
 from PIL import Image
 from IPython.display import display
 import argparse
+import base64
 
 
 import base64
@@ -24,6 +25,7 @@ def buffer_to_base64(buf):
 def json_get_games_durations(task, percentage):
     durations = []
     base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
+    # base_directory = r'C:\Users\ASUS\Desktop\final_project\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
     directory = os.path.join(base_directory, str(percentage))
     for filename in os.listdir(directory):
@@ -78,7 +80,8 @@ def json_get_games_action(task, action, percentage):
                    'uses': [],
                    'crafts': [],
                    'physical': []}
-    base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
+    # base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
+    base_directory = r'C:\Users\ASUS\Desktop\final_project\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
     directory = os.path.join(base_directory, str(percentage))
     categories = ['mines', 'pick-ups', 'uses', 'crafts', 'physical']
@@ -125,7 +128,7 @@ def create_game_action_distribution(task, action, percentage):
 def create_all_actions_distribution(task, actions, percentage):
     buffers = []
     for action in actions:
-        buffers = buffers + create_game_action_distribution(task, action, percentage)
+        buffers = buffers + create_game_action_distribution(task, action, percentage)        
     return buffers
 
 
@@ -291,21 +294,28 @@ def display_images_from_json(file_path):
 
 
 def main():
-    # Assuming 'diamond' is a task or category
-    json_output = create_all_game_data_as_json(
-        'diamond',
-        ['dirt', 'grass'],
-        ['dirt', 'grass'],
-        ['space', 'w'],
-        100
-    )
+    #what is this part? from ron's code
 
-    file_path = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\data_analysis_scripts\game_data.json'
-    display_images_from_json(file_path)
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('--percentage', type=int, default=10, help='Percentage of data to process')
+    parser.add_argument('--items', type=str, default=['dirt','grass'], help='Comma-separated list of items')
+    
+    args = parser.parse_args()
+    percentage = args.percentage
+    items= args.items
 
-    # Optionally, save the JSON data to a file
-    with open('game_data.json', 'w') as f:
-        f.write(json_output)
+    # game_duration_graph = create_game_time_distribution('diamond',percentage)
+    actions_graphs = create_all_actions_distribution('diamond',items,percentage)
+    # inventory_graphs = create_all_items_distribution('diamond',['dirt','grass'],30)
+    # keys_graphs = create_all_keys_distribution('diamond',['space','w'],30)
+
+    # print(json.dumps({
+    #     'actions_graphs': actions_graphs
+    # }))
+
+    print(actions_graphs)
+
+
 
 if __name__ == "__main__":
     main()

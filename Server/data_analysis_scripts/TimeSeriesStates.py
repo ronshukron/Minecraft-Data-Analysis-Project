@@ -3,6 +3,7 @@ import json
 import numpy as np
 import os
 import argparse
+import matplotlib.pyplot as plt
 
 def get_files_by_percentage(directory_path, percentage):
     all_files = sorted([os.path.join(directory_path, f) for f in os.listdir(directory_path) if f.endswith('.json')])
@@ -77,6 +78,25 @@ def aggregate_actions(parsed_data):
 
     return aggregated_actions
 
+def plot_action_frequencies(action_frequencies_df, percentage, items):
+    plt.figure(figsize=(12, 8))
+    
+    for action in items:
+        plt.plot(action_frequencies_df['time'], action_frequencies_df[action], label=action, marker='o', linestyle='-')
+    
+    plt.xlabel('Time (seconds)')
+    plt.ylabel('Frequency')
+    plt.title(f'Action Frequencies Over Time - {percentage}% of Data')
+    plt.legend()
+    plt.grid(True)
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    
+    graph_path = f'D:/University_Studies/Project/Graphs/action_frequencies_{percentage}pct.png'
+    plt.savefig(graph_path)
+    plt.close()
+    return graph_path
+
 def main():
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('--percentage', type=int, default=100, help='Percentage of data to process')
@@ -90,8 +110,19 @@ def main():
     parsed_data = load_parsed_json_data(file_paths)
     aggregated_actions = aggregate_actions(parsed_data)
     action_frequencies_df = calculate_action_frequencies_from_timelines(aggregated_actions, items)
+    
+    # graph_path = plot_action_frequencies(action_frequencies_df, percentage, items)
+    
+    # Print both the JSON output and the path to the graph image
+    # print(json.dumps({
+    #     'data': action_frequencies_df.to_json(orient='records'),
+    #     'graph_path': graph_path
+    # }))
 
-    print(action_frequencies_df.to_json(orient='records'))
+
+    print(json.dumps({
+        'data': action_frequencies_df.to_json(orient='records')
+        }))
 
 if __name__ == "__main__":
     main()

@@ -5,8 +5,11 @@ const fs = require('fs');
 const zip = require('express-zip');
 const os = require('os');
 const { PythonShell } = require('python-shell'); // Correct import for PythonShell
-
+const cors = require('cors');
 const app = express();
+
+app.use(cors());
+
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/views/index.html'));
@@ -14,7 +17,7 @@ app.get('/', (req, res) => {
 
 
 
-//Single Game
+//--------Single Game
 
 
 // Retrieving game list for task
@@ -49,7 +52,7 @@ app.get('/single_game/games_list', (req, res) => { //changed api call
 
 // Retrieving filter lists for game 
 app.get('/single_game/inventory_actions' , (req, res)=> {
-    const gameName= req.query.name;
+    const gameName= req.query.game;
     const task= req.query.task;
     if (!gameName || !task) {
         return res.status(400).send('Game name and Task are required');
@@ -71,9 +74,138 @@ app.get('/single_game/inventory_actions' , (req, res)=> {
 
 
 
+// Retrieving results after user chooses to analyze
+app.get('/single_game/all_data', (req, res) =>{
+    const task= req.query.task;
+    const gameName= req.query.game;
+    const inventory= req.query.inventory;
+    const actions= req.query.actions;
+
+    // if (!gameName || !task || !inventory || !actions) {
+    //     return res.status(400).send('Params are missing');
+    // }
+
+    //console.log(`Received request for analysis with percentage: ${percentage} and items: ${items}`);
+
+    percentage = 30;
+    items = ['dirt','grass'];
+
+    const command = `python data_analysis_scripts/Histograms.py --percentage ${percentage} --items ${items}`;
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing script: ${error.message}`);
+            console.error(`stderr: ${stderr}`);
+            return res.status(500).send(`Error executing script: ${error.message}`);
+        }
+        console.log(`stdout: ${stdout}`);
+        try {
+            const output = JSON.parse(stdout);
+            res.json(output);
+        } catch (parseError) {
+            console.error(`Error parsing JSON output: ${parseError.message}`);
+            res.status(500).send(`Error parsing JSON output: ${parseError.message}`);
+        }
+    });
 
 
-// Dataset
+});
+
+
+
+// ------------Dataset
+
+// Define your route handler
+app.get('/dataset/all_data', async (req, res) => {
+    const percentage = req.query.percentage || 100;
+    const keys = req.query.keys || 'a,b,c';
+    const inventory = req.query.inventory || 'white_tulip,stick,dark_oak_planks,gold_ore,dirt';
+    const actions = req.query.actions || 'mines.stone,mines.cobblestone,pick-ups.cobblestone,uses.stone pickaxe';
+
+    //console.log(`Received request for analysis with percentage: ${percentage} and items: ${items}`);
+
+    //add params checks 
+
+    // const commands = [
+    //     `python data_analysis_scripts/TimeSeriesInventory.py --percentage ${percentage} --items ${items}`,
+    //     `python data_analysis_scripts/TimeSeriesStates.py --percentage ${percentage} --items "${items}"`,
+    //     `python data_analysis_scripts/Histograms.py --percentage ${percentage} --items ${items}`
+    // ];
+
+    const commands = [
+        // `python data_analysis_scripts/TimeSeriesInventory.py --percentage ${percentage} --items ${inventory}`,
+        // `python data_analysis_scripts/TimeSeriesStates.py --percentage ${percentage} --items "${actions}"`,
+           `python data_analysis_scripts/Stats.py --percentage ${percentage} --keys ${keys} --inventory ${inventory} --actions ${actions}`
+
+    ];
+
+    try {
+        // Execute all commands concurrently and wait for all promises to resolve
+        const results = await Promise.all(commands.map(command => executeCommand(command)));
+
+        // Send the results
+        res.json(results);
+    } catch (error) {
+        // Handle any errors
+        res.status(500).send(`Error: ${error.message}`);
+    }
+});
+
+
+// Retrieving filter lists for game 
+app.get('/dataset/keys_inventory_actions' , (req, res)=> {
+    const task= req.query.task;
+    const size= req.query.size;
+    if (!task || !size) {
+        return res.status(400).send('Task and Size are required');
+    }
+
+    const keys = ['key.keyboard.e', 'key.keyboard.q', 'key.keyboard.n', 'key.keyboard.b', 'key.keyboard.f2', 'key.keyboard.7', 'key.keyboard.r', 'key.keyboard.left.control',
+     'key.keyboard.w', 'key.keyboard.2', 'key.keyboard.m', 'key.keyboard.escape', 'key.keyboard.comma', 'key.keyboard.caps.lock', 'key.keyboard.a', 'key.keyboard.3',
+      'key.keyboard.f', 'key.keyboard.space', 'key.keyboard.1', 'key.keyboard.grave.accent'];
+
+    const inventory = ['furnace', 'rotten_flesh', 'granite', 'white_bed', 'feather', 'dirt', 'light_gray_wool', 'acacia_planks', 'chicken', 'dark_oak_planks', 'bucket',
+     'coal', 'sugar_cane', 'bread', 'oak_log', 'gold_ore', 'porkchop', 'white_wool', 'oak_planks', 'poppy', 'cooked_porkchop'];
+
+    const actions = ['furnace', 'lapis_ore', 'tall_grass', 'stone', 'granite', 'coal_ore', 'dirt', 'dead_bush', 'sugar_cane', 'infested_stone', 'diamond_ore', 'oak_log', 
+    'birch_leaves', 'grass_block', 'gold_ore', 'poppy', 'torch', 'lilac', 'melon', 'dark_oak_log'];
+
+    const resFilters = {
+        keys: keys,
+        inventory: inventory,
+        actions: actions
+    };
+
+    res.json(resFilters);
+
+});
+
+
+// Function to execute a command
+function executeCommand(command) {
+    return new Promise((resolve, reject) => {
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error executing script: ${error.message}`);
+                console.error(`stderr: ${stderr}`);
+                reject(error);
+            } else {
+                console.log(`stdout: ${stdout}`);
+                try {
+                    const output = JSON.parse(stdout);
+                    resolve(output);
+                } catch (parseError) {
+                    console.error(`Error parsing JSON output: ${parseError.message}`);
+                    reject(parseError);
+                }
+            }
+        });
+    });
+}
+
+
+
+// ---------Extra
+
 
 app.get('/download', (req, res) => {
     const videoPath = req.query.videoPath;
@@ -113,6 +245,7 @@ app.get('/download', (req, res) => {
         }
     });
 });
+
 
 
 app.get('/TimeSeriesInvetory', (req, res) => {
@@ -162,36 +295,6 @@ app.get('/TimeSeriesStates', (req, res) => {
         }
     });
 });
-
-
-// Retrieving filter lists for game 
-app.get('/dataset/keys_inventory_actions' , (req, res)=> {
-    const task= req.query.task;
-    const size= req.query.size;
-    if (!task || !size) {
-        return res.status(400).send('Task and Size are required');
-    }
-
-    const keys = ['key.keyboard.e', 'key.keyboard.q', 'key.keyboard.n', 'key.keyboard.b', 'key.keyboard.f2', 'key.keyboard.7', 'key.keyboard.r', 'key.keyboard.left.control',
-     'key.keyboard.w', 'key.keyboard.2', 'key.keyboard.m', 'key.keyboard.escape', 'key.keyboard.comma', 'key.keyboard.caps.lock', 'key.keyboard.a', 'key.keyboard.3',
-      'key.keyboard.f', 'key.keyboard.space', 'key.keyboard.1', 'key.keyboard.grave.accent'];
-
-    const inventory = ['furnace', 'rotten_flesh', 'granite', 'white_bed', 'feather', 'dirt', 'light_gray_wool', 'acacia_planks', 'chicken', 'dark_oak_planks', 'bucket',
-     'coal', 'sugar_cane', 'bread', 'oak_log', 'gold_ore', 'porkchop', 'white_wool', 'oak_planks', 'poppy', 'cooked_porkchop'];
-
-    const actions = ['furnace', 'lapis_ore', 'tall_grass', 'stone', 'granite', 'coal_ore', 'dirt', 'dead_bush', 'sugar_cane', 'infested_stone', 'diamond_ore', 'oak_log', 
-    'birch_leaves', 'grass_block', 'gold_ore', 'poppy', 'torch', 'lilac', 'melon', 'dark_oak_log'];
-
-    const resFilters = {
-        keys: keys,
-        inventory: inventory,
-        actions: actions
-    };
-
-    res.json(resFilters);
-
-});
-
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

@@ -2,7 +2,7 @@
 # code for distribution of durations of games
 import matplotlib
 import numpy as np
-
+import argparse
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from datetime import datetime
@@ -122,6 +122,26 @@ def create_game_statistics(task, actions, items, keys, percentage):
 #create_game_statistics()
 
 def main():
+    
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('--percentage', type=int, default=10, help='Percentage of data to process')
+    parser.add_argument('--keys', type=str, default=['a','b'], help='list of keys')
+    parser.add_argument('--inventory', type=str, default=['white_tulip','stick,dark_oak_planks','gold_ore','dirt'], help='list of inventory')
+    parser.add_argument('--actions', type=str, default=['mines.stone','mines.cobblestone','pick-ups.cobblestone','uses.stone pickaxe'], help='list of actions')
+
+    
+    args = parser.parse_args()
+    percentage = args.percentage
+    keys= args.keys
+    inventory= args.inventory
+    actions= args.actions
+
+
     create_game_statistics('a',['a'],['a'],['w'],100)
+
+    
+
+
+
 if __name__ == "__main__":
     main()
