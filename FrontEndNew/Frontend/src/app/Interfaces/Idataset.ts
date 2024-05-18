@@ -3,13 +3,11 @@ export interface getIDataset {
   stats: Array<IStats>;
 }
 
-export interface IDataset {
-  images: Array<string>;
-  states: Array<IStats>;
-  avg: number;
-  stdDeviation: number;
-  minMax: IminMax;
+export interface IDatasetData {
+  images: string[];
+  stats: Array<IStats>;
 }
+
 export interface IminMax {
   min: number;
   max: number;

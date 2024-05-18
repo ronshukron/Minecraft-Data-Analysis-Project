@@ -99,7 +99,6 @@ export class SingleGameComponent {
 
   private restart_args(): void {
     this.afterApply = false;
-
     this.data.data_points = [];
     this.data.images = [];
   }
