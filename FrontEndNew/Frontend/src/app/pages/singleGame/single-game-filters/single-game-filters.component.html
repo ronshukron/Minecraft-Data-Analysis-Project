@@ -19,7 +19,10 @@
           >
         </mat-select>
       </mat-form-field>
+    </div>
 
+    <!-- games list -->
+    <div class="filter-section">
       <mat-form-field *ngIf="afterSelectTask">
         <mat-label>Select game</mat-label>
         <mat-select
@@ -31,44 +34,13 @@
           }}</mat-option>
         </mat-select>
       </mat-form-field>
-
-      <!--games list-->
-      <!-- <div class="filter-section" *ngIf="afterSelectTask">
-        <h3>Select game</h3>
-        <mat-form-field class="MP4Options">
-          <mat-label>Game</mat-label>
-          <mat-select
-            [(value)]="filters.game"
-            (ngModelChange)="onGameChange($event)"
-          >
-            <mat-option *ngFor="let option of gamesOptions" [value]="option">{{
-              option
-            }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div> -->
-
-      <!--Inventory -->
-      <!-- <div class="filter-section" *ngIf="afterSelectGame">
-        <h3>Select Inventory</h3>
-        <mat-form-field>
-          <mat-label> Inventory</mat-label>
-          <mat-select [(value)]="filters.inventory">
-            <mat-option
-              *ngFor="let option of inventoryOptions"
-              [value]="option"
-              >{{ option }}</mat-option
-            >
-          </mat-select>
-        </mat-form-field>
-      </div> -->
     </div>
 
     <!-- actions list -->
     <div class="filter-section" *ngIf="afterSelectGame">
       <mat-form-field>
         <mat-label>Select Action</mat-label>
-        <mat-select multiple (selectionChange)="onActionsChange($event)">
+        <mat-select multiple (selectionChange)="onActionsChange($event.value)">
           <mat-option *ngFor="let option of actionsOptions" [value]="option">{{
             option
           }}</mat-option>
@@ -80,7 +52,10 @@
     <div class="filter-section" *ngIf="afterSelectGame">
       <mat-form-field>
         <mat-label>Select Inventory</mat-label>
-        <mat-select multiple (selectionChange)="onInventoryChange($event)">
+        <mat-select
+          multiple
+          (selectionChange)="onInventoryChange($event.value)"
+        >
           <mat-option
             *ngFor="let option of inventoryOptions"
             [value]="option"

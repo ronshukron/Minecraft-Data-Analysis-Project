@@ -1,9 +1,9 @@
 .data-size-slider {
   size: 20px;
 }
-.filter-section {
-  margin: 2rem 0 0 0;
-}
+/* .filter-section {
+  margin: 1rem 0 0 0;
+} */
 mat-slider {
   width: 12rem;
 }

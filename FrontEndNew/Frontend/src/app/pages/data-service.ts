@@ -13,6 +13,7 @@ import {
 } from '../Interfaces/IdatasetFilters';
 import { RouterModule } from '@angular/router';
 import { IDataset, getIDataset } from '../Interfaces/Idataset';
+import { IsingleGameDataFromAPI } from '../Interfaces/IsingleGameData';
 
 @Injectable({
   providedIn: 'root',
@@ -51,15 +52,17 @@ export class DataService {
   //get all filters return all the data for the graph
   public getSingleGameData(
     filters: ISingleGameFilters,
-  ): Observable<getIDataset> {
-    let apiUrl = `${this.url}/single_game/all_data`;
+  ): Observable<IsingleGameDataFromAPI> {
+    let apiUrl = `${this.url}/single_game/timelines`;
     const paramValue = filters.selectedTask;
     const params = new HttpParams()
       .set('task', paramValue)
-      .set('game', filters.game);
-    // .set('inventory', filters.inventory)
-    // .set('actions', filters.action)
-    return this.http.get<getIDataset>(apiUrl, { params });
+      .set('name', filters.game)
+      .set('inventory', filters.inventory.join(','))
+      .set('aggregated_actions', filters.action.join(','));
+    return this.http.get<IsingleGameDataFromAPI>(apiUrl, {
+      params,
+    });
   }
 
   //get list of games
