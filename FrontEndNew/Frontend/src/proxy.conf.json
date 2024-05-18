@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://minecraft-analysis-422617.oa.r.appspot.com",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

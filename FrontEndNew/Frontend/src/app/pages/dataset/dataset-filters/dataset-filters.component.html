@@ -1,0 +1,63 @@
+<mat-card class="filter-card">
+  <!--Type of Task -->
+  <div class="filter-section">
+    <mat-form-field>
+      <mat-label>Select Task</mat-label>
+      <mat-select
+        [(ngModel)]="filters.selectedTask"
+        (ngModelChange)="onTaskChange($event)"
+      >
+        <mat-option value="House_Building.json"
+          >House Building from Scratch Task</mat-option
+        >
+        <mat-option value="House_Building_rng.json"
+          >House Building from Random Starting Materials Task</mat-option
+        >
+        <mat-option value="Diamonds.json"
+          >Obtain Diamond Pickaxe Task</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+
+    <div class="filter-section">
+      <h3>Size of Dataset: {{ filters.datasetSize }}</h3>
+      <mat-slider
+        class="data-size-slider filter-slider"
+        [max]="100"
+        [min]="10"
+        [step]="10"
+        [discrete]="true"
+        [showTickMarks]="true"
+      >
+        <input matSliderThumb [(ngModel)]="filters.datasetSize" #slider />
+      </mat-slider>
+    </div>
+
+    <div class="filter-section">
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="analyze()">
+          Analyze
+        </button>
+      </mat-card-actions>
+    </div>
+
+    <!-- 
+<div class="filter-section">
+  <h3>Categories</h3>
+  <mat-form-field>
+    <mat-label>Select Categories</mat-label>
+    <mat-select
+      multiple
+      (selectionChange)="onCategorySelectionChange($event)"
+    >
+      <mat-option value="mines">Mines</mat-option>
+      <mat-option value="pickups">Pick Ups</mat-option>
+      <mat-option value="item-uses">Item Uses</mat-option>
+      <mat-option value="crafts">Crafts</mat-option>
+      <mat-option value="physical-data">Physical Data</mat-option>
+      <mat-option value="game-data">Game Data</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div> -->
+  </div></mat-card
+>

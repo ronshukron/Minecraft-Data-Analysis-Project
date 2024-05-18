@@ -1,0 +1,16 @@
+.about-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, white, #7279c5);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+.app-about,
+.developers-about,
+.component-list-about,
+.descriptions-about {
+  margin-bottom: 40px;
+}

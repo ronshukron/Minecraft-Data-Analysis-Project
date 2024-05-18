@@ -1,0 +1,127 @@
+<mat-card class="filter-card">
+  <mat-card-content>
+    <!--Type of Task -->
+    <div class="filter-section">
+      <mat-form-field>
+        <mat-label>Select Task</mat-label>
+        <mat-select
+          [(ngModel)]="filters.selectedTask"
+          (ngModelChange)="onTaskChange($event)"
+        >
+          <mat-option value="House_Building.json"
+            >House Building from Scratch Task</mat-option
+          >
+          <mat-option value="House_Building_rng.json"
+            >House Building from Random Starting Materials Task</mat-option
+          >
+          <mat-option value="Diamonds.json"
+            >Obtain Diamond Pickaxe Task</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="afterSelectTask">
+        <mat-label>Select game</mat-label>
+        <mat-select
+          [(ngModel)]="filters.game"
+          (ngModelChange)="onGameChange($event)"
+        >
+          <mat-option *ngFor="let option of gamesOptions" [value]="option">{{
+            option
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!--games list-->
+      <!-- <div class="filter-section" *ngIf="afterSelectTask">
+        <h3>Select game</h3>
+        <mat-form-field class="MP4Options">
+          <mat-label>Game</mat-label>
+          <mat-select
+            [(value)]="filters.game"
+            (ngModelChange)="onGameChange($event)"
+          >
+            <mat-option *ngFor="let option of gamesOptions" [value]="option">{{
+              option
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div> -->
+
+      <!--Inventory -->
+      <!-- <div class="filter-section" *ngIf="afterSelectGame">
+        <h3>Select Inventory</h3>
+        <mat-form-field>
+          <mat-label> Inventory</mat-label>
+          <mat-select [(value)]="filters.inventory">
+            <mat-option
+              *ngFor="let option of inventoryOptions"
+              [value]="option"
+              >{{ option }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div> -->
+    </div>
+
+    <!-- actions list -->
+    <div class="filter-section" *ngIf="afterSelectGame">
+      <mat-form-field>
+        <mat-label>Select Action</mat-label>
+        <mat-select multiple (selectionChange)="onActionsChange($event)">
+          <mat-option *ngFor="let option of actionsOptions" [value]="option">{{
+            option
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!--inventory list -->
+    <div class="filter-section" *ngIf="afterSelectGame">
+      <mat-form-field>
+        <mat-label>Select Inventory</mat-label>
+        <mat-select multiple (selectionChange)="onInventoryChange($event)">
+          <mat-option
+            *ngFor="let option of inventoryOptions"
+            [value]="option"
+            >{{ option }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="empty-div-before-analyze"></div>
+    <div class="filter-secction">
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="analyze()"
+          [disabled]="
+            !filters.selectedTask ||
+            !filters.game ||
+            filters.action.length === 0 ||
+            filters.inventory.length === 0
+          "
+        >
+          Analyze
+        </button>
+      </mat-card-actions>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- actions list
+     <div class="filter-section" *ngIf="afterSelectGame">
+      <h3>Action</h3>
+      <mat-form-field>
+        <mat-label> select Action</mat-label>
+        <mat-select [(value)]="filters.action">
+          <mat-option
+            *ngFor="let option of actionsOptions"
+            [value]="option"
+            >{{ option }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div> -->

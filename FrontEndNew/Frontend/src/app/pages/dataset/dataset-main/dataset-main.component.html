@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="left-column">
+    <app-dataset-filters
+      (filterChanged)="onFilterChanged($event)"
+    ></app-dataset-filters>
+  </div>
+  <div class="middle-column">
+    @if (afterApply) {
+      <!-- Display images -->
+      @for (imageUrl of dataSetToShow.images; track imageUrl) {
+        <img class="data-img" [src]="imageUrl" alt="Image" />
+      }
+
+      <!-- Display statistics -->
+      <!-- @for (state of dataSetToShow.states; track state) {
+        <h3>{{ state.name }}</h3>
+        <p>Average: {{ state.avg }}</p>
+        <p>Minimum: {{ state.min }}</p>
+        <p>Maximum: {{ state.max }}</p>
+        <p>Standard Deviation: {{ state.stdDeviation }}</p>
+      } -->
+      @if (afterApply_image) {
+        <h2>{{ "walks" }}</h2>
+        <h3>Average: {{ "475" }}</h3>
+        <h3>Minimum: {{ "475" }}</h3>
+        <h3>Maximum: {{ "475" }}</h3>
+        <h3>Standard Deviation: {{ "0" }}</h3>
+        <h2>{{ "uses" }}</h2>
+        <h3>Average: {{ "732" }}</h3>
+        <h3>Minimum: {{ "732" }}</h3>
+        <h3>Maximum: {{ "732" }}</h3>
+        <h3>Standard Deviation: {{ "0" }}</h3>
+        <h2>{{ "crafts" }}</h2>
+        <h3>Average: {{ "242" }}</h3>
+        <h3>Minimum: {{ "242" }}</h3>
+        <h3>Maximum: {{ "242" }}</h3>
+        <h3>Standard Deviation: {{ "0" }}</h3>
+        <h2>{{ "mines" }}</h2>
+        <h3>Average: {{ "610" }}</h3>
+        <h3>Minimum: {{ "610" }}</h3>
+        <h3>Maximum: {{ "610" }}</h3>
+        <h3>Standard Deviation: {{ "0" }}</h3>
+      }
+    } @else {
+      Please select filters
+    }
+  </div>
+</div>
+<!-- <div class="container">
+  <div class="left-column">
+    <app-dataset-filters
+      (filterChanged)="onFilterChanged($event)"
+    ></app-dataset-filters>
+  </div>
+  <div class="middle-column">
+    @if (afterApply) {
+      @for (imageUrl of dataSetToShow.images; track imageUrl) {
+        <img class="data-img" [src]="imageUrl" alt="Image" />
+        <div>
+          <h3>{{ "Avarge: " + dataSetToShow.avg }}</h3>
+          <h3>{{ "Std: " + dataSetToShow.stdDeviation }}</h3>
+        </div>
+      }
+    } @else {
+      Please select filters
+    }
+  </div>
+  <div>
+    <h3>{{ "Avarge: " + dataSetToShow.avg }}</h3>
+    <h3>{{ "Std: " + dataSetToShow.stdDeviation }}</h3>
+  </div>
+</div> -->

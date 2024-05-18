@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="left-column">
+    <app-single-game-filters
+      (filterChanged)="onFilterChanged($event)"
+    ></app-single-game-filters>
+  </div>
+  <div class="middle-column">
+    @if (afterApply) {
+      <button mat-raised-button color="primary">
+        <router-outlet>
+          <a class="mp4-dd" routerLink="/MP4" routerLinkActive="active"
+            >Go To MP4 Page</a
+          >
+        </router-outlet>
+      </button>
+    } @else {
+      Please select filters
+    }
+  </div>
+</div>

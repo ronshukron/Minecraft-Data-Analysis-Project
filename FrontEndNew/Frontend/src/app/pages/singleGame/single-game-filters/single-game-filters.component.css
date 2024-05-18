@@ -1,0 +1,12 @@
+.data-size-slider {
+  size: 20px;
+}
+.filter-section {
+  margin: 2rem 0 0 0;
+}
+mat-slider {
+  width: 12rem;
+}
+.empty-div-before-analyze {
+  height: 17.4rem;
+}
