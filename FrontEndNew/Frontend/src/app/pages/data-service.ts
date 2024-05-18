@@ -29,13 +29,8 @@ export class DataService {
 
   constructor(private http: HttpClient) {}
 
+  //////////////////////////////////////////////////////////
   // Dataset page
-  public getDataSetData(filters: IDatasetFilters): Observable<getIDataset> {
-    const size =
-      filters && filters.datasetSize ? filters.datasetSize : 'defaultSize';
-    let apiUrl = `${this.url}?size=${size}?task=${filters.selectedTask}`;
-    return this.http.get<getIDataset>(apiUrl);
-  }
 
   // Dataset page fillters
   public getDataSetFilters(filters: IDatasetFilters): Observable<getIDataset> {
@@ -48,7 +43,58 @@ export class DataService {
     return this.http.get<any>(apiUrl, { params });
   }
 
+  //  Dataset page Ron two images and statistics
+  public getDataSetDataGraphAndStatistics(
+    filters: IDatasetFilters,
+  ): Observable<getIDataset> {
+    const size =
+      filters && filters.datasetSize ? filters.datasetSize : 'defaultSize';
+    let apiUrl = `${this.url}/dataset/timelines_stats`;
+    const params = new HttpParams()
+      .set('task', filters.selectedTask)
+      .set('size', size)
+      .set('inventory', filters.inventory.join(','))
+      .set('aggregated_actions', filters.action.join(','))
+      .set('keys', filters.key.join(','));
+    return this.http.get<getIDataset>(apiUrl, { params });
+  }
+
+  //  Dataset page Shira zip file with images
+  public getDataSetDataZipGraph(
+    filters: IDatasetFilters,
+  ): Observable<getIDataset> {
+    const size =
+      filters && filters.datasetSize ? filters.datasetSize : 'defaultSize';
+    let apiUrl = `${this.url}/dataset/hist`;
+    const params = new HttpParams()
+      .set('task', filters.selectedTask)
+      .set('size', size)
+      .set('inventory', filters.inventory.join(','))
+      .set('aggregated_actions', filters.action.join(','))
+      .set('keys', filters.key.join(','));
+    return this.http.get<getIDataset>(apiUrl, { params });
+  }
+
+  //////////////////////////////////////////////////////////////////
   // single game page
+  //get list of games
+  public getSingleGameList(task: string): Observable<string[]> {
+    let apiUrl = `${this.url}/single_game/games_list`;
+    const paramValue = task;
+    const params = new HttpParams().set('task', paramValue);
+    return this.http.get<string[]>(apiUrl, { params });
+    return this.gameList;
+  }
+
+  //get list of invetory and actions filters
+  public getSingleInventoryList(task: string, game: string): Observable<any> {
+    let apiUrl = `${this.url}/single_game/inventory_actions`;
+    const paramValue = task;
+    const params = new HttpParams().set('task', paramValue).set('name', game);
+    return this.http.get<any>(apiUrl, { params });
+    return this.actionAndInv;
+  }
+
   //get all filters return all the data for the graph
   public getSingleGameData(
     filters: ISingleGameFilters,
@@ -65,23 +111,7 @@ export class DataService {
     });
   }
 
-  //get list of games
-  public getSingleGameList(task: string): Observable<string[]> {
-    let apiUrl = `${this.url}/single_game/games_list`;
-    const paramValue = task;
-    const params = new HttpParams().set('task', paramValue);
-    return this.http.get<string[]>(apiUrl, { params });
-    return this.gameList;
-  }
-
-  //get list of invetory and actions
-  public getSingleInventoryList(task: string, game: string): Observable<any> {
-    let apiUrl = `${this.url}/single_game/inventory_actions`;
-    const paramValue = task;
-    const params = new HttpParams().set('task', paramValue).set('name', game);
-    return this.http.get<any>(apiUrl, { params });
-    return this.actionAndInv;
-  }
+  ///////////////////////////////////////////////////////////////
 
   //mp4 pgae
   public getMP4Data(): Observable<any> {

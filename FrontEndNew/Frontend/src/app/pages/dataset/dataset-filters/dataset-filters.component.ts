@@ -5,6 +5,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { IDatasetFilters } from '../../../Interfaces/IdatasetFilters';
+import { DataService } from '../../data-service';
+import { Subject, takeUntil } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dataset-filters',
@@ -15,49 +18,80 @@ import { IDatasetFilters } from '../../../Interfaces/IdatasetFilters';
     MatSelectModule,
     MatSliderModule,
     MatButtonModule,
+    CommonModule,
   ],
   templateUrl: './dataset-filters.component.html',
   styleUrl: './dataset-filters.component.css',
 })
 export class DatasetFiltersComponent implements OnInit {
-  @Output() filterChanged: EventEmitter<IDatasetFilters> =
-    new EventEmitter<IDatasetFilters>();
+  public afterApply: boolean = false;
+  public disabled: boolean = false;
+  public afterSelectTaskAndSize: boolean = false;
+  public inventoryOptions: string[] = [];
+  public actionsOptions: string[] = [];
+  public keysOptions: string[] = [];
+  private unsubscribeList: Subject<void> = new Subject<void>();
 
-  public filters: IDatasetFilters = {
-    datasetSize: 10,
-    selectedTask: '',
-    selectedCategories: [],
-  };
-  disabled: boolean = false;
   public max: number = 100;
   public min: number = 10;
   public step: number = 10;
 
+  public filters: IDatasetFilters = {
+    datasetSize: 10,
+    selectedTask: '',
+    inventory: [],
+    action: [],
+    key: [],
+  };
+
+  @Output() filterChanged: EventEmitter<IDatasetFilters> =
+    new EventEmitter<IDatasetFilters>();
+
   ngOnInit(): void {}
+  constructor(public dataService: DataService) {}
 
   public analyze(): void {
     this.filterChanged.emit(this.filters);
   }
 
-  onCategorySelectionChange(event: any): void {
-    this.filters.selectedCategories = event.value;
+  public onInventoryChange(inventorySelectedList: string[]): void {
+    this.filters.inventory = inventorySelectedList;
   }
 
-  public onTaskChange(taskName: string): void {
-    this.getListOfGames();
+  public onActionsChange(actionsSelectedList: string[]): void {
+    this.filters.action = actionsSelectedList;
+  }
+  public onKeysChange(keysSelectedList: string[]): void {
+    this.filters.key = keysSelectedList;
+  }
+  public onTaskOrDatasetSizeChange(event: string): void {
+    this.getListOfInventoryActionsAndKeys();
   }
 
-  private getListOfGames(): void {
-    // if (!this.filters.selectedTask) return;
-    // this.gamesOptions = [];
-    // this.dataService.getSingleGameList(this.filters.selectedTask).subscribe(
-    //   (data: string[]) => {
-    //     this.gamesOptions = data;
-    //     this.afterSelectTask = true;
-    //   },
-    //   (error) => {
-    //     console.error('Error cant load the list of games:', error);
-    //   },
-    // );
+  private getListOfInventoryActionsAndKeys(): void {
+    if (!this.filters.selectedTask) return;
+    this.clearListOfInventoryAndActions();
+    this.dataService
+      .getDataSetFilters(this.filters)
+      .pipe(takeUntil(this.unsubscribeList))
+      .subscribe(
+        (data: any) => {
+          this.inventoryOptions = data.actions;
+          this.actionsOptions = data.inventory;
+          this.keysOptions = data.keys;
+          this.afterSelectTaskAndSize = true;
+        },
+        (error) => {
+          console.error('Error cant load the list of games:', error);
+        },
+      );
+  }
+
+  private clearListOfInventoryAndActions(): void {
+    this.afterSelectTaskAndSize = false;
+    this.inventoryOptions = [];
+    this.actionsOptions = [];
+    this.filters.action = [];
+    this.filters.inventory = [];
   }
 }

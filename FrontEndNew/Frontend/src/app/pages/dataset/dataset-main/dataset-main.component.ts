@@ -49,9 +49,9 @@ export class DatasetMainComponent implements OnInit {
     this.dataService.getDataSetFilters(filters).subscribe(
       (data: getIDataset) => {
         console.log(data);
-        console.log(data.states);
+        console.log(data.stats);
         console.log(data.images);
-        this.dataSetToShow.states = data.states;
+        this.dataSetToShow.states = data.stats;
         let image: IDatasetImages;
         for (image of data.images) {
           if (image) {

@@ -1,7 +1,9 @@
 export interface IDatasetFilters {
   datasetSize: number;
   selectedTask: string;
-  selectedCategories: string[];
+  inventory: string[];
+  action: string[];
+  key: string[];
 }
 
 export interface ISingleGameFilters {
