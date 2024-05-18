@@ -12,7 +12,7 @@ import {
   ISingleGameFilters,
 } from '../Interfaces/IdatasetFilters';
 import { RouterModule } from '@angular/router';
-import { IDataset, getIDataset } from '../Interfaces/Idataset';
+import { getIDataset } from '../Interfaces/Idataset';
 import { IsingleGameDataFromAPI } from '../Interfaces/IsingleGameData';
 
 @Injectable({
