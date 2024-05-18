@@ -31,9 +31,9 @@ def calculate_stats(numbers):
 
 def json_get_walking_cm(task, percentage,actions):
     walks = []
-    base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
+    # base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
-    directory = os.path.join(base_directory, str(percentage))
+    directory = os.path.join("Parsed_Data", str(percentage))
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
@@ -44,9 +44,9 @@ def json_get_walking_cm(task, percentage,actions):
 
 def json_get_uses(task, percentage,actions):
     uses = []
-    base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
+    #base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
-    directory = os.path.join(base_directory, str(percentage))
+    directory = os.path.join("Parsed_Data", str(percentage))
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
@@ -57,9 +57,9 @@ def json_get_uses(task, percentage,actions):
 
 def json_get_crafts(task, percentage,actions):
     crafts = []
-    base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
+    # base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
-    directory = os.path.join(base_directory, str(percentage))
+    directory = os.path.join("Parsed_Data", str(percentage))
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
@@ -70,9 +70,9 @@ def json_get_crafts(task, percentage,actions):
 
 def json_get_mines(task, percentage,actions):
     mines = []
-    base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
+    # base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
-    directory = os.path.join(base_directory, str(percentage))
+    directory = os.path.join("Parsed_Data", str(percentage))
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
@@ -90,8 +90,7 @@ def create_game_statistics(task, actions, items, keys, percentage):
     uses_stats = calculate_stats(uses)
     crafts_stats = calculate_stats(crafts)
     mines_stats = calculate_stats(mines)
-    dict = {
-        'stats': [
+    dict =  [
             {'name': 'walks',
              'average':walk_stats[0],
              'min':walk_stats[1][0],
@@ -113,11 +112,14 @@ def create_game_statistics(task, actions, items, keys, percentage):
              'max':mines_stats[1][1],
              'std_deviation':mines_stats[2]},
         ]
-    }
+    
 
+    return dict
 
-    with open('Games_Statistics.json', 'w') as json_file:
-        json.dump(dict, json_file)
+    # print(dict)
+
+    # with open('Games_Statistics.json', 'w') as json_file:
+    #     json.dump(dict, json_file)
 
 #create_game_statistics()
 
@@ -136,10 +138,9 @@ def main():
     inventory= args.inventory
     actions= args.actions
 
-
-    create_game_statistics('a',['a'],['a'],['w'],100)
-
-    
+    print(json.dumps({
+            'stats': create_game_statistics('a',['a'],['a'],['w'],100)
+        }))
 
 
 

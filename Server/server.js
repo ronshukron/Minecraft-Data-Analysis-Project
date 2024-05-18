@@ -7,7 +7,6 @@ const os = require('os');
 const { PythonShell } = require('python-shell'); // Correct import for PythonShell
 const cors = require('cors');
 const app = express();
-
 app.use(cors());
 
 
@@ -21,8 +20,9 @@ app.get('/', (req, res) => {
 
 
 // Retrieving game list for task
-app.get('/single_game/games_list', (req, res) => { //changed api call 
-    const jsonFileName = req.query.task; //changed name of param
+app.get('/single_game/games_list', (req, res) => { 
+    const jsonFileName = req.query.task || 'Diamonds.json' 
+
     if (!jsonFileName) {
         return res.status(400).send('JSON file name is required');
     }
@@ -52,8 +52,9 @@ app.get('/single_game/games_list', (req, res) => { //changed api call
 
 // Retrieving filter lists for game 
 app.get('/single_game/inventory_actions' , (req, res)=> {
-    const gameName= req.query.game;
-    const task= req.query.task;
+    const task= req.query.task || 'Diamonds';
+    const gameName= req.query.game || 'game1';
+
     if (!gameName || !task) {
         return res.status(400).send('Game name and Task are required');
     }
@@ -75,93 +76,55 @@ app.get('/single_game/inventory_actions' , (req, res)=> {
 
 
 // Retrieving results after user chooses to analyze
-app.get('/single_game/all_data', (req, res) =>{
-    const task= req.query.task;
-    const gameName= req.query.game;
-    const inventory= req.query.inventory;
-    const actions= req.query.actions;
-
-    // if (!gameName || !task || !inventory || !actions) {
-    //     return res.status(400).send('Params are missing');
-    // }
-
-    //console.log(`Received request for analysis with percentage: ${percentage} and items: ${items}`);
-
-    percentage = 30;
-    items = ['dirt','grass'];
-
-    const command = `python data_analysis_scripts/Histograms.py --percentage ${percentage} --items ${items}`;
-    exec(command, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Error executing script: ${error.message}`);
-            console.error(`stderr: ${stderr}`);
-            return res.status(500).send(`Error executing script: ${error.message}`);
-        }
-        console.log(`stdout: ${stdout}`);
-        try {
-            const output = JSON.parse(stdout);
-            res.json(output);
-        } catch (parseError) {
-            console.error(`Error parsing JSON output: ${parseError.message}`);
-            res.status(500).send(`Error parsing JSON output: ${parseError.message}`);
-        }
-    });
-
-
-});
-
-
-
-// ------------Dataset
-
-// Define your route handler
-app.get('/dataset/all_data', async (req, res) => {
-    const percentage = req.query.percentage || 100;
-    const keys = req.query.keys || 'a,b,c';
-    const inventory = req.query.inventory || 'white_tulip,stick,dark_oak_planks,gold_ore,dirt';
-    const actions = req.query.actions || 'mines.stone,mines.cobblestone,pick-ups.cobblestone,uses.stone pickaxe';
-
-    //console.log(`Received request for analysis with percentage: ${percentage} and items: ${items}`);
+app.get('/single_game/timelines', async (req, res) =>{
+    const percentage = req.query.percentage || 10;
+    const inventory = req.query.inventory || ['white_tulip', 'stick','dark_oak_planks','gold_ore', 'dirt'];
+    const actions = req.query.actions || ['mines.stone','mines.cobblestone','pick-ups.cobblestone','uses.stone'];
 
     //add params checks 
 
-    // const commands = [
-    //     `python data_analysis_scripts/TimeSeriesInventory.py --percentage ${percentage} --items ${items}`,
-    //     `python data_analysis_scripts/TimeSeriesStates.py --percentage ${percentage} --items "${items}"`,
-    //     `python data_analysis_scripts/Histograms.py --percentage ${percentage} --items ${items}`
-    // ];
-
     const commands = [
-        // `python data_analysis_scripts/TimeSeriesInventory.py --percentage ${percentage} --items ${inventory}`,
-        // `python data_analysis_scripts/TimeSeriesStates.py --percentage ${percentage} --items "${actions}"`,
-           `python data_analysis_scripts/Stats.py --percentage ${percentage} --keys ${keys} --inventory ${inventory} --actions ${actions}`
-
+        `python data_analysis_scripts/TimeSeriesInventory.py --percentage ${percentage} --inventory ${inventory}`,
+        `python data_analysis_scripts/TimeSeriesStates.py --percentage ${percentage} --actions ${actions}`
     ];
 
     try {
         // Execute all commands concurrently and wait for all promises to resolve
         const results = await Promise.all(commands.map(command => executeCommand(command)));
 
-        // Send the results
-        res.json(results);
+        const [inv_timeline, actions_timeline] = await Promise.all([
+            fs.promises.readFile(results[0].inv_path),
+            fs.promises.readFile(results[1].actions_path),
+        ]);
+
+        const response = {
+            images: [actions_timeline, inv_timeline],
+            data_points: [results[0].inv_points, results[1].actions_points]
+        };
+
+        res.json(response)
+
     } catch (error) {
-        // Handle any errors
         res.status(500).send(`Error: ${error.message}`);
     }
 });
 
 
+
+
+// ------------Dataset
+
+
 // Retrieving filter lists for game 
 app.get('/dataset/keys_inventory_actions' , (req, res)=> {
-    const task= req.query.task;
-    const size= req.query.size;
+    const task= req.query.task || 'Diamonds';
+    const size= req.query.size || 10;
+
     if (!task || !size) {
         return res.status(400).send('Task and Size are required');
     }
 
-    const keys = ['key.keyboard.e', 'key.keyboard.q', 'key.keyboard.n', 'key.keyboard.b', 'key.keyboard.f2', 'key.keyboard.7', 'key.keyboard.r', 'key.keyboard.left.control',
-     'key.keyboard.w', 'key.keyboard.2', 'key.keyboard.m', 'key.keyboard.escape', 'key.keyboard.comma', 'key.keyboard.caps.lock', 'key.keyboard.a', 'key.keyboard.3',
-      'key.keyboard.f', 'key.keyboard.space', 'key.keyboard.1', 'key.keyboard.grave.accent'];
+    const keys = ['e', 'q', 'n', 'b', 'f2', '7', 'r', 'left.control', 'w', '2', 'm', 'escape', 'comma', 'caps.lock', 'a', '3', 'f', 'space', '1', 'grave.accent'];
 
     const inventory = ['furnace', 'rotten_flesh', 'granite', 'white_bed', 'feather', 'dirt', 'light_gray_wool', 'acacia_planks', 'chicken', 'dark_oak_planks', 'bucket',
      'coal', 'sugar_cane', 'bread', 'oak_log', 'gold_ore', 'porkchop', 'white_wool', 'oak_planks', 'poppy', 'cooked_porkchop'];
@@ -180,8 +143,86 @@ app.get('/dataset/keys_inventory_actions' , (req, res)=> {
 });
 
 
+app.get('/dataset/hist', async (req, res) => {
+    const percentage = req.query.percentage || 100;
+    const keys = req.query.keys || 'a,b,c';
+    const inventory = req.query.inventory || ['white_tulip', 'stick','dark_oak_planks','gold_ore', 'dirt'];
+    const actions = req.query.actions || ['mines.stone','mines.cobblestone','pick-ups.cobblestone','uses.stone'];
+
+    //add params checks 
+
+    const command= `python data_analysis_scripts/Histograms.py --percentage ${percentage} --keys ${keys} --inventory ${inventory} --actions ${actions}`
+
+    try {
+        const zipResult = await executeCommand(command, 0);
+
+        // Send the zip file as binary data
+        res.send(zipResult);
+
+    } catch (error) {
+        res.status(500).send(`Error: ${error.message}`);
+    }
+});
+
+
+// 
+app.get('/dataset/timelines', async (req, res) =>{
+    const percentage = req.query.percentage || 10;
+    const inventory = req.query.inventory || ['white_tulip', 'stick','dark_oak_planks','gold_ore', 'dirt'];
+    const actions = req.query.actions || ['mines.stone','mines.cobblestone','pick-ups.cobblestone','uses.stone'];
+
+    //add params checks 
+
+    const commands = [
+        `python data_analysis_scripts/TimeSeriesInventory.py --percentage ${percentage} --inventory ${inventory}`,
+        `python data_analysis_scripts/TimeSeriesStates.py --percentage ${percentage} --actions ${actions}`
+    ];
+
+    try {
+        // Execute all commands concurrently and wait for all promises to resolve
+        const results = await Promise.all(commands.map(command => executeCommand(command)));
+
+        const [inv_timeline, actions_timeline] = await Promise.all([
+            fs.promises.readFile(results[0].inv_path),
+            fs.promises.readFile(results[1].actions_path),
+        ]);
+
+        const response = {
+            images: [actions_timeline, inv_timeline],
+            data_points: [results[0].inv_points, results[1].actions_points]
+        };
+
+        res.json(response)
+
+    } catch (error) {
+        res.status(500).send(`Error: ${error.message}`);
+    }
+});
+
+app.get('/dataset/stats', async (req, res) => {
+    const percentage = req.query.percentage || 100;
+    const keys = req.query.keys || 'a,b,c';
+    const inventory = req.query.inventory || ['white_tulip', 'stick','dark_oak_planks','gold_ore', 'dirt'];
+    const actions = req.query.actions || ['mines.stone','mines.cobblestone','pick-ups.cobblestone','uses.stone'];
+
+    //add params checks 
+
+    const command =  `python data_analysis_scripts/Stats.py --percentage ${percentage} --keys ${keys} --inventory ${inventory} --actions ${actions}`;
+    
+    try {
+        const stats = await executeCommand(command);
+
+        // Send the JSON result
+        res.json(stats);        
+
+    } catch (error) {
+        res.status(500).send(`Error: ${error.message}`);
+    }
+});
+
+
 // Function to execute a command
-function executeCommand(command) {
+function executeCommand(command, idx = -1) {
     return new Promise((resolve, reject) => {
         exec(command, (error, stdout, stderr) => {
             if (error) {
@@ -191,7 +232,16 @@ function executeCommand(command) {
             } else {
                 console.log(`stdout: ${stdout}`);
                 try {
-                    const output = JSON.parse(stdout);
+                    var output = ''
+                    if (idx == 0){
+                        const zipFilePath = 'histograms.zip';
+                        const zipFileContents = fs.readFileSync(zipFilePath);
+                        output = zipFileContents;
+                    }
+                    else{
+                        output = JSON.parse(stdout);
+                    }
+                    
                     resolve(output);
                 } catch (parseError) {
                     console.error(`Error parsing JSON output: ${parseError.message}`);

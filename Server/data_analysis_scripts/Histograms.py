@@ -1,7 +1,7 @@
 # code for distribution of durations of games
+import zipfile
 import matplotlib
 import numpy as np
-
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from datetime import datetime
@@ -16,18 +16,14 @@ import argparse
 import base64
 
 
-import base64
-
 def buffer_to_base64(buf):
     """ Convert a buffer to a base64 encoded string suitable for JSON embedding. """
     return base64.b64encode(buf.getvalue()).decode('utf-8')
 
 def json_get_games_durations(task, percentage):
     durations = []
-    base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
-    # base_directory = r'C:\Users\ASUS\Desktop\final_project\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
-    directory = os.path.join(base_directory, str(percentage))
+    directory = os.path.join("Parsed_Data", str(percentage))
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
@@ -67,23 +63,19 @@ def create_game_time_distribution(task, percentage):
 
 # Now call the function with the durations list
 # image = create_game_time_distribution('diamond',30)
-
 # image1 = Image.open(image)  # Open the image from the BytesIO buffer
 # image1.show()
 
 
 # code for actions ditribution graphs
-
 def json_get_games_action(task, action, percentage):
     action_freq = {'mines': [],
                    'pick-ups': [],
                    'uses': [],
                    'crafts': [],
                    'physical': []}
-    # base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
-    base_directory = r'C:\Users\ASUS\Desktop\final_project\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
-    directory = os.path.join(base_directory, str(percentage))
+    directory = os.path.join("Parsed_Data", str(percentage))
     categories = ['mines', 'pick-ups', 'uses', 'crafts', 'physical']
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
@@ -128,15 +120,13 @@ def create_game_action_distribution(task, action, percentage):
 def create_all_actions_distribution(task, actions, percentage):
     buffers = []
     for action in actions:
-        buffers = buffers + create_game_action_distribution(task, action, percentage)        
+        buffers.append(create_game_action_distribution(task, action, percentage))  
     return buffers
 
 
 # example how to call this function
 # images = create_all_actions_distribution('diamond',['dirt','granite'],30)
 # how to open the buffers array
-
-
 #     image = Image.open(buf)  # Open the image from the BytesIO buffer
 #     image.show()
 
@@ -144,9 +134,8 @@ def create_all_actions_distribution(task, actions, percentage):
 # distribution for inventory
 def json_get_games_item(task, item, percentage):
     item_freq = []
-    base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
-    directory = os.path.join(base_directory, str(percentage))
+    directory = os.path.join("Parsed_Data", str(percentage))
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
@@ -184,15 +173,13 @@ def create_all_items_distribution(task, items, percentage):
 # image1= create_all_items_distribution('diamond',['leather','dirt'],30)
 # image = Image.open(image1[1])  # Open the image from the BytesIO buffer
 # image.show()
-
 # create a distribution graph for a single key
 
 
 def json_get_games_key(task, key, percentage):
     key_freq = []
-    base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
-    directory = os.path.join(base_directory, str(percentage))
+    directory = os.path.join("Parsed_Data", str(percentage))
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
@@ -229,7 +216,6 @@ def create_all_keys_distribution(task, keys, percentage):
 
 
 # Now call the function with the durations list
-
 # image1= create_all_keys_distribution('diamond',['space','w'],30)
 # image = Image.open(image1[0])  # Open the image from the BytesIO buffer
 # image.show()
@@ -243,10 +229,10 @@ def create_all_game_data_as_json(task, actions, items, keys, percentage):
         'inventory_graphs': {item: create_game_item_distribution(task, item, percentage) for item in items},
         'keys_graphs': {key: create_game_key_distribution(task, key, percentage) for key in keys}
     }
+
     json_data = json.dumps(data, indent=4)  # Use indent for pretty-printing if desired
     return json_data
 
-import json
 
 def load_json_data(file_path):
     """ Load the JSON file and return the data """
@@ -254,18 +240,11 @@ def load_json_data(file_path):
         data = json.load(file)
     return data
 
-import io
-from PIL import Image
-import base64
-
 def base64_to_image(base64_string):
     """ Convert a base64 string to a PIL image """
     image_data = base64.b64decode(base64_string)
     image = Image.open(io.BytesIO(image_data))
     return image
-
-
-from IPython.display import display
 
 
 def display_images_from_json(file_path):
@@ -291,31 +270,55 @@ def display_images_from_json(file_path):
                     image.show()
 
 
+def create_zip_with_json(data, filename="game_data.zip"):
+    # Create a BytesIO object to hold the ZIP file
+    memory_file = io.BytesIO()
+
+    # Create a ZIP file
+    with zipfile.ZipFile(memory_file, 'w', zipfile.ZIP_DEFLATED) as zf:
+        # Write the JSON data to a file within the ZIP file
+        zf.writestr('game_data.json', data)
+
+    # Prepare the ZIP file for sending
+    memory_file.seek(0)
+
+    return memory_file
 
 
 def main():
-    #what is this part? from ron's code
 
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('--percentage', type=int, default=10, help='Percentage of data to process')
-    parser.add_argument('--items', type=str, default=['dirt','grass'], help='Comma-separated list of items')
+    parser.add_argument('--keys', type=str, default=['a','b'], help='list of keys')
+    parser.add_argument('--inventory', type=str, default=['white_tulip','stick,dark_oak_planks','gold_ore','dirt'], help='list of inventory')
+    parser.add_argument('--actions', type=str, default=['mines.stone','mines.cobblestone','pick-ups.cobblestone','uses.stone'], help='list of actions')
+
     
     args = parser.parse_args()
     percentage = args.percentage
-    items= args.items
-
-    # game_duration_graph = create_game_time_distribution('diamond',percentage)
-    actions_graphs = create_all_actions_distribution('diamond',items,percentage)
-    # inventory_graphs = create_all_items_distribution('diamond',['dirt','grass'],30)
-    # keys_graphs = create_all_keys_distribution('diamond',['space','w'],30)
-
-    # print(json.dumps({
-    #     'actions_graphs': actions_graphs
-    # }))
-
-    print(actions_graphs)
+    keys= args.keys
+    inventory= args.inventory
+    actions= args.actions
 
 
+    json_output = create_all_game_data_as_json(
+            'diamond',
+            ['dirt', 'grass','furnace', 'rotten_flesh', 'granite', 'white_bed', 'feather', 'dirt', 'light_gray_wool', 'acacia_planks', 'chicken', 'dark_oak_planks', 'bucket'],
+            ['dirt', 'grass','furnace', 'lapis_ore', 'tall_grass', 'stone', 'granite', 'coal_ore', 'dirt', 'dead_bush', 'sugar_cane', 'infested_stone', 'diamond_ore', 'oak_log'],
+            ['e', 'q', 'n', 'b', 'f2', '7', 'r', 'left.control'],
+            100
+    )
+
+    # Create a ZIP file containing the JSON data
+    zip_memory_file = create_zip_with_json(json_output)
+    zip_file_path = 'histograms.zip'  # Modify this path as needed
+
+    # Save the ZIP file to disk
+    with open(zip_file_path, 'wb') as f:
+        # zip_memory_file.getvalue() gets the entire content of the BytesIO object
+        f.write(zip_memory_file.getvalue())
+
+    print(f"ZIP file saved to {zip_file_path}")
 
 if __name__ == "__main__":
     main()

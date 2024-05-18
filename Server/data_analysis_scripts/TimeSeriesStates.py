@@ -92,37 +92,32 @@ def plot_action_frequencies(action_frequencies_df, percentage, items):
     plt.xticks(rotation=45)
     plt.tight_layout()
     
-    graph_path = f'D:/University_Studies/Project/Graphs/action_frequencies_{percentage}pct.png'
+    graph_path = f'action_frequencies_{percentage}pct.png'
     plt.savefig(graph_path)
     plt.close()
     return graph_path
 
 def main():
     parser = argparse.ArgumentParser(description='Process some integers.')
-    parser.add_argument('--percentage', type=int, default=100, help='Percentage of data to process')
-    parser.add_argument('--items', type=str, default='mines.stone,mines.cobblestone,pick-ups.cobblestone,uses.stone pickaxe', help='Comma-separated list of items')
+    parser.add_argument('--percentage', type=int, help='Percentage of data to process')
+    parser.add_argument('--actions', type=str, help='List of actions')
 
     args = parser.parse_args()
     percentage = args.percentage
-    items = args.items.split(',')
+    actions = args.actions.split(',')
+    #items = args.items.split(',')
 
     file_paths = get_files_by_percentage('Parsed_Data', percentage)
     parsed_data = load_parsed_json_data(file_paths)
     aggregated_actions = aggregate_actions(parsed_data)
-    action_frequencies_df = calculate_action_frequencies_from_timelines(aggregated_actions, items)
+    action_frequencies_df = calculate_action_frequencies_from_timelines(aggregated_actions, actions)
     
-    # graph_path = plot_action_frequencies(action_frequencies_df, percentage, items)
+    graph_path = plot_action_frequencies(action_frequencies_df, percentage, actions)
     
-    # Print both the JSON output and the path to the graph image
-    # print(json.dumps({
-    #     'data': action_frequencies_df.to_json(orient='records'),
-    #     'graph_path': graph_path
-    # }))
-
-
-    print(json.dumps({
-        'data': action_frequencies_df.to_json(orient='records')
-        }))
+    print( json.dumps({
+        'actions_points': action_frequencies_df.to_json(orient='records'),
+        'actions_path': graph_path
+        }) )
 
 if __name__ == "__main__":
     main()

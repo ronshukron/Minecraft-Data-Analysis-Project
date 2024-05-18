@@ -88,7 +88,7 @@ def plot_average_quantities(avg_quantities_df, percentage, items):
     plt.xticks(rotation=45)
     plt.tight_layout()
     
-    graph_path = f'D:/University_Studies/Project/Graphs/inventory_quantities_{percentage}pct.png'
+    graph_path = f'inventory_quantities_{percentage}pct.png'
     plt.savefig(graph_path)
     plt.close()
     return graph_path
@@ -96,28 +96,23 @@ def plot_average_quantities(avg_quantities_df, percentage, items):
 def main():
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('--percentage', type=int, default=100, help='Percentage of data to process')
-    parser.add_argument('--items', type=str, default='white_tulip,stick,dark_oak_planks,gold_ore,dirt', help='Comma-separated list of items')
+    parser.add_argument('--inventory', help='List of inventory')
 
     args = parser.parse_args()
     percentage = args.percentage
-    items = args.items.split(',')
+    inventory = args.inventory.split(',')
 
     file_paths = get_files_by_percentage('Parsed_Data', percentage)
     parsed_data = load_parsed_json_data(file_paths)
     aggregated_timelines = aggregate_timelines(parsed_data)
-    avg_quantities_df = calculate_average_quantities_from_timelines(aggregated_timelines, items)
+    avg_quantities_df = calculate_average_quantities_from_timelines(aggregated_timelines, inventory)
     
-    #graph_path = plot_average_quantities(avg_quantities_df, percentage, items)
+    graph_path = plot_average_quantities(avg_quantities_df, percentage, inventory)
     
-    # Print both the JSON output and the path to the graph image
-    # print(json.dumps({
-    #     'data': avg_quantities_df.to_json(orient='records'),
-    #     'graph_path': graph_path
-    # }))
-    
-    print(json.dumps({
-        'data': avg_quantities_df.to_json(orient='records')
-    }))
+    print( json.dumps({
+        'inv_points': avg_quantities_df.to_json(orient='records'),
+        'inv_path': graph_path
+    }) )
 
 
 
