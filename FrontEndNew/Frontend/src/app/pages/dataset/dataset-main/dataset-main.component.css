@@ -16,4 +16,9 @@
 }
 .data-img {
   margin: 0 0 0 2rem;
+  width: 60rem;
+  height: 40rem;
+}
+.data-set-spiner {
+  margin: 20rem 30rem;
 }

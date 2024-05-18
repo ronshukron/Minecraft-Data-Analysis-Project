@@ -1,6 +1,6 @@
 export interface getIDataset {
   images: Array<IDatasetImages>;
-  states: Array<IStats>;
+  stats: Array<IStats>;
 }
 
 export interface IDataset {
@@ -24,7 +24,7 @@ export interface IStats {
   avg: number;
   min: number;
   max: number;
-  stdDeviation: number;
+  std_deviation: number;
 }
 
 // export interface IStats {
