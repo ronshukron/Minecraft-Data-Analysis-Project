@@ -3,9 +3,9 @@ import {
   __toESM
 } from "./chunk-PZQZAEDH.js";
 
-// ../../../node_modules/global/window.js
+// node_modules/global/window.js
 var require_window = __commonJS({
-  "../../../node_modules/global/window.js"(exports, module) {
+  "node_modules/global/window.js"(exports, module) {
     var win;
     if (typeof window !== "undefined") {
       win = window;
@@ -33,9 +33,9 @@ var require_min_document = __commonJS({
   }
 });
 
-// ../../../node_modules/global/document.js
+// node_modules/global/document.js
 var require_document = __commonJS({
-  "../../../node_modules/global/document.js"(exports, module) {
+  "node_modules/global/document.js"(exports, module) {
     var topLevel = typeof global !== "undefined" ? global : typeof window !== "undefined" ? window : {};
     var minDoc = require_min_document();
     var doccy;
@@ -51,9 +51,9 @@ var require_document = __commonJS({
   }
 });
 
-// ../../../node_modules/keycode/index.js
+// node_modules/keycode/index.js
 var require_keycode = __commonJS({
-  "../../../node_modules/keycode/index.js"(exports, module) {
+  "node_modules/keycode/index.js"(exports, module) {
     function keyCode(searchInput) {
       if (searchInput && "object" === typeof searchInput) {
         var hasKeyCode = searchInput.which || searchInput.keyCode || searchInput.charCode;
@@ -181,9 +181,9 @@ var require_keycode = __commonJS({
   }
 });
 
-// ../../../node_modules/safe-json-parse/tuple.js
+// node_modules/safe-json-parse/tuple.js
 var require_tuple = __commonJS({
-  "../../../node_modules/safe-json-parse/tuple.js"(exports, module) {
+  "node_modules/safe-json-parse/tuple.js"(exports, module) {
     module.exports = SafeParseTuple;
     function SafeParseTuple(obj, reviver) {
       var json;
@@ -198,9 +198,9 @@ var require_tuple = __commonJS({
   }
 });
 
-// ../../../node_modules/@babel/runtime/helpers/extends.js
+// node_modules/@babel/runtime/helpers/extends.js
 var require_extends = __commonJS({
-  "../../../node_modules/@babel/runtime/helpers/extends.js"(exports, module) {
+  "node_modules/@babel/runtime/helpers/extends.js"(exports, module) {
     function _extends2() {
       module.exports = _extends2 = Object.assign ? Object.assign.bind() : function(target) {
         for (var i = 1; i < arguments.length; i++) {
@@ -219,9 +219,9 @@ var require_extends = __commonJS({
   }
 });
 
-// ../../../node_modules/is-function/index.js
+// node_modules/is-function/index.js
 var require_is_function = __commonJS({
-  "../../../node_modules/is-function/index.js"(exports, module) {
+  "node_modules/is-function/index.js"(exports, module) {
     module.exports = isFunction;
     var toString2 = Object.prototype.toString;
     function isFunction(fn) {
@@ -235,9 +235,9 @@ var require_is_function = __commonJS({
   }
 });
 
-// ../../../node_modules/@videojs/xhr/lib/http-handler.js
+// node_modules/@videojs/xhr/lib/http-handler.js
 var require_http_handler = __commonJS({
-  "../../../node_modules/@videojs/xhr/lib/http-handler.js"(exports, module) {
+  "node_modules/@videojs/xhr/lib/http-handler.js"(exports, module) {
     "use strict";
     var window8 = require_window();
     var httpResponseHandler = function httpResponseHandler2(callback, decodeResponseBody) {
@@ -286,9 +286,9 @@ var require_http_handler = __commonJS({
   }
 });
 
-// ../../../node_modules/@videojs/xhr/lib/index.js
+// node_modules/@videojs/xhr/lib/index.js
 var require_lib = __commonJS({
-  "../../../node_modules/@videojs/xhr/lib/index.js"(exports, module) {
+  "node_modules/@videojs/xhr/lib/index.js"(exports, module) {
     "use strict";
     var window8 = require_window();
     var _extends2 = require_extends();
@@ -518,9 +518,9 @@ var require_lib = __commonJS({
   }
 });
 
-// ../../../node_modules/videojs-vtt.js/lib/vtt.js
+// node_modules/videojs-vtt.js/lib/vtt.js
 var require_vtt = __commonJS({
-  "../../../node_modules/videojs-vtt.js/lib/vtt.js"(exports, module) {
+  "node_modules/videojs-vtt.js/lib/vtt.js"(exports, module) {
     var document3 = require_document();
     var _objCreate = Object.create || /* @__PURE__ */ function() {
       function F() {
@@ -1594,9 +1594,9 @@ var require_vtt = __commonJS({
   }
 });
 
-// ../../../node_modules/videojs-vtt.js/lib/vttcue.js
+// node_modules/videojs-vtt.js/lib/vttcue.js
 var require_vttcue = __commonJS({
-  "../../../node_modules/videojs-vtt.js/lib/vttcue.js"(exports, module) {
+  "node_modules/videojs-vtt.js/lib/vttcue.js"(exports, module) {
     var autoKeyword = "auto";
     var directionSetting = {
       "": 1,
@@ -1825,9 +1825,9 @@ var require_vttcue = __commonJS({
   }
 });
 
-// ../../../node_modules/videojs-vtt.js/lib/vttregion.js
+// node_modules/videojs-vtt.js/lib/vttregion.js
 var require_vttregion = __commonJS({
-  "../../../node_modules/videojs-vtt.js/lib/vttregion.js"(exports, module) {
+  "node_modules/videojs-vtt.js/lib/vttregion.js"(exports, module) {
     var scrollSetting = {
       "": true,
       "up": true
@@ -1943,9 +1943,9 @@ var require_vttregion = __commonJS({
   }
 });
 
-// ../../../node_modules/videojs-vtt.js/lib/browser-index.js
+// node_modules/videojs-vtt.js/lib/browser-index.js
 var require_browser_index = __commonJS({
-  "../../../node_modules/videojs-vtt.js/lib/browser-index.js"(exports, module) {
+  "node_modules/videojs-vtt.js/lib/browser-index.js"(exports, module) {
     var window8 = require_window();
     var vttjs = module.exports = {
       WebVTT: require_vtt(),
@@ -1972,9 +1972,9 @@ var require_browser_index = __commonJS({
   }
 });
 
-// ../../../node_modules/url-toolkit/src/url-toolkit.js
+// node_modules/url-toolkit/src/url-toolkit.js
 var require_url_toolkit = __commonJS({
-  "../../../node_modules/url-toolkit/src/url-toolkit.js"(exports, module) {
+  "node_modules/url-toolkit/src/url-toolkit.js"(exports, module) {
     (function(root) {
       var URL_REGEX = /^(?=((?:[a-zA-Z0-9+\-.]+:)?))\1(?=((?:\/\/[^\/?#]*)?))\2(?=((?:(?:[^?#\/]*\/)*[^;?#\/]*)?))\3((?:;[^?#]*)?)(\?[^#]*)?(#[^]*)?$/;
       var FIRST_SEGMENT_REGEX = /^(?=([^\/?#]*))\1([^]*)$/;
@@ -2098,9 +2098,9 @@ var require_url_toolkit = __commonJS({
   }
 });
 
-// ../../../node_modules/@xmldom/xmldom/lib/conventions.js
+// node_modules/@xmldom/xmldom/lib/conventions.js
 var require_conventions = __commonJS({
-  "../../../node_modules/@xmldom/xmldom/lib/conventions.js"(exports) {
+  "node_modules/@xmldom/xmldom/lib/conventions.js"(exports) {
     "use strict";
     function find(list, predicate, ac) {
       if (ac === void 0) {
@@ -2237,9 +2237,9 @@ var require_conventions = __commonJS({
   }
 });
 
-// ../../../node_modules/@xmldom/xmldom/lib/dom.js
+// node_modules/@xmldom/xmldom/lib/dom.js
 var require_dom = __commonJS({
-  "../../../node_modules/@xmldom/xmldom/lib/dom.js"(exports) {
+  "node_modules/@xmldom/xmldom/lib/dom.js"(exports) {
     var conventions = require_conventions();
     var find = conventions.find;
     var NAMESPACE = conventions.NAMESPACE;
@@ -3645,9 +3645,9 @@ var require_dom = __commonJS({
   }
 });
 
-// ../../../node_modules/@xmldom/xmldom/lib/entities.js
+// node_modules/@xmldom/xmldom/lib/entities.js
 var require_entities = __commonJS({
-  "../../../node_modules/@xmldom/xmldom/lib/entities.js"(exports) {
+  "node_modules/@xmldom/xmldom/lib/entities.js"(exports) {
     "use strict";
     var freeze = require_conventions().freeze;
     exports.XML_ENTITIES = freeze({
@@ -5788,9 +5788,9 @@ var require_entities = __commonJS({
   }
 });
 
-// ../../../node_modules/@xmldom/xmldom/lib/sax.js
+// node_modules/@xmldom/xmldom/lib/sax.js
 var require_sax = __commonJS({
-  "../../../node_modules/@xmldom/xmldom/lib/sax.js"(exports) {
+  "node_modules/@xmldom/xmldom/lib/sax.js"(exports) {
     var NAMESPACE = require_conventions().NAMESPACE;
     var nameStartChar = /[A-Z_a-z\xC0-\xD6\xD8-\xF6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]/;
     var nameChar = new RegExp("[\\-\\.0-9" + nameStartChar.source.slice(1, -1) + "\\u00B7\\u0300-\\u036F\\u203F-\\u2040]");
@@ -6371,9 +6371,9 @@ var require_sax = __commonJS({
   }
 });
 
-// ../../../node_modules/@xmldom/xmldom/lib/dom-parser.js
+// node_modules/@xmldom/xmldom/lib/dom-parser.js
 var require_dom_parser = __commonJS({
-  "../../../node_modules/@xmldom/xmldom/lib/dom-parser.js"(exports) {
+  "node_modules/@xmldom/xmldom/lib/dom-parser.js"(exports) {
     var conventions = require_conventions();
     var dom = require_dom();
     var entities = require_entities();
@@ -6587,9 +6587,9 @@ var require_dom_parser = __commonJS({
   }
 });
 
-// ../../../node_modules/@xmldom/xmldom/lib/index.js
+// node_modules/@xmldom/xmldom/lib/index.js
 var require_lib2 = __commonJS({
-  "../../../node_modules/@xmldom/xmldom/lib/index.js"(exports) {
+  "node_modules/@xmldom/xmldom/lib/index.js"(exports) {
     var dom = require_dom();
     exports.DOMImplementation = dom.DOMImplementation;
     exports.XMLSerializer = dom.XMLSerializer;
@@ -6597,9 +6597,9 @@ var require_lib2 = __commonJS({
   }
 });
 
-// ../../../node_modules/mux.js/lib/utils/numbers.js
+// node_modules/mux.js/lib/utils/numbers.js
 var require_numbers = __commonJS({
-  "../../../node_modules/mux.js/lib/utils/numbers.js"(exports, module) {
+  "node_modules/mux.js/lib/utils/numbers.js"(exports, module) {
     var MAX_UINT32 = Math.pow(2, 32);
     var getUint64 = function(uint8) {
       var dv = new DataView(uint8.buffer, uint8.byteOffset, uint8.byteLength);
@@ -6620,9 +6620,9 @@ var require_numbers = __commonJS({
   }
 });
 
-// ../../../node_modules/mux.js/lib/tools/parse-sidx.js
+// node_modules/mux.js/lib/tools/parse-sidx.js
 var require_parse_sidx = __commonJS({
-  "../../../node_modules/mux.js/lib/tools/parse-sidx.js"(exports, module) {
+  "node_modules/mux.js/lib/tools/parse-sidx.js"(exports, module) {
     var getUint64 = require_numbers().getUint64;
     var parseSidx2 = function(data) {
       var view = new DataView(data.buffer, data.byteOffset, data.byteLength), result = {
@@ -6660,9 +6660,9 @@ var require_parse_sidx = __commonJS({
   }
 });
 
-// ../../../node_modules/mux.js/lib/utils/clock.js
+// node_modules/mux.js/lib/utils/clock.js
 var require_clock = __commonJS({
-  "../../../node_modules/mux.js/lib/utils/clock.js"(exports, module) {
+  "node_modules/mux.js/lib/utils/clock.js"(exports, module) {
     var ONE_SECOND_IN_TS2 = 9e4;
     var secondsToVideoTs;
     var secondsToAudioTs;
@@ -6705,7 +6705,7 @@ var require_clock = __commonJS({
   }
 });
 
-// ../../../node_modules/video.js/dist/video.es.js
+// node_modules/video.js/dist/video.es.js
 var import_window7 = __toESM(require_window());
 var import_document = __toESM(require_document());
 var import_keycode = __toESM(require_keycode());
@@ -6713,7 +6713,7 @@ var import_tuple = __toESM(require_tuple());
 var import_xhr = __toESM(require_lib());
 var import_videojs_vtt = __toESM(require_browser_index());
 
-// ../../../node_modules/@babel/runtime/helpers/esm/extends.js
+// node_modules/@babel/runtime/helpers/esm/extends.js
 function _extends() {
   _extends = Object.assign ? Object.assign.bind() : function(target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -6729,7 +6729,7 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 
-// ../../../node_modules/@videojs/vhs-utils/es/resolve-url.js
+// node_modules/@videojs/vhs-utils/es/resolve-url.js
 var import_url_toolkit = __toESM(require_url_toolkit());
 var import_window = __toESM(require_window());
 var DEFAULT_LOCATION = "http://example.com";
@@ -6761,7 +6761,7 @@ var resolveUrl = function resolveUrl2(baseUrl, relativeUrl) {
 };
 var resolve_url_default = resolveUrl;
 
-// ../../../node_modules/m3u8-parser/node_modules/@videojs/vhs-utils/es/stream.js
+// node_modules/m3u8-parser/node_modules/@videojs/vhs-utils/es/stream.js
 var Stream = function() {
   function Stream2() {
     this.listeners = {};
@@ -6811,7 +6811,7 @@ var Stream = function() {
   return Stream2;
 }();
 
-// ../../../node_modules/m3u8-parser/node_modules/@videojs/vhs-utils/es/decode-b64-to-uint8-array.js
+// node_modules/m3u8-parser/node_modules/@videojs/vhs-utils/es/decode-b64-to-uint8-array.js
 var import_window2 = __toESM(require_window());
 var atob = function atob2(s) {
   return import_window2.default.atob ? import_window2.default.atob(s) : Buffer.from(s, "base64").toString("binary");
@@ -6825,7 +6825,7 @@ function decodeB64ToUint8Array(b64Text) {
   return array;
 }
 
-// ../../../node_modules/m3u8-parser/dist/m3u8-parser.es.js
+// node_modules/m3u8-parser/dist/m3u8-parser.es.js
 var LineStream = class extends Stream {
   constructor() {
     super();
@@ -8067,7 +8067,7 @@ var Parser = class extends Stream {
   }
 };
 
-// ../../../node_modules/@videojs/vhs-utils/es/codecs.js
+// node_modules/@videojs/vhs-utils/es/codecs.js
 var import_window3 = __toESM(require_window());
 var regexs = {
   // to determine mime types
@@ -8212,7 +8212,7 @@ var muxerSupportsCodec = function muxerSupportsCodec2(codecString) {
 var DEFAULT_AUDIO_CODEC = "mp4a.40.2";
 var DEFAULT_VIDEO_CODEC = "avc1.4d400d";
 
-// ../../../node_modules/@videojs/vhs-utils/es/media-types.js
+// node_modules/@videojs/vhs-utils/es/media-types.js
 var MPEGURL_REGEX = /^(audio|video|application)\/(x-|vnd\.apple\.)?mpegurl/i;
 var DASH_REGEX = /^application\/dash\+xml/i;
 var simpleTypeFromSourceType = function simpleTypeFromSourceType2(type) {
@@ -8228,7 +8228,7 @@ var simpleTypeFromSourceType = function simpleTypeFromSourceType2(type) {
   return null;
 };
 
-// ../../../node_modules/@videojs/vhs-utils/es/byte-helpers.js
+// node_modules/@videojs/vhs-utils/es/byte-helpers.js
 var import_window4 = __toESM(require_window());
 var countBits = function countBits2(x) {
   return x.toString(2).length;
@@ -8371,10 +8371,10 @@ var bytesMatch = function bytesMatch2(a, b, _temp3) {
   });
 };
 
-// ../../../node_modules/mpd-parser/dist/mpd-parser.es.js
+// node_modules/mpd-parser/dist/mpd-parser.es.js
 var import_window6 = __toESM(require_window());
 
-// ../../../node_modules/@videojs/vhs-utils/es/media-groups.js
+// node_modules/@videojs/vhs-utils/es/media-groups.js
 var forEachMediaGroup = function forEachMediaGroup2(master, groups, callback) {
   groups.forEach(function(mediaType) {
     for (var groupKey in master.mediaGroups[mediaType]) {
@@ -8386,7 +8386,7 @@ var forEachMediaGroup = function forEachMediaGroup2(master, groups, callback) {
   });
 };
 
-// ../../../node_modules/@videojs/vhs-utils/es/decode-b64-to-uint8-array.js
+// node_modules/@videojs/vhs-utils/es/decode-b64-to-uint8-array.js
 var import_window5 = __toESM(require_window());
 var atob3 = function atob4(s) {
   return import_window5.default.atob ? import_window5.default.atob(s) : Buffer.from(s, "base64").toString("binary");
@@ -8400,7 +8400,7 @@ function decodeB64ToUint8Array2(b64Text) {
   return array;
 }
 
-// ../../../node_modules/mpd-parser/dist/mpd-parser.es.js
+// node_modules/mpd-parser/dist/mpd-parser.es.js
 var import_xmldom = __toESM(require_lib2());
 var isObject = (obj) => {
   return !!obj && typeof obj === "object";
@@ -10081,10 +10081,10 @@ var parse = (manifestString, options = {}) => {
 };
 var parseUTCTiming = (manifestString) => parseUTCTimingScheme(stringToMpdXml(manifestString));
 
-// ../../../node_modules/video.js/dist/video.es.js
+// node_modules/video.js/dist/video.es.js
 var import_parse_sidx = __toESM(require_parse_sidx());
 
-// ../../../node_modules/@videojs/vhs-utils/es/id3-helpers.js
+// node_modules/@videojs/vhs-utils/es/id3-helpers.js
 var ID3 = toUint8([73, 68, 51]);
 var getId3Size = function getId3Size2(bytes, offset) {
   if (offset === void 0) {
@@ -10113,7 +10113,7 @@ var getId3Offset = function getId3Offset2(bytes, offset) {
   return getId3Offset2(bytes, offset);
 };
 
-// ../../../node_modules/@videojs/vhs-utils/es/opus-helpers.js
+// node_modules/@videojs/vhs-utils/es/opus-helpers.js
 var OPUS_HEAD = new Uint8Array([
   // O, p, u, s
   79,
@@ -10127,7 +10127,7 @@ var OPUS_HEAD = new Uint8Array([
   100
 ]);
 
-// ../../../node_modules/@videojs/vhs-utils/es/mp4-helpers.js
+// node_modules/@videojs/vhs-utils/es/mp4-helpers.js
 var normalizePath = function normalizePath2(path) {
   if (typeof path === "string") {
     return stringToBytes(path);
@@ -10271,7 +10271,7 @@ var findBox = function findBox2(bytes, paths, complete) {
   return results;
 };
 
-// ../../../node_modules/@videojs/vhs-utils/es/ebml-helpers.js
+// node_modules/@videojs/vhs-utils/es/ebml-helpers.js
 var EBML_TAGS = {
   EBML: toUint8([26, 69, 223, 163]),
   DocType: toUint8([66, 130]),
@@ -10394,7 +10394,7 @@ var findEbml = function findEbml2(bytes, paths) {
   return results;
 };
 
-// ../../../node_modules/@videojs/vhs-utils/es/nal-helpers.js
+// node_modules/@videojs/vhs-utils/es/nal-helpers.js
 var NAL_TYPE_ONE = toUint8([0, 0, 0, 1]);
 var NAL_TYPE_TWO = toUint8([0, 0, 1]);
 var EMULATION_PREVENTION = toUint8([0, 0, 3]);
@@ -10467,7 +10467,7 @@ var findH265Nal = function findH265Nal2(bytes, type, nalLimit) {
   return findNal(bytes, "h265", type, nalLimit);
 };
 
-// ../../../node_modules/@videojs/vhs-utils/es/containers.js
+// node_modules/@videojs/vhs-utils/es/containers.js
 var CONSTANTS = {
   // "webm" string literal in hex
   "webm": toUint8([119, 101, 98, 109]),
@@ -10620,7 +10620,7 @@ var isLikelyFmp4MediaSegment = function isLikelyFmp4MediaSegment2(bytes) {
   return findBox(bytes, ["moof"]).length > 0;
 };
 
-// ../../../node_modules/video.js/dist/video.es.js
+// node_modules/video.js/dist/video.es.js
 var import_clock = __toESM(require_clock());
 var version$6 = "8.12.0";
 var hooks_ = {};
