@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-column {
+  flex: 1;
+  height: 100%;
+}
+
+.middle-column {
+  flex: 4;
+  margin: 5rem 0 0 5rem;
+  font-size: 3rem;
+  font-family: Roboto, sans-serif;
+}
+.data-img {
+  margin: 0 0 0 2rem;
+  width: 60rem;
+  height: 40rem;
+}
+.mp4-dd {
+  color: white;
+}
+
+.MP4Options .mat-select-trigger {
+  width: 300px; /* Set the width as per your requirement */
+}
+.single-game-spiner {
+  margin: 20rem 30rem;
+}

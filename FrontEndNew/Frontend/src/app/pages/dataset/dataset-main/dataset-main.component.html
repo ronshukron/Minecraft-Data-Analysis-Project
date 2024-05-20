@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="left-column">
+    <app-dataset-filters
+      (filterChanged)="onFilterChanged($event)"
+    ></app-dataset-filters>
+  </div>
+  <div class="middle-column">
+    @if (afterApply) {
+      <!-- Display images -->
+      @for (imageUrl of data.images; track imageUrl) {
+        <img class="data-img" [src]="imageUrl" alt="Image" />
+      }
+
+      <!-- Display statistics -->
+      <!-- @for (state of dataSetToShow.states; track state) {
+        <h3>{{ state.name }}</h3>
+        <p>Average: {{ state.avg }}</p>
+        <p>Minimum: {{ state.min }}</p>
+        <p>Maximum: {{ state.max }}</p>
+        <p>Standard Deviation: {{ state.stdDeviation }}</p>
+      } -->
+      @if (afterApply_image) {
+        @for (stat of data.stats; track stat) {
+          <h2>{{ stat.name }}</h2>
+          <h3>Average: {{ stat.avg }}</h3>
+          <h3>Minimum: {{ stat.min }}</h3>
+          <h3>Maximum: {{ stat.max }}</h3>
+          <h3>Standard Deviation: {{ stat.std_deviation }}</h3>
+        }
+      }
+    } @else {
+      @if (loading) {
+        <mat-spinner class="data-set-spiner"></mat-spinner>
+      } @else {
+        Please select filters
+      }
+    }
+  </div>
+</div>
+<!-- <div class="container">
+  <div class="left-column">
+    <app-dataset-filters
+      (filterChanged)="onFilterChanged($event)"
+    ></app-dataset-filters>
+  </div>
+  <div class="middle-column">
+    @if (afterApply) {
+      @for (imageUrl of dataSetToShow.images; track imageUrl) {
+        <img class="data-img" [src]="imageUrl" alt="Image" />
+        <div>
+          <h3>{{ "Avarge: " + dataSetToShow.avg }}</h3>
+          <h3>{{ "Std: " + dataSetToShow.stdDeviation }}</h3>
+        </div>
+      }
+    } @else {
+      Please select filters
+    }
+  </div>
+  <div>
+    <h3>{{ "Avarge: " + dataSetToShow.avg }}</h3>
+    <h3>{{ "Std: " + dataSetToShow.stdDeviation }}</h3>
+  </div>
+</div> -->

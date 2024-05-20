@@ -1,0 +1,21 @@
+/* .link {
+  margin-right: 3rem; 
+}
+.spacer {
+  flex: 1; 
+} */
+.link {
+  margin-right: 3rem; /* Adjust the value as needed */
+  color: white;
+}
+.spacer {
+  flex: 1; /* This will push the title to the right edge of the toolbar */
+}
+
+.link.active {
+  font-weight: bold;
+  color: #3f51b5;
+  background-color: white;
+  padding: 17px 12px;
+  /* border-radius: 20px; */
+}

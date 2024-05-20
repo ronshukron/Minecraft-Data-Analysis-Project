@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="left-column">
+    <app-single-game-filters
+      (filterChanged)="onFilterChanged($event)"
+    ></app-single-game-filters>
+  </div>
+  <div class="middle-column">
+    @if (afterApply) {
+      <div class="mp4">
+        <button mat-raised-button color="primary">
+          <router-outlet>
+            <a class="mp4-dd" routerLink="/MP4" routerLinkActive="active"
+              >Go To MP4 Page</a
+            >
+          </router-outlet>
+        </button>
+      </div>
+      <!-- Display images -->
+      <div class="imageArray">
+        @for (imageUrl of data.images; track imageUrl) {
+          <img class="data-img" [src]="imageUrl" alt="Image" />
+        }
+      </div>
+    } @else {
+      @if (loading) {
+        <mat-spinner class="single-game-spiner"></mat-spinner>
+      } @else {
+        Please select filters
+      }
+    }
+  </div>
+</div>

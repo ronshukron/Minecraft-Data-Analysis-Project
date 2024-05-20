@@ -1,0 +1,129 @@
+<mat-card class="filter-card">
+  <mat-card-content>
+    <!--Type of Task -->
+    <div class="filter-section">
+      <mat-form-field>
+        <mat-label>Select Task</mat-label>
+        <mat-select
+          [(ngModel)]="filters.selectedTask"
+          (ngModelChange)="onTaskOrDatasetSizeChange($event)"
+        >
+          <mat-option value="House_Building.json"
+            >House Building from Scratch Task</mat-option
+          >
+          <mat-option value="House_Building_rng.json"
+            >House Building from Random Starting Materials Task</mat-option
+          >
+          <mat-option value="Diamonds.json"
+            >Obtain Diamond Pickaxe Task</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+
+      <!-- size -->
+      <div class="filter-section">
+        <h3>Size of Dataset: {{ filters.datasetSize }}</h3>
+        <mat-slider
+          class="data-size-slider filter-slider"
+          [max]="100"
+          [min]="10"
+          [step]="10"
+          [discrete]="true"
+          [showTickMarks]="true"
+          [disabled]="!filters.selectedTask"
+        >
+          <input
+            matSliderThumb
+            [(ngModel)]="filters.datasetSize"
+            (ngModelChange)="onTaskOrDatasetSizeChange($event)"
+            #slider
+          />
+        </mat-slider>
+      </div>
+
+      <!-- actions list -->
+      <div class="filter-section" *ngIf="afterSelectTaskAndSize">
+        <mat-form-field>
+          <mat-label>Select Action</mat-label>
+          <mat-select
+            multiple
+            (selectionChange)="onActionsChange($event.value)"
+          >
+            <mat-option
+              *ngFor="let option of actionsOptions"
+              [value]="option"
+              >{{ option }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!--inventory list -->
+      <div class="filter-section" *ngIf="afterSelectTaskAndSize">
+        <mat-form-field>
+          <mat-label>Select Inventory</mat-label>
+          <mat-select
+            multiple
+            (selectionChange)="onInventoryChange($event.value)"
+          >
+            <mat-option
+              *ngFor="let option of inventoryOptions"
+              [value]="option"
+              >{{ option }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!--inventory list -->
+      <div class="filter-section" *ngIf="afterSelectTaskAndSize">
+        <mat-form-field>
+          <mat-label>Select Keys</mat-label>
+          <mat-select multiple (selectionChange)="onKeysChange($event.value)">
+            <mat-option *ngFor="let option of keysOptions" [value]="option">{{
+              option
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="empty-div-before-analyze"></div>
+      <div class="filter-secction">
+        <mat-card-actions>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="analyze()"
+            [disabled]="
+              !filters.selectedTask ||
+              filters.action.length === 0 ||
+              filters.inventory.length === 0 ||
+              filters.key.length === 0
+            "
+          >
+            Analyze
+          </button>
+        </mat-card-actions>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- 
+<div class="filter-section">
+  <h3>Categories</h3>
+  <mat-form-field>
+    <mat-label>Select Categories</mat-label>
+    <mat-select
+      multiple
+      (selectionChange)="onCategorySelectionChange($event)"
+    >
+      <mat-option value="mines">Mines</mat-option>
+      <mat-option value="pickups">Pick Ups</mat-option>
+      <mat-option value="item-uses">Item Uses</mat-option>
+      <mat-option value="crafts">Crafts</mat-option>
+      <mat-option value="physical-data">Physical Data</mat-option>
+      <mat-option value="game-data">Game Data</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div> -->
