@@ -3,7 +3,7 @@ FROM node:20
 
 # Install Python and virtualenv
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip python3-venv && \
+    apt-get install -y python3 python3-pip python3-venv python3-tk && \
     if [ ! -e /usr/bin/python ]; then ln -s /usr/bin/python3 /usr/bin/python; fi
 
 # Create app directory

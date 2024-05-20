@@ -2,7 +2,8 @@
 import zipfile
 import matplotlib
 import numpy as np
-matplotlib.use('TkAgg')
+#matplotlib.use('TkAgg')
+matplotlib.use('Agg') 
 import matplotlib.pyplot as plt
 from datetime import datetime
 import pandas as pd

@@ -166,8 +166,9 @@ app.get('/dataset/hist', async (req, res) => {
 
 
 // 
-app.get('/dataset/timelines', async (req, res) =>{
+app.get('/dataset/timelines_stats', async (req, res) =>{
     const percentage = req.query.percentage || 10;
+    const keys = req.query.keys || 'a,b,c';
     const inventory = req.query.inventory || ['white_tulip', 'stick','dark_oak_planks','gold_ore', 'dirt'];
     const actions = req.query.actions || ['mines.stone','mines.cobblestone','pick-ups.cobblestone','uses.stone'];
 
@@ -175,8 +176,11 @@ app.get('/dataset/timelines', async (req, res) =>{
 
     const commands = [
         `python data_analysis_scripts/TimeSeriesInventory.py --percentage ${percentage} --inventory ${inventory}`,
-        `python data_analysis_scripts/TimeSeriesStates.py --percentage ${percentage} --actions ${actions}`
+        `python data_analysis_scripts/TimeSeriesStates.py --percentage ${percentage} --actions ${actions}`,
+        `python data_analysis_scripts/Stats.py --percentage ${percentage} --keys ${keys} --inventory ${inventory} --actions ${actions}`
     ];
+
+    //const command =  `python data_analysis_scripts/Stats.py --percentage ${percentage} --keys ${keys} --inventory ${inventory} --actions ${actions}`;
 
     try {
         // Execute all commands concurrently and wait for all promises to resolve
@@ -189,7 +193,8 @@ app.get('/dataset/timelines', async (req, res) =>{
 
         const response = {
             images: [actions_timeline, inv_timeline],
-            data_points: [results[0].inv_points, results[1].actions_points]
+            data_points: [results[0].inv_points, results[1].actions_points],
+            stats: results[2].stats
         };
 
         res.json(response)
