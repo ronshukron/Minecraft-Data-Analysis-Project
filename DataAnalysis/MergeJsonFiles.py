@@ -3,22 +3,24 @@ import glob
 import os
 import re
 
-
-
-# def append_to_jsonl(data, file_path):
-#     with open(file_path, 'a') as file:  # 'a' mode for appending to the file
-#         for item in data:
-#             file.write(json.dumps(item) + '\n')
-
-
-
 def extract_date(filename):
     match = re.search(r'(\d{8}-\d{6})', filename)
     return match.group(0) if match else None
 
 def read_jsonl(file_path):
-    with open(file_path, 'r') as file:
-        return [json.loads(line) for line in file]
+    data = []
+    try:
+        with open(file_path, 'r') as file:
+            for line in file:
+                try:
+                    data.append(json.loads(line))
+                except json.JSONDecodeError:
+                    print(f"Skipping corrupted line in file: {file_path}")
+                    continue
+    except Exception as e:
+        print(f"Skipping corrupted file: {file_path}. Error: {e}")
+        return []
+    return data
 
 def read_jsonl_line(line):
     return json.loads(line)
@@ -47,6 +49,9 @@ def merge_runs(input_directory, output_directory):
     for json_file in json_files:
         i += 1
         data = read_jsonl(json_file)
+        if not data:
+            print(f"Skipping empty or corrupted file: {json_file}")
+            continue
         # Assuming each file contains a list of JSON objects
         if len(data) > 0 and len(data[0]["inventory"]) == 0:  # Start of a new run
             if start_of_run is not None:
@@ -64,67 +69,8 @@ def merge_runs(input_directory, output_directory):
         write_json(merged_data, output_path)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def read_jsonl(file_path):
-#     data = []
-#     with open(file_path, 'r', encoding='utf-8') as file:
-#         for line in file:
-#             data.append(json.loads(line))
-#     return data
-
-# def read_jsonl_line(line):
-#     return json.loads(line)
-
-# def write_jsonl_line(data, file):
-#     json_line = json.dumps(data)
-#     file.write(json_line + '\n')
-
-# def merge_runs(input_directory, output_directory):
-#     json_files = sorted(glob.glob(os.path.join(input_directory, '*.jsonl')))
-    # current_output_file = None
-    # for json_file in json_files:
-    #     with open(json_file, 'r') as file:
-    #         for line in file:
-    #             data = read_jsonl_line(line)
-    #             # Check if this is the start of a new run based on inventory
-    #             if len(data["inventory"]) == 0 and current_output_file is None:
-    #                 # Start of a new run, open a new output file
-    #                 output_path = os.path.join(output_directory, f"merged_run_{os.path.basename(json_file)}")
-    #                 current_output_file = open(output_path, 'w')
-    #             elif len(data["inventory"]) == 0 and current_output_file is not None:
-    #                 # New run, but we have an open file, close it and start a new one
-    #                 current_output_file.close()
-    #                 output_path = os.path.join(output_directory, f"merged_run_{os.path.basename(json_file)}")
-    #                 current_output_file = open(output_path, 'w')
-    #             # Write the current action to the current output file
-    #             write_jsonl_line(data, current_output_file)
-    # # Close the last output file if it's open
-    # if current_output_file is not None:
-    #     current_output_file.close()
-
 # Set your input and output directories here
-input_directory = r'D:\University_Studies\Project\Task_10_only_json_test_100'
-output_directory = r'D:\University_Studies\Project\Task_10_only_json_test_100_merged'
+input_directory = r'C:\Users\Shira\Data\MineRLBasaltFindCave-v0\Raw_Data'
+output_directory = r'C:\Users\Shira\Data\MineRLBasaltFindCave-v0\Merged_Files'
 
 merge_runs(input_directory, output_directory)
