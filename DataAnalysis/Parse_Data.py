@@ -171,17 +171,34 @@ def total_count_of_action_categories(data, pars_data):
     return pars_data
 
 
-def save_as_json(pars_data, filename):
-    with open(filename.replace('Raw_Data', 'Parsed_Data'), 'w') as f:
+# def save_as_json(pars_data, filename):
+#     with open(filename.replace('Raw_Data', 'Parsed_Data'), 'w') as f:
+#         json.dump(pars_data, f)
+
+def save_as_json(pars_data, filename, output_dir):
+    # Extract just the filename and replace 'Raw_Data' with 'Parsed_Data'
+    base_filename = os.path.basename(filename).replace('Raw_Data', 'Parsed_Data')
+    # Create the full path by joining the output_dir with the base_filename
+    output_filename = os.path.join(output_dir, base_filename)
+
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(output_filename), exist_ok=True)
+
+    with open(output_filename, 'w') as f:
         json.dump(pars_data, f)
+    # print(filename)
 
 
-def parse_game(game_file, filename):
+
+def parse_game(game_file, filename, output_dir):
     data = []  # will read file into this
     with open(game_file, 'r') as file:  # reading file to the array per line
-        for line in file:
-            # Parse the JSON object and append it to the list
-            data.append(json.loads(line))
+        for line_number, line in enumerate(file, 1):
+            try:
+                # Parse the JSON object and append it to the list
+                data.append(json.loads(line))
+            except json.JSONDecodeError as e:
+                print(f"Skipping line {line_number} due to JSONDecodeError: {e}")
     # setting dict structure for parsed data
     pars_data = {
         'distrbution': {
@@ -218,25 +235,50 @@ def parse_game(game_file, filename):
         },
         'steps': []
     }
-
-    pars_data = get_keyboard_count(data, pars_data)
-    pars_data = get_actions_count(data, pars_data)
-    pars_data = get_final_inventory(data, pars_data)
-    pars_data = get_inventory_timeline(data, pars_data)
-    pars_data = get_actions_timeline_and_playout(data, pars_data)
-    pars_data = check_diamondaxe(data, pars_data)
-    pars_data = get_game_duration(data, pars_data)
-    pars_data = total_count_of_action_categories(data, pars_data)
-    save_as_json(pars_data, filename)
+    try:
+        pars_data = get_keyboard_count(data, pars_data)
+        pars_data = get_actions_count(data, pars_data)
+        pars_data = get_final_inventory(data, pars_data)
+        pars_data = get_inventory_timeline(data, pars_data)
+        pars_data = get_actions_timeline_and_playout(data, pars_data)
+        pars_data = check_diamondaxe(data, pars_data)
+        pars_data = get_game_duration(data, pars_data)
+        pars_data = total_count_of_action_categories(data, pars_data)
+        save_as_json(pars_data, filename,output_dir)
+        print('created succesfully '+filename)
+    except:
+        print('could parse game '+ filename)
 
 
 # creating JSON files for parsing all JSONL files in the path
+# def parse_all_games():
+#     directory = r'C:\Users\Shira\Data\MineRLBasaltFindCave-v0'
+#     output_dir = r'C:\Users\Shira\Data\MineRLBasaltFindCave-v0\Parsed_Data'
+#     # Iterate over each file in the directory
+#     for filename in os.listdir(directory):
+#         if os.path.isfile(os.path.join(directory, filename)) and filename.lower().endswith('.jsonl'):
+#             parse_game(os.path.join(directory, filename), os.path.join(directory, filename.split('.')[0] + '.json'), output_dir)
+
+
 def parse_all_games():
-    directory = r'C:\Users\Shira\PycharmProjects\MineCraft\Raw_Data'
+    directory = r'C:\Users\Shira\Data\MineRLBasaltFindCave-v0' # change this path
+    output_dir = r'C:\Users\Shira\Data\MineRLBasaltFindCave-v0\Parsed_Data'
+
+    # Ensure the output directory exists
+    os.makedirs(output_dir, exist_ok=True)
+
     # Iterate over each file in the directory
     for filename in os.listdir(directory):
-        if os.path.isfile(os.path.join(directory, filename)):
-            parse_game(os.path.join(directory, filename), os.path.join(directory, filename.split('.')[0] + '.json'))
+        print(filename)
+        file_path = os.path.join(directory, filename)
+        if os.path.isfile(os.path.join(directory, filename)) and filename.lower().endswith('.jsonl'):
+            json_filename = filename.rsplit('.', 1)[0] + '.json'
+            output_file_path = os.path.join(output_dir, json_filename)
+
+            # Check if the corresponding JSON file already exists in the Parsed_Data directory
+            if not os.path.exists(output_file_path) and os.path.getsize(file_path) > 0:
+                a = os.path.join(directory, filename)
+                parse_game(a, json_filename, output_dir)
 
 
-# parse_all_games()
+parse_all_games()
