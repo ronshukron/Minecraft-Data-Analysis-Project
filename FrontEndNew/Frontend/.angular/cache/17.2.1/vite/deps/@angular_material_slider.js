@@ -1,6 +1,6 @@
 import {
   NG_VALUE_ACCESSOR
-} from "./chunk-NGBAJSTV.js";
+} from "./chunk-M7RRWK7A.js";
 import {
   Directionality,
   MAT_RIPPLE_GLOBAL_OPTIONS,
@@ -9,8 +9,8 @@ import {
   MatRippleModule,
   Platform,
   RippleState
-} from "./chunk-6K4ZKIVL.js";
-import "./chunk-AXEDDOXG.js";
+} from "./chunk-VGRLO3OC.js";
+import "./chunk-LMSEMJS7.js";
 import {
   ANIMATION_MODULE_TYPE,
   ChangeDetectionStrategy,
@@ -70,13 +70,15 @@ import {
   ɵɵtext,
   ɵɵtextInterpolate,
   ɵɵviewQuery
-} from "./chunk-SOHE4UWL.js";
+} from "./chunk-IFBAGI5D.js";
+import "./chunk-J7D4UNJD.js";
+import "./chunk-TWAGPFHE.js";
 import {
   Subject
-} from "./chunk-WSA2QMXP.js";
+} from "./chunk-EHI7HIM4.js";
 import "./chunk-PZQZAEDH.js";
 
-// node_modules/@angular/material/fesm2022/slider.mjs
+// ../../../../node_modules/@angular/material/fesm2022/slider.mjs
 var _c0 = ["knob"];
 var _c1 = ["valueIndicatorContainer"];
 function MatSliderVisualThumb_Conditional_0_Template(rf, ctx) {

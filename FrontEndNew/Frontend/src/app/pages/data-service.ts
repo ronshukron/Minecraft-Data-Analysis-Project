@@ -6,7 +6,7 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import {
   IDatasetFilters,
   ISingleGameFilters,
@@ -14,6 +14,7 @@ import {
 import { RouterModule } from '@angular/router';
 import { getIDataset } from '../Interfaces/Idataset';
 import { IsingleGameDataFromAPI } from '../Interfaces/IsingleGameData';
+import JSZip from 'jszip';
 
 @Injectable({
   providedIn: 'root',
@@ -60,19 +61,18 @@ export class DataService {
   }
 
   //  Dataset page Shira zip file with images
-  public getDataSetDataZipGraph(
-    filters: IDatasetFilters,
-  ): Observable<getIDataset> {
-    const size =
-      filters && filters.datasetSize ? filters.datasetSize : 'defaultSize';
-    let apiUrl = `${this.url}/dataset/hist`;
+
+  public getDataSetDataZipGraph(filters: any): Observable<any> {
+    const size = filters?.datasetSize || 'defaultSize';
+    const apiUrl = `${this.url}/dataset/hist`;
     const params = new HttpParams()
       .set('task', filters.selectedTask)
       .set('size', size)
       .set('inventory', filters.inventory.join(','))
       .set('aggregated_actions', filters.action.join(','))
       .set('keys', filters.key.join(','));
-    return this.http.get<getIDataset>(apiUrl, { params });
+
+    return this.http.get(apiUrl, { params, responseType: 'blob' });
   }
 
   //////////////////////////////////////////////////////////////////
@@ -138,30 +138,35 @@ export class DataService {
   }
 }
 
-// public getTest(): Observable<string> {
-//   const headers = new HttpHeaders()
-//     .set('Authorization', 'Bearer your-auth-token')
-//     .set('ngrok-skip-browser-warning', '69420');
+// public getDataSetDataZipGraph(filters: any): Observable<any> {
+//   const size = filters?.datasetSize || 'defaultSize';
+//   const apiUrl = `${this.url}/dataset/hist`;
+//   const params = new HttpParams()
+//     .set('task', filters.selectedTask)
+//     .set('size', size)
+//     .set('inventory', filters.inventory.join(','))
+//     .set('aggregated_actions', filters.action.join(','))
+//     .set('keys', filters.key.join(','));
 
-//   return this.http.get(this.apiUrl, { headers, responseType: 'text' });
-// }
+//   return this.http.get(apiUrl, { params, responseType: 'blob' }).pipe(
+//     map(async (response: Blob) => {
+//       const arrayBuffer = await response.arrayBuffer();
+//       const jszip = new JSZip();
+//       const zipContent = await jszip.loadAsync(arrayBuffer);
+//       const imageFiles = Object.keys(zipContent.files).filter(
+//         (file) =>
+//           file.endsWith('.png') ||
+//           file.endsWith('.jpg') ||
+//           file.endsWith('.jpeg'),
+//       );
 
-// single game page
-// public getSingleGameData(
-//   filters: ISingleGameFilters,
-// ): Observable<getIDataset> {
-//   const headers = new HttpHeaders()
-//     .set('Authorization', 'Bearer your-auth-token')
-//     .set('ngrok-skip-browser-warning', '69420');
+//       const images: string[] = [];
+//       for (const file of imageFiles) {
+//         const base64 = await zipContent.files[file].async('base64');
+//         images.push(`data:image/png;base64,${base64}`);
+//       }
 
-//   let apiUrl = `${this.apiUrl}?task=${filters.selectedTask}`;
-
-//   return this.http.get<getIDataset>(apiUrl, { headers });
-// }
-
-// public getSingleInventoryList(task: string, game:string): Observable<string[]> {
-//   let apiUrl = `${this.apiUrl}/get-video-paths`;
-//   const paramValue = task + '.json';
-//   const params = new HttpParams().set('jsonFile', paramValue);
-//   return this.http.get<string[]>(apiUrl, { params });
+//       return images;
+//     }),
+//   );
 // }
