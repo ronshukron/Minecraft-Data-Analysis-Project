@@ -11,6 +11,9 @@ import {
 } from '../../../Interfaces/Idataset';
 import { arrayBufferToBase64 } from '../../../utilityFunctions/arrayBufferToBase64';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ZipOpenComponent } from '../../zip-open/zip-open.component';
+import { publishFacade } from '@angular/compiler';
+import JSZip from 'jszip';
 
 @Component({
   selector: 'app-dataset-main',
@@ -37,9 +40,14 @@ export class DatasetMainComponent implements OnInit {
     key: [],
   };
 
-  constructor(public dataService: DataService) {}
+  constructor(
+    public dataService: DataService,
+    public zipService: ZipOpenComponent,
+  ) {}
 
   ngOnInit(): void {}
+
+  public sData: string[] = [];
 
   public onFilterChanged(filters: IDatasetFilters) {
     if (!filters) return;
@@ -54,9 +62,37 @@ export class DatasetMainComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data from ron graphs:', error);
       },
     );
+
+    this.dataService.getDataSetDataZipGraph(filters).subscribe((blob) => {
+      const zip = new JSZip();
+      zip.loadAsync(blob).then((contents) => {
+        Object.keys(contents.files).forEach((filename) => {
+          zip
+            .file(filename)
+            ?.async('base64')
+            .then(
+              (base64) => {
+                this.createImageElement(base64);
+                this.afterApply = true;
+                this.loading = false;
+              },
+              (error) => {
+                console.error('Error fetching data from zip:', error);
+              },
+            );
+        });
+      });
+    });
+  }
+  public images: HTMLImageElement[] = [];
+
+  createImageElement(base64String: string): void {
+    const imageElement = new Image();
+    imageElement.src = `data:image/png;base64,${base64String}`;
+    this.images.push(imageElement);
   }
 
   private restart_args(): void {
@@ -77,32 +113,3 @@ export class DatasetMainComponent implements OnInit {
     this.afterApply_image = true;
   }
 }
-
-// public onFilterChanged(filters: IDatasetFilters) {
-//   if (!filters) return;
-//   console.log(filters);
-//   this.afterApply_image = false;
-//   this.afterApply = true;
-//   this.dataSetToShow.images = [];
-//   this.dataSetToShow.avg = 0;
-//   (this.dataSetToShow.minMax = { min: 0, max: 100 }),
-//     (this.dataSetToShow.stdDeviation = 0);
-//   this.dataService.getDataSetFilters(filters).subscribe(
-//     (data: getIDataset) => {
-//       console.log(data);
-//       console.log(data.stats);
-//       console.log(data.images);
-//       this.dataSetToShow.states = data.stats;
-//       let image: IDatasetImages;
-//       for (image of data.images) {
-//         if (image) {
-//           this.dataSetToShow.images.push(arrayBufferToBase64(image.data));
-//         }
-//       }
-//       this.afterApply_image = true;
-//     },
-//     (error) => {
-//       console.error('Error fetching data:', error);
-//     },
-//   );
-// }

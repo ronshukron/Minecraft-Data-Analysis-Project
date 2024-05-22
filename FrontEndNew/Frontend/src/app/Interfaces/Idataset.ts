@@ -19,7 +19,7 @@ export interface IDatasetImages {
 
 export interface IStats {
   name: string;
-  avg: number;
+  average: number;
   min: number;
   max: number;
   std_deviation: number;
