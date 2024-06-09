@@ -15,6 +15,7 @@ from PIL import Image
 from IPython.display import display
 import argparse
 import base64
+import shutil
 
 
 def buffer_to_base64(buf):
@@ -56,10 +57,13 @@ def create_game_time_distribution(task, percentage):
     plt.xlabel('Duration (minutes)')
     plt.ylabel('Frequency')
     plt.title('Distribution Graph - Game Duration')
-    buf = io.BytesIO()
-    plt.savefig(buf, format='jpeg')
-    buf.seek(0)
-    return buffer_to_base64(buf)
+
+    output_dir='Histo_Results'
+    os.makedirs(output_dir, exist_ok=True)
+    graph_path = os.path.join(output_dir, f'game_time_histo_{percentage}.png')
+    plt.savefig(graph_path)
+    plt.close()
+    return graph_path
 
 
 # Now call the function with the durations list
@@ -106,14 +110,16 @@ def create_game_action_distribution(task, action, percentage):
             plt.xlabel('Number of times action was done')
             plt.ylabel('Frequency')
             plt.title('Distribution Graph - Number of Times Players ' + cat + ' of ' + action)
-            buf = io.BytesIO()
-            plt.savefig(buf, format='jpeg')
-            plt.close()  # Make sure to close the plot
-            buf.seek(0)
-            base64_string = buffer_to_base64(buf)
+
+            output_dir = 'Histo_Results'
+            os.makedirs(output_dir, exist_ok=True)
+            graph_path = os.path.join(output_dir,f'game_action_histo_{action}_{percentage}.png')
+            plt.savefig(graph_path)
+            plt.close()
+
             if cat not in category_images:
                 category_images[cat] = []
-            category_images[cat].append(base64_string)
+            category_images[cat].append(graph_path)
 
     return category_images  # Returns a dictionary of categories, each containing a list of base64 strings
 
@@ -158,10 +164,13 @@ def create_game_item_distribution(task, item, percentage):
     plt.xlabel('Number of times action was done')
     plt.ylabel('Frequency')
     plt.title('Distribution Graph - Number of ' + item + ' in inventory at the end of the game')
-    buf = io.BytesIO()
-    plt.savefig(buf, format='jpeg')
-    buf.seek(0)
-    return [buffer_to_base64(buf)]
+
+    output_dir='Histo_Results'
+    os.makedirs(output_dir, exist_ok=True)
+    graph_path = os.path.join(output_dir, f'game_item_histo_{item}_{percentage}pct.png')
+    plt.savefig(graph_path)
+    plt.close()
+    return [graph_path]
 
 def create_all_items_distribution(task, items, percentage):
     buffers = []
@@ -203,10 +212,14 @@ def create_game_key_distribution(task, key, percentage):
     plt.xlabel('Number of times action was done')
     plt.ylabel('Frequency')
     plt.title('Distribution Graph - Number of time the ' + key + ' was used during the game')
-    buf = io.BytesIO()
-    plt.savefig(buf, format='jpeg')
-    buf.seek(0)
-    return [buffer_to_base64(buf)]
+
+    output_dir='Histo_Results'
+    os.makedirs(output_dir, exist_ok=True)
+    graph_path = os.path.join(output_dir, f'game_key_histo_{key}_{percentage}.png')
+    plt.savefig(graph_path)
+    plt.savefig(graph_path)
+    plt.close()
+    return [graph_path]
 
 
 def create_all_keys_distribution(task, keys, percentage):
@@ -223,7 +236,7 @@ def create_all_keys_distribution(task, keys, percentage):
 
 import json
 
-def create_all_game_data_as_json(task, actions, items, keys, percentage):
+def create_all_game_data(task, actions, items, keys, percentage):
     data = {
         'game_duration_graph': create_game_time_distribution(task, percentage),
         'actions_graphs': {action: create_game_action_distribution(task, action, percentage) for action in actions},
@@ -285,41 +298,73 @@ def create_zip_with_json(data, filename="game_data.zip"):
 
     return memory_file
 
+def delete_all_files_in_directory(directory_path):
+    """Delete all files in the specified directory."""
+    if not os.path.exists(directory_path):
+        print(f"Directory {directory_path} does not exist.")
+        return
+
+    # Iterate over the files in the directory
+    for filename in os.listdir(directory_path):
+        file_path = os.path.join(directory_path, filename)
+        try:
+            # Check if it's a file and remove it
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print(f"Failed to delete {file_path}. Reason: {e}")
+
 
 def main():
 
     parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('--task', type=str, default='diamond')
     parser.add_argument('--percentage', type=int, default=10, help='Percentage of data to process')
     parser.add_argument('--keys', type=str, default=['a','b'], help='list of keys')
-    parser.add_argument('--inventory', type=str, default=['white_tulip','stick,dark_oak_planks','gold_ore','dirt'], help='list of inventory')
-    parser.add_argument('--actions', type=str, default=['mines.stone','mines.cobblestone','pick-ups.cobblestone','uses.stone'], help='list of actions')
+    parser.add_argument('--inventory', type=str, default='white_tulip, stick, dark_oak_planks, gold_ore, dirt', help='list of inventory')
+    parser.add_argument('--actions', type=str, default='mines.stone, mines.cobblestone, pick-ups.cobblestone, uses.stone', help='list of actions')
 
     
     args = parser.parse_args()
+    task = args.task
     percentage = args.percentage
     keys= args.keys
-    inventory= args.inventory
-    actions= args.actions
+    inventory = args.inventory.split(',')
+    actions = args.actions.split(',')
 
 
-    json_output = create_all_game_data_as_json(
-            'diamond',
-            ['dirt', 'grass','furnace', 'rotten_flesh', 'granite', 'white_bed', 'feather', 'dirt', 'light_gray_wool', 'acacia_planks', 'chicken', 'dark_oak_planks', 'bucket'],
-            ['dirt', 'grass','furnace', 'lapis_ore', 'tall_grass', 'stone', 'granite', 'coal_ore', 'dirt', 'dead_bush', 'sugar_cane', 'infested_stone', 'diamond_ore', 'oak_log'],
-            ['e', 'q', 'n', 'b', 'f2', '7', 'r', 'left.control'],
-            100
-    )
+    current_directory = os.getcwd()
+    full_path = os.path.join(current_directory, 'Histo_Results')
+    delete_all_files_in_directory(full_path)
+        # Assuming 'diamond' is a task or category
+    # create_all_game_data(
+    #         'diamond',
+    #         ['dirt', 'grass'],
+    #         ['dirt', 'grass'],
+    #         ['space', 'w'],
+    #         100
+    #     )
 
-    # Create a ZIP file containing the JSON data
-    zip_memory_file = create_zip_with_json(json_output)
-    zip_file_path = 'histograms.zip'  # Modify this path as needed
+    create_all_game_data(
+            task,
+            actions,
+            inventory,
+            keys,
+            percentage
+        )
 
-    # Save the ZIP file to disk
-    with open(zip_file_path, 'wb') as f:
-        # zip_memory_file.getvalue() gets the entire content of the BytesIO object
-        f.write(zip_memory_file.getvalue())
+    # # Create a ZIP file containing the JSON data
+    # zip_memory_file = create_zip_with_json(json_output)
+    # zip_file_path = 'histograms.zip'  # Modify this path as needed
 
-    print(f"ZIP file saved to {zip_file_path}")
+    # # Save the ZIP file to disk
+    # with open(zip_file_path, 'wb') as f:
+    #     # zip_memory_file.getvalue() gets the entire content of the BytesIO object
+    #     f.write(zip_memory_file.getvalue())
+
+    # print(f"ZIP file saved to {zip_file_path}")
 
 if __name__ == "__main__":
     main()

@@ -6,6 +6,7 @@ const zip = require('express-zip');
 const os = require('os');
 const { PythonShell } = require('python-shell'); // Correct import for PythonShell
 const cors = require('cors');
+const archiver = require('archiver');
 const app = express();
 app.use(cors());
 
@@ -52,7 +53,7 @@ app.get('/single_game/games_list', (req, res) => {
 
 // Retrieving filter lists for game 
 app.get('/single_game/inventory_actions' , (req, res)=> {
-    const task= req.query.task || 'Diamonds';
+    const task= req.query.task || 'diamonds';
     const gameName= req.query.game || 'game1';
 
     if (!gameName || !task) {
@@ -74,14 +75,18 @@ app.get('/single_game/inventory_actions' , (req, res)=> {
 });
 
 
-
 // Retrieving results after user chooses to analyze
 app.get('/single_game/timelines', async (req, res) =>{
-    const percentage = req.query.percentage || 10;
-    const inventory = req.query.inventory || ['white_tulip', 'stick','dark_oak_planks','gold_ore', 'dirt'];
-    const actions = req.query.actions || ['mines.stone','mines.cobblestone','pick-ups.cobblestone','uses.stone'];
+    const task= req.query.task || 'diamonds';
+    const percentage = req.query.size || 10;
+    const inventory = req.query.inventory || 'white_tulip,stick,dark_oak_planks,gold_ore,dirt';
+    const actions1 = req.query.aggregated_actions || 'mines.stone,mines.cobblestone,pick-ups.cobblestone,uses.stone';
 
     //add params checks 
+
+    const items = actions1.split(',');
+    const prefixedItems = items.map(item => 'mines.' + item);
+    const actions = prefixedItems.join(',');
 
     const commands = [
         `python data_analysis_scripts/TimeSeriesInventory.py --percentage ${percentage} --inventory ${inventory}`,
@@ -144,20 +149,31 @@ app.get('/dataset/keys_inventory_actions' , (req, res)=> {
 
 
 app.get('/dataset/hist', async (req, res) => {
-    const percentage = req.query.percentage || 100;
+    const task= req.query.task || 'Diamonds';
+    const percentage = req.query.size || 100;
     const keys = req.query.keys || 'a,b,c';
-    const inventory = req.query.inventory || ['white_tulip', 'stick','dark_oak_planks','gold_ore', 'dirt'];
-    const actions = req.query.actions || ['mines.stone','mines.cobblestone','pick-ups.cobblestone','uses.stone'];
+    const inventory = req.query.inventory || 'white_tulip,stick,dark_oak_planks,gold_ore,dirt';
+    const actions = req.query.aggregated_actions || 'mines.stone,mines.cobblestone,pick-ups.cobblestone,uses.stone';
 
     //add params checks 
 
-    const command= `python data_analysis_scripts/Histograms.py --percentage ${percentage} --keys ${keys} --inventory ${inventory} --actions ${actions}`
+    const command= `python data_analysis_scripts/Histograms.py --percentage ${percentage} --task ${task} --keys ${keys} --inventory ${inventory} --actions ${actions}`
 
     try {
-        const zipResult = await executeCommand(command, 0);
+        await executeCommand(command, 0);
 
-        // Send the zip file as binary data
-        res.send(zipResult);
+        const archive = archiver('zip', {
+            zlib: { level: 9 } 
+        });
+
+        // Pipe the archive data to the response
+        archive.pipe(res);
+
+        // Add files to the archive
+        archive.directory('Histo_Results', 'Histo_Results'); 
+
+        // stream the zip file to the response
+        await archive.finalize();
 
     } catch (error) {
         res.status(500).send(`Error: ${error.message}`);
@@ -167,12 +183,16 @@ app.get('/dataset/hist', async (req, res) => {
 
 // 
 app.get('/dataset/timelines_stats', async (req, res) =>{
-    const percentage = req.query.percentage || 10;
+    const percentage = req.query.size || 10;
     const keys = req.query.keys || 'a,b,c';
-    const inventory = req.query.inventory || ['white_tulip', 'stick','dark_oak_planks','gold_ore', 'dirt'];
-    const actions = req.query.actions || ['mines.stone','mines.cobblestone','pick-ups.cobblestone','uses.stone'];
+    const inventory = req.query.inventory || 'white_tulip,stick,dark_oak_planks,gold_ore,dirt';
+    const actions1 = req.query.aggregated_actions || 'mines.stone,mines.cobblestone,pick-ups.cobblestone,uses.stone';
 
     //add params checks 
+
+    const items = actions1.split(',');
+    const prefixedItems = items.map(item => 'mines.' + item);
+    const actions = prefixedItems.join(',');
 
     const commands = [
         `python data_analysis_scripts/TimeSeriesInventory.py --percentage ${percentage} --inventory ${inventory}`,
@@ -182,6 +202,7 @@ app.get('/dataset/timelines_stats', async (req, res) =>{
 
     //const command =  `python data_analysis_scripts/Stats.py --percentage ${percentage} --keys ${keys} --inventory ${inventory} --actions ${actions}`;
 
+    
     try {
         // Execute all commands concurrently and wait for all promises to resolve
         const results = await Promise.all(commands.map(command => executeCommand(command)));
@@ -204,27 +225,6 @@ app.get('/dataset/timelines_stats', async (req, res) =>{
     }
 });
 
-app.get('/dataset/stats', async (req, res) => {
-    const percentage = req.query.percentage || 100;
-    const keys = req.query.keys || 'a,b,c';
-    const inventory = req.query.inventory || ['white_tulip', 'stick','dark_oak_planks','gold_ore', 'dirt'];
-    const actions = req.query.actions || ['mines.stone','mines.cobblestone','pick-ups.cobblestone','uses.stone'];
-
-    //add params checks 
-
-    const command =  `python data_analysis_scripts/Stats.py --percentage ${percentage} --keys ${keys} --inventory ${inventory} --actions ${actions}`;
-    
-    try {
-        const stats = await executeCommand(command);
-
-        // Send the JSON result
-        res.json(stats);        
-
-    } catch (error) {
-        res.status(500).send(`Error: ${error.message}`);
-    }
-});
-
 
 // Function to execute a command
 function executeCommand(command, idx = -1) {
@@ -239,9 +239,10 @@ function executeCommand(command, idx = -1) {
                 try {
                     var output = ''
                     if (idx == 0){
-                        const zipFilePath = 'histograms.zip';
-                        const zipFileContents = fs.readFileSync(zipFilePath);
-                        output = zipFileContents;
+                        // const zipFilePath = 'histograms.zip';
+                        // const zipFileContents = fs.readFileSync(zipFilePath);
+                        // output = zipFileContents;
+                        
                     }
                     else{
                         output = JSON.parse(stdout);
@@ -256,7 +257,6 @@ function executeCommand(command, idx = -1) {
         });
     });
 }
-
 
 
 // ---------Extra

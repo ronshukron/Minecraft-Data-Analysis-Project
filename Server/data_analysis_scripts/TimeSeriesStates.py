@@ -105,7 +105,10 @@ def main():
     args = parser.parse_args()
     percentage = args.percentage
     actions = args.actions.split(',')
-    #items = args.items.split(',')
+    # prefixed_items = ['mines.' + item for item in f_actions]
+    # actions = ','.join(prefixed_items)
+
+    #print(actions)
 
     file_paths = get_files_by_percentage('Parsed_Data', percentage)
     parsed_data = load_parsed_json_data(file_paths)
