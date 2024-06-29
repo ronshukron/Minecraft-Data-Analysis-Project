@@ -1,61 +1,87 @@
 import {
   Component,
   ElementRef,
+  Input,
   OnDestroy,
   OnInit,
   ViewChild,
+  input,
 } from '@angular/core';
 import { DataService } from '../../data-service';
-import * as JSZip from 'jszip';
+import JSZip from 'jszip';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-mp4-page',
   standalone: true,
-  imports: [],
-
+  imports: [CommonModule, MatProgressSpinnerModule],
   templateUrl: './mp4-page.component.html',
   styleUrl: './mp4-page.component.css',
 })
 export class Mp4PageComponent implements OnInit, OnDestroy {
-  @ViewChild('videoPlayer') videoPlayer?: ElementRef;
-  private zip?: JSZip;
+  videoSrc: string | ArrayBuffer | null = null;
+  public fileName: string = '';
+  public loading: boolean = false;
+  public videoUrl: string = '';
+  public message: string = '';
+  videos: any;
 
   constructor(public dataService: DataService) {}
 
-  ngOnInit(): void {
-    this.fetchAndExtractZip();
-  }
-
-  ngOnDestroy(): void {
-    if (this.zip) {
-      this.zip = undefined;
+  async ngOnInit() {
+    try {
+      console.log(this.dataService.gameName);
+      const videoBlob = await this.extractVideo();
+      this.videoSrc = URL.createObjectURL(videoBlob);
+    } catch (error) {
+      console.error('Error extracting video:', error);
     }
   }
+  ngOnDestroy(): void {}
 
-  async fetchAndExtractZip(): Promise<void> {
-    const zipUrl = 'assets/mp4/attachment.zip';
-    const response = await fetch(zipUrl);
-    const zipData = await response.arrayBuffer();
-    this.zip = await (JSZip.loadAsync(zipData) as unknown as JSZip);
-    const mp4File = this.zip.file(
-      'cheeky-cornflower-setter-02e496ce4abb-20220421-093149.mp4',
-    );
-    if (mp4File) {
-      const mp4Data = await mp4File.async('blob');
-      this.displayVideo(mp4Data);
-    } else {
-      console.error('MP4 file not found in ZIP.');
+  async extractVideo(): Promise<Blob> {
+    this.loading = true;
+    try {
+      this.message = 'Fetching MP4 data...';
+      console.log('Fetching MP4 data...');
+      const blob = await this.dataService.getMP4Data().toPromise(); // Assuming getMP4Data returns an Observable<Blob>
+      this.message = 'MP4 data fetched successfully';
+      console.log('MP4 data fetched successfully');
+
+      const zip = await JSZip.loadAsync(blob);
+      console.log('Zip content:', Object.keys(zip.files));
+
+      const mp4FileName = Object.keys(zip.files).find((filename) =>
+        filename.endsWith('.mp4'),
+      );
+
+      if (!mp4FileName) {
+        this.message = 'MP4 file not found in the zip content';
+        throw new Error('MP4 file not found in the zip content');
+      }
+      (this.message = 'MP4 file found in zip content:'), mp4FileName;
+      console.log('MP4 file found in zip content:', mp4FileName);
+
+      const videoFile = zip.file(mp4FileName);
+      if (videoFile) {
+        console.log('Video file found in zip, extracting...');
+        this.message = 'Video file found in zip, extracting...';
+        const videoBlob = await videoFile.async('blob');
+        console.log('Video file extracted successfully');
+        this.message = 'Video file extracted successfully';
+        this.loading = false;
+        return videoBlob;
+      } else {
+        this.loading = false;
+        this.message = 'Video file not found in the zip';
+        throw new Error('Video file not found in the zip');
+      }
+    } catch (error) {
+      this.loading = false;
+      console.error('Error during extraction:', error);
+      throw error;
     }
-  }
-
-  displayVideo(mp4Data: Blob): void {
-    if (!this.videoPlayer) return;
-    const videoElement = this.videoPlayer.nativeElement;
-    const player = videojs(videoElement, {});
-    player.src(window.URL.createObjectURL(mp4Data));
   }
 }

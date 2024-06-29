@@ -30,7 +30,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './single-game.component.css',
   imports: [
     SingleGameFiltersComponent,
-    MatButtonModule,
     Mp4PageComponent,
     RouterModule,
     MatCardModule,
@@ -65,6 +64,7 @@ export class SingleGameComponent {
   public onFilterChanged(filters: ISingleGameFilters) {
     if (!filters) return;
     this.filters = filters;
+    this.dataService.gameName = filters.game;
     this.restart_args();
     this.loading = true;
     this.dataService.getSingleGameData(filters).subscribe(
@@ -103,7 +103,3 @@ export class SingleGameComponent {
     this.data.images = [];
   }
 }
-
-// public applyFilter(filterValue: string) {
-//   this.filteredGames = this.games.filter(game => game.toLowerCase().includes(filterValue.toLowerCase()));
-// }

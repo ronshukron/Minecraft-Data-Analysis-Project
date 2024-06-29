@@ -1,11 +1,11 @@
 import {
   __commonJS,
   __require
-} from "./chunk-PZQZAEDH.js";
+} from "./chunk-X6JV76XL.js";
 
-// ../../../../node_modules/jszip/dist/jszip.min.js
+// node_modules/jszip/dist/jszip.min.js
 var require_jszip_min = __commonJS({
-  "../../../../node_modules/jszip/dist/jszip.min.js"(exports, module) {
+  "node_modules/jszip/dist/jszip.min.js"(exports, module) {
     !function(e) {
       if ("object" == typeof exports && "undefined" != typeof module)
         module.exports = e();

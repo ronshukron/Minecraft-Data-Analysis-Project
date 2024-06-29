@@ -20,7 +20,8 @@ import JSZip from 'jszip';
   providedIn: 'root',
 })
 export class DataService {
-  private url = 'https://minecraft-analysis-422617.oa.r.appspot.com';
+  public gameName: string = '';
+  private url = 'http://132.73.84.50:8080';
   public gameList: Observable<string[]> = of(['game1', 'game2']);
   public invList: Observable<string[]> = of(['game1', 'game2']);
   public actionAndInv: Observable<string[][]> = of([
@@ -92,7 +93,6 @@ export class DataService {
     const paramValue = task;
     const params = new HttpParams().set('task', paramValue).set('name', game);
     return this.http.get<any>(apiUrl, { params });
-    return this.actionAndInv;
   }
 
   //get all filters return all the data for the graph
@@ -113,14 +113,16 @@ export class DataService {
 
   ///////////////////////////////////////////////////////////////
 
-  //mp4 pgae
+  // mp4 pgae
   public getMP4Data(): Observable<any> {
-    let url = 'https://minecraft-analysis-422617.oa.r.appspot.com/download';
-    const paramValue =
-      'data/10.0/cheeky-cornflower-setter-02e496ce4abb-20220421-093149.mp4';
-    const params = new HttpParams().set('videoPath', paramValue);
-    return this.http.get<any>(url, { params });
+    const apiUrl = `${this.url}/download`;
+    const params = new HttpParams().set('videoPath', this.gameName);
+    return this.http.get(apiUrl, { params, responseType: 'blob' });
   }
+
+  // public getMP4Data(): Observable<Blob> {
+  //   return this.http.get('assets/video.zip', { responseType: 'blob' });
+  // }
 
   private handleError(error: HttpErrorResponse): Observable<any> {
     if (error.error instanceof ErrorEvent) {
@@ -137,36 +139,3 @@ export class DataService {
     return throwError('Something bad happened; please try again later.');
   }
 }
-
-// public getDataSetDataZipGraph(filters: any): Observable<any> {
-//   const size = filters?.datasetSize || 'defaultSize';
-//   const apiUrl = `${this.url}/dataset/hist`;
-//   const params = new HttpParams()
-//     .set('task', filters.selectedTask)
-//     .set('size', size)
-//     .set('inventory', filters.inventory.join(','))
-//     .set('aggregated_actions', filters.action.join(','))
-//     .set('keys', filters.key.join(','));
-
-//   return this.http.get(apiUrl, { params, responseType: 'blob' }).pipe(
-//     map(async (response: Blob) => {
-//       const arrayBuffer = await response.arrayBuffer();
-//       const jszip = new JSZip();
-//       const zipContent = await jszip.loadAsync(arrayBuffer);
-//       const imageFiles = Object.keys(zipContent.files).filter(
-//         (file) =>
-//           file.endsWith('.png') ||
-//           file.endsWith('.jpg') ||
-//           file.endsWith('.jpeg'),
-//       );
-
-//       const images: string[] = [];
-//       for (const file of imageFiles) {
-//         const base64 = await zipContent.files[file].async('base64');
-//         images.push(`data:image/png;base64,${base64}`);
-//       }
-
-//       return images;
-//     }),
-//   );
-// }
