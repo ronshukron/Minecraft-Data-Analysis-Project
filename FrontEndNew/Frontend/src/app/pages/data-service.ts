@@ -20,7 +20,8 @@ import JSZip from 'jszip';
   providedIn: 'root',
 })
 export class DataService {
-  private url = 'https://minecraft-analysis-422617.oa.r.appspot.com';
+  public gameName: string = '';
+  private url = 'http://132.73.84.50:8080';
   public gameList: Observable<string[]> = of(['game1', 'game2']);
   public invList: Observable<string[]> = of(['game1', 'game2']);
   public actionAndInv: Observable<string[][]> = of([
@@ -115,11 +116,9 @@ export class DataService {
 
   //mp4 pgae
   public getMP4Data(): Observable<any> {
-    let url = 'https://minecraft-analysis-422617.oa.r.appspot.com/download';
-    const paramValue =
-      'data/10.0/cheeky-cornflower-setter-02e496ce4abb-20220421-093149.mp4';
-    const params = new HttpParams().set('videoPath', paramValue);
-    return this.http.get<any>(url, { params });
+    const apiUrl = `${this.url}/download`;
+    const params = new HttpParams().set('videoPath', this.gameName);
+    return this.http.get(apiUrl, { params, responseType: 'blob' });
   }
 
   private handleError(error: HttpErrorResponse): Observable<any> {

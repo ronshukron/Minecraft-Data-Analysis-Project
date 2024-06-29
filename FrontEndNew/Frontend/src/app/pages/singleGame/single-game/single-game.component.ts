@@ -65,6 +65,7 @@ export class SingleGameComponent {
   public onFilterChanged(filters: ISingleGameFilters) {
     if (!filters) return;
     this.filters = filters;
+    this.dataService.gameName = filters.game;
     this.restart_args();
     this.loading = true;
     this.dataService.getSingleGameData(filters).subscribe(
