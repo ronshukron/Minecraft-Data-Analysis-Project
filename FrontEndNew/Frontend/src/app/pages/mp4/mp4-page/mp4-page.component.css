@@ -1,0 +1,24 @@
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* Adjust height as needed */
+}
+
+.video-element {
+  width: 80%; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
+video {
+  height: 100%;
+  width: 100%;
+}
+.loading {
+  margin: 25rem 65rem;
+}
