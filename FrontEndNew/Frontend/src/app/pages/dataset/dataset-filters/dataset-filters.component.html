@@ -49,11 +49,19 @@
             multiple
             (selectionChange)="onActionsChange($event.value)"
           >
-            <mat-option
+            <mat-optgroup
               *ngFor="let option of actionsOptions"
-              [value]="option"
-              >{{ option }}</mat-option
+              [label]="option.name"
             >
+              <!-- <mat-option [value]="{ name: option.name, action: 'All' }">{{
+                "All options"
+              }}</mat-option> -->
+              <mat-option
+                *ngFor="let action of option.actions"
+                [value]="{ name: option.name, action: action }"
+                >{{ action }}
+              </mat-option>
+            </mat-optgroup>
           </mat-select>
         </mat-form-field>
       </div>
@@ -66,16 +74,24 @@
             multiple
             (selectionChange)="onInventoryChange($event.value)"
           >
-            <mat-option
+            <mat-optgroup
               *ngFor="let option of inventoryOptions"
-              [value]="option"
-              >{{ option }}</mat-option
+              [label]="option.name"
             >
+              <!-- <mat-option [value]="{ name: option.name, action: 'All' }">{{
+                "All options"
+              }}</mat-option> -->
+              <mat-option
+                *ngFor="let action of option.actions"
+                [value]="{ name: option.name, action: action }"
+                >{{ action }}
+              </mat-option>
+            </mat-optgroup>
           </mat-select>
         </mat-form-field>
       </div>
 
-      <!--inventory list -->
+      <!--keys list -->
       <div class="filter-section" *ngIf="afterSelectTaskAndSize">
         <mat-form-field>
           <mat-label>Select Keys</mat-label>
@@ -94,12 +110,7 @@
             mat-raised-button
             color="primary"
             (click)="analyze()"
-            [disabled]="
-              !filters.selectedTask ||
-              filters.action.length === 0 ||
-              filters.inventory.length === 0 ||
-              filters.key.length === 0
-            "
+            [disabled]="!filters.selectedTask || filters.key.length === 0"
           >
             Analyze
           </button>
@@ -108,22 +119,3 @@
     </div>
   </mat-card-content>
 </mat-card>
-
-<!-- 
-<div class="filter-section">
-  <h3>Categories</h3>
-  <mat-form-field>
-    <mat-label>Select Categories</mat-label>
-    <mat-select
-      multiple
-      (selectionChange)="onCategorySelectionChange($event)"
-    >
-      <mat-option value="mines">Mines</mat-option>
-      <mat-option value="pickups">Pick Ups</mat-option>
-      <mat-option value="item-uses">Item Uses</mat-option>
-      <mat-option value="crafts">Crafts</mat-option>
-      <mat-option value="physical-data">Physical Data</mat-option>
-      <mat-option value="game-data">Game Data</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div> -->

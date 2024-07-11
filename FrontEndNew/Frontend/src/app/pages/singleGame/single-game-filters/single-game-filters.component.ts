@@ -8,6 +8,7 @@ import { ISingleGameFilters } from '../../../Interfaces/IdatasetFilters';
 import { DataService } from '../../data-service';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
+import { iTask } from '../../../Interfaces/Itask';
 
 @Component({
   selector: 'app-single-game-filters',
@@ -25,22 +26,19 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrl: './single-game-filters.component.css',
 })
 export class SingleGameFiltersComponent {
-  public onInventoryChange(inventorySelectedList: string[]): void {
-    this.filters.inventory = inventorySelectedList;
-  }
-
-  public onActionsChange(actionsSelectedList: string[]): void {
-    this.filters.action = actionsSelectedList;
-  }
-
   public afterApply: boolean = false;
   public disabled: boolean = false;
   public gamesOptions: string[] = [];
-  public inventoryOptions: string[] = [];
-  public actionsOptions: string[] = [];
+
   public afterSelectTask: boolean = false;
   public afterSelectGame: boolean = false;
+
   private unsubscribeList: Subject<void> = new Subject<void>();
+  public inventoryOptions: iTask[] = [];
+  public inventoryOptionsDict: { name: string; action: string }[] = [];
+
+  public actionsOptions: iTask[] = [];
+  public actionOptionsDict: { name: string; action: string }[] = [];
 
   @Output() filterChanged: EventEmitter<ISingleGameFilters> =
     new EventEmitter<ISingleGameFilters>();
@@ -108,6 +106,21 @@ export class SingleGameFiltersComponent {
       );
   }
 
+  public onActionsChange(tasks: { name: string; action: string }[]) {
+    this.actionOptionsDict = tasks;
+    this.filters.action = this.dataService.transformToTaskArray(
+      this.actionOptionsDict,
+    );
+    console.log(this.filters.action);
+  }
+
+  public onInventoryChange(tasks: { name: string; action: string }[]) {
+    this.inventoryOptionsDict = tasks;
+    this.filters.inventory = this.dataService.transformToTaskArray(
+      this.inventoryOptionsDict,
+    );
+    console.log(this.filters.inventory);
+  }
   private clearListOfInventoryAndActions(): void {
     this.afterSelectGame = false;
     this.inventoryOptions = [];

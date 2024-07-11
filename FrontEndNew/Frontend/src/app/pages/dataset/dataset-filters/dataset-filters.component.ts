@@ -8,11 +8,16 @@ import { IDatasetFilters } from '../../../Interfaces/IdatasetFilters';
 import { DataService } from '../../data-service';
 import { Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { iTask } from '../../../Interfaces/Itask';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dataset-filters',
   standalone: true,
   imports: [
+    MatIconModule,
+    MatDialogModule,
     FormsModule,
     MatCardModule,
     MatSelectModule,
@@ -27,9 +32,15 @@ export class DatasetFiltersComponent implements OnInit {
   public afterApply: boolean = false;
   public disabled: boolean = false;
   public afterSelectTaskAndSize: boolean = false;
-  public inventoryOptions: string[] = [];
-  public actionsOptions: string[] = [];
+
+  public inventoryOptions: iTask[] = [];
+  public inventoryOptionsDict: { name: string; action: string }[] = [];
+
+  public actionsOptions: iTask[] = [];
+  public actionOptionsDict: { name: string; action: string }[] = [];
+
   public keysOptions: string[] = [];
+
   private unsubscribeList: Subject<void> = new Subject<void>();
 
   public max: number = 100;
@@ -48,18 +59,11 @@ export class DatasetFiltersComponent implements OnInit {
     new EventEmitter<IDatasetFilters>();
 
   ngOnInit(): void {}
+
   constructor(public dataService: DataService) {}
 
   public analyze(): void {
     this.filterChanged.emit(this.filters);
-  }
-
-  public onInventoryChange(inventorySelectedList: string[]): void {
-    this.filters.inventory = inventorySelectedList;
-  }
-
-  public onActionsChange(actionsSelectedList: string[]): void {
-    this.filters.action = actionsSelectedList;
   }
   public onKeysChange(keysSelectedList: string[]): void {
     this.filters.key = keysSelectedList;
@@ -85,6 +89,22 @@ export class DatasetFiltersComponent implements OnInit {
           console.error('Error cant load the list of games:', error);
         },
       );
+  }
+
+  public onActionsChange(tasks: { name: string; action: string }[]) {
+    this.actionOptionsDict = tasks;
+    this.filters.action = this.dataService.transformToTaskArray(
+      this.actionOptionsDict,
+    );
+    console.log(this.filters.action);
+  }
+
+  public onInventoryChange(tasks: { name: string; action: string }[]) {
+    this.inventoryOptionsDict = tasks;
+    this.filters.inventory = this.dataService.transformToTaskArray(
+      this.inventoryOptionsDict,
+    );
+    console.log(this.filters.inventory);
   }
 
   private clearListOfInventoryAndActions(): void {

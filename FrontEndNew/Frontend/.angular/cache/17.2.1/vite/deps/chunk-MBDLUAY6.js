@@ -47,6 +47,13 @@ function animate(timings, styles = null) {
     timings
   };
 }
+function group(steps, options = null) {
+  return {
+    type: AnimationMetadataType.Group,
+    steps,
+    options
+  };
+}
 function sequence(steps, options = null) {
   return {
     type: AnimationMetadataType.Sequence,
@@ -476,6 +483,7 @@ export {
   AUTO_STYLE,
   trigger,
   animate,
+  group,
   sequence,
   style,
   state,
@@ -495,4 +503,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-2PY3VQDE.js.map
+//# sourceMappingURL=chunk-MBDLUAY6.js.map

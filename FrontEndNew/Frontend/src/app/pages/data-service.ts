@@ -55,8 +55,8 @@ export class DataService {
     const params = new HttpParams()
       .set('task', filters.selectedTask)
       .set('size', size)
-      .set('inventory', filters.inventory.join(','))
-      .set('aggregated_actions', filters.action.join(','))
+      .set('inventory', JSON.stringify(filters.inventory))
+      .set('aggregated_actions', JSON.stringify(filters.action))
       .set('keys', filters.key.join(','));
     return this.http.get<getIDataset>(apiUrl, { params });
   }
@@ -69,8 +69,8 @@ export class DataService {
     const params = new HttpParams()
       .set('task', filters.selectedTask)
       .set('size', size)
-      .set('inventory', filters.inventory.join(','))
-      .set('aggregated_actions', filters.action.join(','))
+      .set('inventory', JSON.stringify(filters.inventory))
+      .set('aggregated_actions', JSON.stringify(filters.action))
       .set('keys', filters.key.join(','));
 
     return this.http.get(apiUrl, { params, responseType: 'blob' });
@@ -104,8 +104,8 @@ export class DataService {
     const params = new HttpParams()
       .set('task', paramValue)
       .set('name', filters.game)
-      .set('inventory', filters.inventory.join(','))
-      .set('aggregated_actions', filters.action.join(','));
+      .set('inventory', JSON.stringify(filters.inventory))
+      .set('aggregated_actions', JSON.stringify(filters.action));
     return this.http.get<IsingleGameDataFromAPI>(apiUrl, {
       params,
     });
@@ -137,5 +137,25 @@ export class DataService {
     }
     // Return an observable with a user-facing error message.
     return throwError('Something bad happened; please try again later.');
+  }
+
+  public transformToTaskArray(
+    tasks: { name: string; action: string }[],
+  ): { name: string; actions: string[] }[] {
+    const dictionary: { [key: string]: string[] } = {};
+    tasks.forEach((task) => {
+      if (!dictionary[task.name]) {
+        dictionary[task.name] = [];
+      }
+      if (!dictionary[task.name].includes(task.action)) {
+        dictionary[task.name].push(task.action);
+      }
+    });
+    const transformedArray = Object.keys(dictionary).map((name) => ({
+      name,
+      actions: dictionary[name],
+    }));
+
+    return transformedArray;
   }
 }
