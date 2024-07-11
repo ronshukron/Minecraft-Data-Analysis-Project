@@ -41,9 +41,19 @@
       <mat-form-field>
         <mat-label>Select Action</mat-label>
         <mat-select multiple (selectionChange)="onActionsChange($event.value)">
-          <mat-option *ngFor="let option of actionsOptions" [value]="option">{{
-            option
-          }}</mat-option>
+          <mat-optgroup
+            *ngFor="let option of actionsOptions"
+            [label]="option.name"
+          >
+            <!-- <mat-option [value]="{ name: option.name, action: 'All' }">{{
+                "All options"
+              }}</mat-option> -->
+            <mat-option
+              *ngFor="let action of option.actions"
+              [value]="{ name: option.name, action: action }"
+              >{{ action }}
+            </mat-option>
+          </mat-optgroup>
         </mat-select>
       </mat-form-field>
     </div>
@@ -56,11 +66,19 @@
           multiple
           (selectionChange)="onInventoryChange($event.value)"
         >
-          <mat-option
+          <mat-optgroup
             *ngFor="let option of inventoryOptions"
-            [value]="option"
-            >{{ option }}</mat-option
+            [label]="option.name"
           >
+            <!-- <mat-option [value]="{ name: option.name, action: 'All' }">{{
+                    "All options"
+                  }}</mat-option> -->
+            <mat-option
+              *ngFor="let action of option.actions"
+              [value]="{ name: option.name, action: action }"
+              >{{ action }}
+            </mat-option>
+          </mat-optgroup>
         </mat-select>
       </mat-form-field>
     </div>
