@@ -55,7 +55,7 @@ export class DataService {
     const params = new HttpParams()
       .set('task', filters.selectedTask)
       .set('size', size)
-      .set('inventory', JSON.stringify(filters.inventory))
+      .set('inventory', filters.inventory.join(','))
       .set('aggregated_actions', JSON.stringify(filters.action))
       .set('keys', filters.key.join(','));
     return this.http.get<getIDataset>(apiUrl, { params });
@@ -69,7 +69,7 @@ export class DataService {
     const params = new HttpParams()
       .set('task', filters.selectedTask)
       .set('size', size)
-      .set('inventory', JSON.stringify(filters.inventory))
+      .set('inventory', filters.inventory.join(','))
       .set('aggregated_actions', JSON.stringify(filters.action))
       .set('keys', filters.key.join(','));
 
