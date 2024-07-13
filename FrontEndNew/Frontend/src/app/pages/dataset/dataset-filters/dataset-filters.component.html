@@ -74,19 +74,11 @@
             multiple
             (selectionChange)="onInventoryChange($event.value)"
           >
-            <mat-optgroup
+            <mat-option
               *ngFor="let option of inventoryOptions"
-              [label]="option.name"
+              [value]="option"
+              >{{ option }}</mat-option
             >
-              <!-- <mat-option [value]="{ name: option.name, action: 'All' }">{{
-                "All options"
-              }}</mat-option> -->
-              <mat-option
-                *ngFor="let action of option.actions"
-                [value]="{ name: option.name, action: action }"
-                >{{ action }}
-              </mat-option>
-            </mat-optgroup>
           </mat-select>
         </mat-form-field>
       </div>

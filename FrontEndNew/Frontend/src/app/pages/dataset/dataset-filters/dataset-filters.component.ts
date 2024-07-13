@@ -33,8 +33,7 @@ export class DatasetFiltersComponent implements OnInit {
   public disabled: boolean = false;
   public afterSelectTaskAndSize: boolean = false;
 
-  public inventoryOptions: iTask[] = [];
-  public inventoryOptionsDict: { name: string; action: string }[] = [];
+  public inventoryOptions: string[] = [];
 
   public actionsOptions: iTask[] = [];
   public actionOptionsDict: { name: string; action: string }[] = [];
@@ -65,11 +64,17 @@ export class DatasetFiltersComponent implements OnInit {
   public analyze(): void {
     this.filterChanged.emit(this.filters);
   }
+
   public onKeysChange(keysSelectedList: string[]): void {
     this.filters.key = keysSelectedList;
   }
+
   public onTaskOrDatasetSizeChange(event: string): void {
     this.getListOfInventoryActionsAndKeys();
+  }
+
+  public onInventoryChange(List: string[]) {
+    this.filters.inventory = List;
   }
 
   private getListOfInventoryActionsAndKeys(): void {
@@ -80,8 +85,8 @@ export class DatasetFiltersComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribeList))
       .subscribe(
         (data: any) => {
-          this.inventoryOptions = data.actions;
-          this.actionsOptions = data.inventory;
+          this.inventoryOptions = data.inventory;
+          this.actionsOptions = data.actions;
           this.keysOptions = data.keys;
           this.afterSelectTaskAndSize = true;
         },
@@ -96,15 +101,6 @@ export class DatasetFiltersComponent implements OnInit {
     this.filters.action = this.dataService.transformToTaskArray(
       this.actionOptionsDict,
     );
-    console.log(this.filters.action);
-  }
-
-  public onInventoryChange(tasks: { name: string; action: string }[]) {
-    this.inventoryOptionsDict = tasks;
-    this.filters.inventory = this.dataService.transformToTaskArray(
-      this.inventoryOptionsDict,
-    );
-    console.log(this.filters.inventory);
   }
 
   private clearListOfInventoryAndActions(): void {

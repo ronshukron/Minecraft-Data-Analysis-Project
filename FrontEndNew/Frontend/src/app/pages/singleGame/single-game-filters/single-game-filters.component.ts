@@ -34,8 +34,7 @@ export class SingleGameFiltersComponent {
   public afterSelectGame: boolean = false;
 
   private unsubscribeList: Subject<void> = new Subject<void>();
-  public inventoryOptions: iTask[] = [];
-  public inventoryOptionsDict: { name: string; action: string }[] = [];
+  public inventoryOptions: string[] = [];
 
   public actionsOptions: iTask[] = [];
   public actionOptionsDict: { name: string; action: string }[] = [];
@@ -70,6 +69,10 @@ export class SingleGameFiltersComponent {
     this.getListOfInventoryAndActions();
   }
 
+  public onInventoryChange(list: string[]): void {
+    this.filters.inventory = list;
+  }
+
   private getListOfInventoryAndActions() {
     if (!this.filters.game || !this.filters.selectedTask) return;
     this.clearListOfInventoryAndActions();
@@ -78,8 +81,8 @@ export class SingleGameFiltersComponent {
       .pipe(takeUntil(this.unsubscribeList))
       .subscribe(
         (data: any) => {
-          this.inventoryOptions = data.actions;
-          this.actionsOptions = data.inventory;
+          this.inventoryOptions = data.inventory;
+          this.actionsOptions = data.actions;
           this.afterSelectGame = true;
         },
         (error) => {
@@ -114,13 +117,6 @@ export class SingleGameFiltersComponent {
     console.log(this.filters.action);
   }
 
-  public onInventoryChange(tasks: { name: string; action: string }[]) {
-    this.inventoryOptionsDict = tasks;
-    this.filters.inventory = this.dataService.transformToTaskArray(
-      this.inventoryOptionsDict,
-    );
-    console.log(this.filters.inventory);
-  }
   private clearListOfInventoryAndActions(): void {
     this.afterSelectGame = false;
     this.inventoryOptions = [];
