@@ -11,10 +11,18 @@ const app = express();
 app.use(cors());
 
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '/views/index.html'));
-});
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, '/views/index.html'));
+// });
 
+
+// Serve static files from the frontend build directory
+app.use(express.static(path.join(__dirname, 'dist/final-project/browser')));
+
+// Serve the main index.html file on the root path
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/final-project/browser/index.html'));
+});
 
 
 //--------Single Game
@@ -52,25 +60,40 @@ app.get('/single_game/games_list', (req, res) => {
 
 
 // Retrieving filter lists for game 
-app.get('/single_game/inventory_actions' , (req, res)=> {
+app.get('/single_game/inventory_actions' , async (req, res)=> {
     const task= req.query.task || 'diamonds';
-    const gameName= req.query.game || 'game1';
+    const gameName= req.query.name || 'game1';
 
     if (!gameName || !task) {
         return res.status(400).send('Game name and Task are required');
     }
 
-    const inventory = ['furnace', 'rotten_flesh', 'granite', 'white_bed', 'feather', 'dirt', 'light_gray_wool', 'acacia_planks', 'chicken', 'dark_oak_planks', 'bucket',
-     'coal', 'sugar_cane', 'bread', 'oak_log', 'gold_ore', 'porkchop', 'white_wool', 'oak_planks', 'poppy', 'cooked_porkchop'];
-    const actions = ['furnace', 'lapis_ore', 'tall_grass', 'stone', 'granite', 'coal_ore', 'dirt', 'dead_bush', 'sugar_cane', 'infested_stone', 'diamond_ore', 'oak_log', 
-    'birch_leaves', 'grass_block', 'gold_ore', 'poppy', 'torch', 'lilac', 'melon', 'dark_oak_log'];
+    const gamename = 'cheeky-cornflower-setter-0b1e4d5c2f70-20220413-211200.jsonl'; //puting a default game name that exists in our data, remove this when we run on 100%
+    const command= `python data_analysis_scripts/Get_Filters_Single.py --task ${task} --gamename ${gamename}`
 
-    const resFilters = {
-        inventory: inventory,
-        actions: actions
-    };
+    try {
+        await executeCommand(command, 0);
 
-    res.json(resFilters);
+        fs.readFile('filters_single.json', 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error reading the file:', err);
+                return;
+            }
+        
+            const jsonData = JSON.parse(data);
+
+            // Prepare the response object
+            const resFilters = {
+                inventory: jsonData.inventory,
+                actions: jsonData.actions
+            };
+
+            res.json(resFilters);
+        });
+
+    } catch (error) {
+        res.status(500).send(`Error: ${error.message}`);
+    }
 
 });
 
@@ -79,17 +102,22 @@ app.get('/single_game/inventory_actions' , (req, res)=> {
 app.get('/single_game/timelines', async (req, res) =>{
     const task= req.query.task || 'diamonds';
     const percentage = req.query.size || 10;
-    const inventory = req.query.inventory || 'white_tulip,stick,dark_oak_planks,gold_ore,dirt';
-    const actions1 = req.query.aggregated_actions || 'mines.stone,mines.cobblestone,pick-ups.cobblestone,uses.stone';
+    const res_inventory = JSON.parse(req.query.inventory) || 'white_tulip,stick,dark_oak_planks,gold_ore,dirt';
+    const res_actions = JSON.parse(req.query.aggregated_actions) || 'mines.stone,mines.cobblestone,pick-ups.cobblestone,uses.stone';
 
     //add params checks 
 
-    const items = actions1.split(',');
-    const prefixedItems = items.map(item => 'mines.' + item);
-    const actions = prefixedItems.join(',');
+    //const inventory = 'white_tulip,stick,dark_oak_planks,gold_ore,dirt';
+    const inventory = res_inventory.map(item => item.name);
+    const actions = res_actions.flatMap(item =>
+        item.actions.map(action => `${action.replace(/-/g, '_')}.${item.name.replace(/ /g, '_')}`)
+    );
+
+    console.log(actions)
+    
 
     const commands = [
-        `python data_analysis_scripts/TimeSeriesInventory.py --percentage ${percentage} --inventory ${inventory}`,
+        `python data_analysis_scripts/TimeSeriesInventory.py --percentage ${percentage} --inventory ${inventory}`,  
         `python data_analysis_scripts/TimeSeriesStates.py --percentage ${percentage} --actions ${actions}`
     ];
 
@@ -121,7 +149,7 @@ app.get('/single_game/timelines', async (req, res) =>{
 
 
 // Retrieving filter lists for game 
-app.get('/dataset/keys_inventory_actions' , (req, res)=> {
+app.get('/dataset/keys_inventory_actions' , async (req, res)=> {
     const task= req.query.task || 'Diamonds';
     const size= req.query.size || 10;
 
@@ -129,21 +157,34 @@ app.get('/dataset/keys_inventory_actions' , (req, res)=> {
         return res.status(400).send('Task and Size are required');
     }
 
-    const keys = ['e', 'q', 'n', 'b', 'f2', '7', 'r', 'left.control', 'w', '2', 'm', 'escape', 'comma', 'caps.lock', 'a', '3', 'f', 'space', '1', 'grave.accent'];
+    const command= `python data_analysis_scripts/Get_Filters.py --task ${task} --percentage ${size}`
 
-    const inventory = ['furnace', 'rotten_flesh', 'granite', 'white_bed', 'feather', 'dirt', 'light_gray_wool', 'acacia_planks', 'chicken', 'dark_oak_planks', 'bucket',
-     'coal', 'sugar_cane', 'bread', 'oak_log', 'gold_ore', 'porkchop', 'white_wool', 'oak_planks', 'poppy', 'cooked_porkchop'];
+    try {
+        await executeCommand(command, 0);
 
-    const actions = ['furnace', 'lapis_ore', 'tall_grass', 'stone', 'granite', 'coal_ore', 'dirt', 'dead_bush', 'sugar_cane', 'infested_stone', 'diamond_ore', 'oak_log', 
-    'birch_leaves', 'grass_block', 'gold_ore', 'poppy', 'torch', 'lilac', 'melon', 'dark_oak_log'];
+        fs.readFile('filters_dataset.json', 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error reading the file:', err);
+                return;
+            }
+        
+            const jsonData = JSON.parse(data);
 
-    const resFilters = {
-        keys: keys,
-        inventory: inventory,
-        actions: actions
-    };
+            const keys = jsonData.keys.map(key => key.replace(/^keyboard\./, ''));
+            
+            // Prepare the response object
+            const resFilters = {
+                inventory: jsonData.inventory,
+                actions: jsonData.actions,
+                keys: keys
+            };
 
-    res.json(resFilters);
+            res.json(resFilters);
+        });
+
+    } catch (error) {
+        res.status(500).send(`Error: ${error.message}`);
+    }
 
 });
 
@@ -152,8 +193,8 @@ app.get('/dataset/hist', async (req, res) => {
     const task= req.query.task || 'Diamonds';
     const percentage = req.query.size || 100;
     const keys = req.query.keys || 'a,b,c';
-    const inventory = req.query.inventory || 'white_tulip,stick,dark_oak_planks,gold_ore,dirt';
-    const actions = req.query.aggregated_actions || 'mines.stone,mines.cobblestone,pick-ups.cobblestone,uses.stone';
+    const inventory = JSON.stringify(req.query.inventory) || 'white_tulip,stick,dark_oak_planks,gold_ore,dirt';
+    const actions = JSON.stringify(req.query.aggregated_actions) || 'mines.stone,mines.cobblestone,pick-ups.cobblestone,uses.stone';
 
     //add params checks 
 
@@ -181,26 +222,49 @@ app.get('/dataset/hist', async (req, res) => {
 });
 
 
+async function actionGraph(task, actions, percentage){
+
+    const command= `python data_analysis_scripts/Actions_Graph_2.0.py --percentage ${percentage} --task ${task} --actions ${actions}`
+
+    try {
+        const result = await executeCommand(command);
+        // Assuming the result contains the path to the JPEG file
+        const jpegPath = result.trim();
+        const fullPath = path.resolve(jpegPath);
+
+        console.log('JPEG Path:', fullPath);
+
+        // Read the JPEG file
+        const jpegData = await fs.readFile(fullPath);
+
+        return jpegData;
+    } catch (error) {
+        throw new Error(`Error generating action graph: ${error}`);
+    }
+
+}
+
+
+
+
 // 
 app.get('/dataset/timelines_stats', async (req, res) =>{
     const percentage = req.query.size || 10;
     const keys = req.query.keys || 'a,b,c';
     const inventory = req.query.inventory || 'white_tulip,stick,dark_oak_planks,gold_ore,dirt';
-    const actions1 = req.query.aggregated_actions || 'mines.stone,mines.cobblestone,pick-ups.cobblestone,uses.stone';
+    const res_actions = JSON.parse(req.query.aggregated_actions) || 'mines.stone,mines.cobblestone,pick-ups.cobblestone,uses.stone';
 
     //add params checks 
 
-    const items = actions1.split(',');
-    const prefixedItems = items.map(item => 'mines.' + item);
-    const actions = prefixedItems.join(',');
+    const actions = res_actions.flatMap(item =>
+        item.actions.map(action => `${action.replace(/-/g, '_')}.${item.name.replace(/ /g, '_')}`)
+    );
 
     const commands = [
         `python data_analysis_scripts/TimeSeriesInventory.py --percentage ${percentage} --inventory ${inventory}`,
         `python data_analysis_scripts/TimeSeriesStates.py --percentage ${percentage} --actions ${actions}`,
-        `python data_analysis_scripts/Stats.py --percentage ${percentage} --keys ${keys} --inventory ${inventory} --actions ${actions}`
+        `python data_analysis_scripts/Stats.py --percentage ${percentage} --keys ${keys} --inventory ${inventory} --actions ${actions}`,
     ];
-
-    //const command =  `python data_analysis_scripts/Stats.py --percentage ${percentage} --keys ${keys} --inventory ${inventory} --actions ${actions}`;
 
     
     try {
@@ -212,8 +276,12 @@ app.get('/dataset/timelines_stats', async (req, res) =>{
             fs.promises.readFile(results[1].actions_path),
         ]);
 
+        const task= 'House_Building.json';
+        myactions =JSON.stringify(req.query.aggregated_actions);
+        const action_graph = await actionGraph(task, myactions , percentage);
+
         const response = {
-            images: [actions_timeline, inv_timeline],
+            images: [actions_timeline, inv_timeline, action_graph],
             data_points: [results[0].inv_points, results[1].actions_points],
             stats: results[2].stats
         };
@@ -355,3 +423,5 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`App deployed at Port ${PORT}`);
 });
+
+

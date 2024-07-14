@@ -1,0 +1,120 @@
+{
+    "actions": [
+        {
+            "name": "peony",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "oak log",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "dirt",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "oak planks",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "crafting table",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "stick",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "wooden pickaxe",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "stone",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "cobblestone",
+            "actions": [
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "stone pickaxe",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "stone axe",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "poppy",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "coal ore",
+            "actions": [
+                "mines"
+            ]
+        }
+    ],
+    "inventory": [
+        "stone_axe",
+        "stone_pickaxe",
+        "poppy",
+        "crafting_table",
+        "peony",
+        "wooden_pickaxe",
+        "stick",
+        "oak_planks"
+    ],
+    "keys": [
+        "keyboard.w",
+        "left.control",
+        "keyboard.space",
+        "keyboard.s",
+        "keyboard.e",
+        "left.shift",
+        "keyboard.2",
+        "keyboard.5",
+        "keyboard.7",
+        "keyboard.d",
+        "keyboard.1",
+        "keyboard.escape",
+        "keyboard.3",
+        "keyboard.a"
+    ]
+}

@@ -25,13 +25,15 @@ def buffer_to_base64(buf):
 def json_get_games_durations(task, percentage):
     durations = []
     # Properly format the path with the percentage
+    #directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data\100'
     directory = os.path.join("Parsed_Data", str(percentage))
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
         with open(filepath, 'r') as f:
             json_content = json.load(f)
-        durations.append(json_content['stats']['time'])
+        if json_content['stats']['time'][0]!='-':
+            durations.append(json_content['stats']['time'])
     return durations
 
 
@@ -73,15 +75,22 @@ def create_game_time_distribution(task, percentage):
 
 
 # code for actions ditribution graphs
-def json_get_games_action(task, action, percentage):
-    action_freq = {'mines': [],
-                   'pick-ups': [],
-                   'uses': [],
-                   'crafts': [],
-                   'physical': []}
-    # Properly format the path with the percentage
+def json_get_games_action(task, action_dict, percentage):
+    # action_freq = {'mines': [],
+    #                'pick-ups': [],
+    #                'uses': [],
+    #                'crafts': [],
+    #                'physical': []}
+
+    name = action_dict['name']
+    categories = action_dict['actions']
+    action_freq = {}
+    for cat in categories:
+        action_freq[cat] = []
+# Properly format the path with the percentage
+    #directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data\100'
     directory = os.path.join("Parsed_Data", str(percentage))
-    categories = ['mines', 'pick-ups', 'uses', 'crafts', 'physical']
+    # categories = ['mines', 'pick-ups', 'uses', 'crafts', 'physical']
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
@@ -89,7 +98,7 @@ def json_get_games_action(task, action, percentage):
             json_content = json.load(f)
         for cat in categories:
             try:
-                action_freq[cat].append(json_content['distrbution']['actions'][cat][action])
+                action_freq[cat].append(json_content['distrbution']['actions'][cat][name])
             except:
                 if cat == 'physical':
                     continue
@@ -98,9 +107,11 @@ def json_get_games_action(task, action, percentage):
     return action_freq
 
 
-def create_game_action_distribution(task, action, percentage):
-    action_freq = json_get_games_action(task, action, percentage)
-    categories = ['mines', 'pick-ups', 'uses', 'crafts', 'physical']
+def create_game_action_distribution(task, action_dict, percentage):
+    action_freq = json_get_games_action(task, action_dict, percentage)
+    categories = action_dict['actions']#['mines', 'pick-ups', 'uses', 'crafts', 'physical']
+    name = action_dict['name']
+    clean_name = action_dict['name'].replace('_', ' ')
     category_images = {}
 
     for cat in categories:
@@ -109,11 +120,11 @@ def create_game_action_distribution(task, action, percentage):
             plt.hist(action_freq[cat], bins=bin_edges, edgecolor='black', color='#7293cb')
             plt.xlabel('Number of times action was done')
             plt.ylabel('Frequency')
-            plt.title('Distribution Graph - Number of Times Players ' + cat + ' of ' + action)
+            plt.title('Distribution Graph - Number of Times Players ' + cat + ' of ' + clean_name)
 
             output_dir = 'Histo_Results'
             os.makedirs(output_dir, exist_ok=True)
-            graph_path = os.path.join(output_dir,f'game_action_histo_{action}_{percentage}.png')
+            graph_path = os.path.join(output_dir,f'game_action_histo_{cat}_{name}_{percentage}.png')
             plt.savefig(graph_path)
             plt.close()
 
@@ -142,6 +153,7 @@ def create_all_actions_distribution(task, actions, percentage):
 def json_get_games_item(task, item, percentage):
     item_freq = []
     # Properly format the path with the percentage
+    # directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data\100'
     directory = os.path.join("Parsed_Data", str(percentage))
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
@@ -157,13 +169,14 @@ def json_get_games_item(task, item, percentage):
 
 def create_game_item_distribution(task, item, percentage):
     item_freq = json_get_games_item(task, item, percentage)
+    clean_name = item.replace('_', ' ')
     bin_edges = np.linspace(min(item_freq) - 1, max(item_freq) + 1, 6)
     plt.hist(item_freq, bins=bin_edges, edgecolor='black', color='#7293cb')
 
     # Add labels and title
     plt.xlabel('Number of times action was done')
     plt.ylabel('Frequency')
-    plt.title('Distribution Graph - Number of ' + item + ' in inventory at the end of the game')
+    plt.title('Distribution Graph - Number of ' + clean_name + ' in inventory at the end of the game')
 
     output_dir='Histo_Results'
     os.makedirs(output_dir, exist_ok=True)
@@ -189,6 +202,7 @@ def create_all_items_distribution(task, items, percentage):
 def json_get_games_key(task, key, percentage):
     key_freq = []
     # Properly format the path with the percentage
+    #directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data\100'
     directory = os.path.join("Parsed_Data", str(percentage))
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
@@ -237,10 +251,14 @@ def create_all_keys_distribution(task, keys, percentage):
 import json
 
 def create_all_game_data(task, actions, items, keys, percentage):
+    # for item in actions:
+    #     item['name'] = item['name'].replace('_', ' ')
+    items_edited = items
+
     data = {
         'game_duration_graph': create_game_time_distribution(task, percentage),
-        'actions_graphs': {action: create_game_action_distribution(task, action, percentage) for action in actions},
-        'inventory_graphs': {item: create_game_item_distribution(task, item, percentage) for item in items},
+        'actions_graphs': {action_dict['name']: create_game_action_distribution(task, action_dict, percentage) for action_dict in actions},
+        'inventory_graphs': {item: create_game_item_distribution(task, item, percentage) for item in items_edited},
         'keys_graphs': {key: create_game_key_distribution(task, key, percentage) for key in keys}
     }
 
@@ -318,6 +336,13 @@ def delete_all_files_in_directory(directory_path):
 
 
 def main():
+    # json_output = create_all_game_data(
+    #     'diamond',
+    #     [{'name':'stone', 'actions':['mines']},{"name":"dark_oak_log","actions":["mines"]},{"name":"crafting table","actions":["pick-ups"]}],
+    #     ['dirt', 'grass', 'crafting_table'],
+    #     ['space', 'w'],
+    #     100
+    # )
 
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('--task', type=str, default='diamond')
@@ -325,29 +350,22 @@ def main():
     parser.add_argument('--keys', type=str, default=['a','b'], help='list of keys')
     parser.add_argument('--inventory', type=str, default='white_tulip, stick, dark_oak_planks, gold_ore, dirt', help='list of inventory')
     parser.add_argument('--actions', type=str, default='mines.stone, mines.cobblestone, pick-ups.cobblestone, uses.stone', help='list of actions')
-
     
     args = parser.parse_args()
     task = args.task
     percentage = args.percentage
     keys= args.keys
-    inventory = args.inventory.split(',')
-    actions = args.actions.split(',')
-
+    inventory = args.inventory
+    actions = json.loads(args.actions)
+    
+    # inventory = args.inventory.split(',')
+    # actions = args.actions.split(',')
 
     current_directory = os.getcwd()
     full_path = os.path.join(current_directory, 'Histo_Results')
     delete_all_files_in_directory(full_path)
-        # Assuming 'diamond' is a task or category
-    # create_all_game_data(
-    #         'diamond',
-    #         ['dirt', 'grass'],
-    #         ['dirt', 'grass'],
-    #         ['space', 'w'],
-    #         100
-    #     )
-
-    create_all_game_data(
+    
+    json_output= create_all_game_data(
             task,
             actions,
             inventory,
@@ -355,16 +373,16 @@ def main():
             percentage
         )
 
-    # # Create a ZIP file containing the JSON data
-    # zip_memory_file = create_zip_with_json(json_output)
-    # zip_file_path = 'histograms.zip'  # Modify this path as needed
+    # Create a ZIP file containing the JSON data
+    zip_memory_file = create_zip_with_json(json_output)
+    zip_file_path = 'histograms.zip'  # Modify this path as needed
 
-    # # Save the ZIP file to disk
-    # with open(zip_file_path, 'wb') as f:
-    #     # zip_memory_file.getvalue() gets the entire content of the BytesIO object
-    #     f.write(zip_memory_file.getvalue())
+    # Save the ZIP file to disk
+    with open(zip_file_path, 'wb') as f:
+        # zip_memory_file.getvalue() gets the entire content of the BytesIO object
+        f.write(zip_memory_file.getvalue())
 
-    # print(f"ZIP file saved to {zip_file_path}")
+    print(f"ZIP file saved to {zip_file_path}")
 
 if __name__ == "__main__":
     main()

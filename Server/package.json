@@ -16,5 +16,6 @@
     "express": "^4.19.2",
     "express-zip": "^3.0.0",
     "python-shell": "^5.0.0"
-  }
+  },
+  "proxy": "https://minecraft-analysis-422617.oa.r.appspot.com"
 }
