@@ -82,6 +82,9 @@ export class SingleGameFiltersComponent {
       .subscribe(
         (data: any) => {
           this.inventoryOptions = data.inventory;
+          this.inventoryOptions = data.inventory.sort((a: string, b: string) =>
+            a > b ? 1 : -1,
+          );
           this.actionsOptions = data.actions;
           this.afterSelectGame = true;
         },
