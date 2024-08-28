@@ -37,7 +37,9 @@ def normalize_counts(edge_counts):
 def create_actions_graph(task, actions_dict, percentage, count_multiple, save_path):
     #base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     #directory = os.path.join(base_directory, str(percentage))
-    #directory = os.path.join("Parsed_Data", str(percentage))
+    directory = os.path.join("Parsed_Data", str(percentage))
+    # base_directory = r'C:\Users\user\Desktop\final_project\Minecraft-Data-Analysis-Project\Server\Parsed_Data\10'
+    # directory = base_directory#os.path.join(base_directory, str(percentage))
     count = 1
     sequences = {}
 
@@ -46,8 +48,7 @@ def create_actions_graph(task, actions_dict, percentage, count_multiple, save_pa
         actions[d['name'].replace('_', ' ')] = d['actions']
 
     for filename in os.listdir(directory):
-        #filepath = os.path.join(directory, filename)
-        filepath=save_path
+        filepath = os.path.join(directory, filename)
         actions_per_player = json_get_game_actions(task, actions, percentage, filepath)
         sequences[f'Player {count}'] = actions_per_player
         count += 1
@@ -73,7 +74,10 @@ def create_actions_graph(task, actions_dict, percentage, count_multiple, save_pa
                 edge_counts[action_pair] = 1
 
     # Normalize edge counts for width
-    normalized_counts = normalize_counts(edge_counts)
+    if len(edge_counts.keys())>0:
+        normalized_counts = normalize_counts(edge_counts)
+    else:
+        normalized_counts = edge_counts
 
     # Draw the graph using a different layout algorithm
     pos = nx.spring_layout(G, k=0.3)  # Increase the spacing
@@ -92,7 +96,8 @@ def create_actions_graph(task, actions_dict, percentage, count_multiple, save_pa
 
     # Save the plot as a JPEG file
     plt.savefig(save_path, format='jpeg')
-    plt.show()
+
+    # plt.show()
 
 # ['white tulip', 'dark oak log', 'stone axe', 'stone', 'fly one cm']
 # [{'name':'stone', 'actions':['mines']},{"name":"dark_oak_log","actions":["mines"]},{"name":"crafting_table","actions":["pick-ups"]}]
@@ -112,33 +117,34 @@ def main():
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('--task', type=str, default='House Building from Scratch Task', help='name of a task')
     parser.add_argument('--percentage', type=int, default=10, help='Percentage of data to process')
-    parser.add_argument('--actions', type=list, default=[
-                                                        {'name': 'white tulip', 'actions': ['uses', 'pick-ups']},
-                                                        {'name': 'dark oak log', 'actions': ['crafts', 'uses', 'pick-ups']},
-                                                        {'name': 'stone axe', 'actions': ['uses', 'pick-ups', 'crafts']},
-                                                        {'name': 'stone', 'actions': ['mines', 'uses']},
-                                                        {'name': 'fly one cm', 'actions': ['physical']}
-                                                                                                        ], help='Percentage of data to process')
+    parser.add_argument('--actions', type=str, required=True, help='JSON string of actions')
 
-    
     args = parser.parse_args()
     task = args.task
-    percentage= args.percentage
-    actions= args.actions
+    percentage = args.percentage
+    # try:
+    #     actions = json.loads(args.actions)
+    # except json.JSONDecodeError as e:
+    #     print(f"Error parsing actions: {e}")
+    #     return
 
-    #actions = json.loads(actions)
+    try:
+        actions = json.loads("[{\"name\":\"oak log\",\"actions\":[\"mines\"]}]")
+    except json.JSONDecodeError as e:
+        print(f"Error parsing actions: {e}")
+        return
 
 
     # save_filename = 'actions_graph.jpeg'
     # save_path = os.path.join(base_directory, save_filename)
 
-    save_path='Minecraft-Data-Analysis-Project/Server/actions_graph.jpeg'
+    save_filename = r'C:\Users\user\Desktop\final_project\Minecraft-Data-Analysis-Project\server\actions_graph.jpeg'    
     
-    create_actions_graph(task, actions, percentage, count_multiple=False, save_path=save_path)
+    create_actions_graph(task, actions, percentage, count_multiple=False, save_path=save_filename)
 
-    print( json.dumps({
-        'action_graph_path': file_path
-    }) )
+    # print( json.dumps({
+    #     'action_graph_path': save_filename
+    # }) )
 
 
 if __name__ == "__main__":

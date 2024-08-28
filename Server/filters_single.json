@@ -1,25 +1,10 @@
 {
     "actions": [
         {
-            "name": "peony",
-            "actions": [
-                "mines",
-                "pick-ups"
-            ]
-        },
-        {
             "name": "oak log",
             "actions": [
                 "mines",
                 "pick-ups"
-            ]
-        },
-        {
-            "name": "dirt",
-            "actions": [
-                "mines",
-                "pick-ups",
-                "uses"
             ]
         },
         {
@@ -44,10 +29,36 @@
             ]
         },
         {
+            "name": "wooden axe",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
             "name": "wooden pickaxe",
             "actions": [
                 "crafts",
                 "uses"
+            ]
+        },
+        {
+            "name": "wooden shovel",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "coal ore",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "coal",
+            "actions": [
+                "pick-ups"
             ]
         },
         {
@@ -59,62 +70,105 @@
         {
             "name": "cobblestone",
             "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "grass",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "grass block",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "dirt",
+            "actions": [
                 "pick-ups",
                 "uses"
             ]
         },
         {
-            "name": "stone pickaxe",
+            "name": "wheat seeds",
             "actions": [
-                "crafts",
-                "uses"
-            ]
-        },
-        {
-            "name": "stone axe",
-            "actions": [
-                "crafts",
-                "uses"
-            ]
-        },
-        {
-            "name": "poppy",
-            "actions": [
-                "mines",
                 "pick-ups"
             ]
         },
         {
-            "name": "coal ore",
+            "name": "mutton",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "white wool",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "white bed",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "furnace",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "oak door",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "torch",
+            "actions": [
+                "crafts",
+                "uses",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "wall torch",
             "actions": [
                 "mines"
             ]
         }
     ],
     "inventory": [
-        "stone_axe",
-        "stone_pickaxe",
-        "poppy",
-        "crafting_table",
-        "peony",
+        "wooden_axe",
         "wooden_pickaxe",
+        "wooden_shovel",
         "stick",
-        "oak_planks"
+        "dirt",
+        "torch",
+        "oak_door",
+        "wheat_seeds",
+        "mutton"
     ],
     "keys": [
         "keyboard.w",
-        "left.control",
         "keyboard.space",
-        "keyboard.s",
+        "keyboard.d",
+        "keyboard.a",
         "keyboard.e",
         "left.shift",
-        "keyboard.2",
-        "keyboard.5",
-        "keyboard.7",
-        "keyboard.d",
         "keyboard.1",
-        "keyboard.escape",
+        "keyboard.2",
         "keyboard.3",
-        "keyboard.a"
+        "keyboard.s",
+        "keyboard.4",
+        "keyboard.escape"
     ]
 }

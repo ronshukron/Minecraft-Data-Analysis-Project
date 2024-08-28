@@ -34,12 +34,21 @@ def json_get_walking_cm(task, percentage,actions):
     # base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
     directory = os.path.join("Parsed_Data", str(percentage))
+                # my try:
+    base = 'C:\Data'
+    actual_task = task.split('.')[0]
+    specific_path = f'\{actual_task}\{percentage}'
+    directory = base+specific_path
+    #end of change
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
         with open(filepath, 'r') as f:
             json_content = json.load(f)
-        walks.append(json_content['distrbution']['actions']['physical']['walk_one_cm']/100)
+        if 'walk_one_cm' in json_content['distrbution']['actions']['physical'].keys():
+            walks.append(json_content['distrbution']['actions']['physical']['walk_one_cm']/100)
+        else:
+            walks.append(0)
     return walks
 
 def json_get_uses(task, percentage,actions):
@@ -47,6 +56,12 @@ def json_get_uses(task, percentage,actions):
     #base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
     directory = os.path.join("Parsed_Data", str(percentage))
+            # my try:
+    base = 'C:\Data'
+    actual_task = task.split('.')[0]
+    specific_path = f'\{actual_task}\{percentage}'
+    directory = base+specific_path
+    #end of change
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
@@ -60,6 +75,12 @@ def json_get_crafts(task, percentage,actions):
     # base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
     directory = os.path.join("Parsed_Data", str(percentage))
+            # my try:
+    base = 'C:\Data'
+    actual_task = task.split('.')[0]
+    specific_path = f'\{actual_task}\{percentage}'
+    directory = base+specific_path
+    #end of change
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
@@ -72,7 +93,13 @@ def json_get_mines(task, percentage,actions):
     mines = []
     # base_directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data'
     # Properly format the path with the percentage
-    directory = os.path.join("Parsed_Data", str(percentage))
+    # directory = os.path.join("Parsed_Data", str(percentage))
+        # my try:
+    base = 'C:\Data'
+    actual_task = task.split('.')[0]
+    specific_path = f'\{actual_task}\{percentage}'
+    directory = base+specific_path
+    #end of change
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
@@ -139,7 +166,7 @@ def main():
     actions= args.actions
 
     print(json.dumps({
-            'stats': create_game_statistics('a',['a'],['a'],['w'],100)
+            'stats': create_game_statistics('Diamonds.json',['a'],['a'],['w'],percentage) ### curently hard coded as diamonds, need to get task as argument!
         }))
 
 

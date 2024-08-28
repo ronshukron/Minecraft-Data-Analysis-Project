@@ -9,12 +9,18 @@
             ]
         },
         {
+            "name": "oak leaves",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
             "name": "oak planks",
             "actions": [
                 "crafts",
-                "pick-ups",
                 "uses",
-                "mines"
+                "mines",
+                "pick-ups"
             ]
         },
         {
@@ -51,16 +57,23 @@
             "name": "cobblestone",
             "actions": [
                 "pick-ups",
-                "uses",
-                "mines"
+                "mines",
+                "uses"
             ]
         },
         {
-            "name": "stone pickaxe",
+            "name": "grass block",
             "actions": [
-                "crafts",
-                "uses",
+                "mines",
                 "pick-ups"
+            ]
+        },
+        {
+            "name": "dirt",
+            "actions": [
+                "pick-ups",
+                "uses",
+                "mines"
             ]
         },
         {
@@ -68,6 +81,261 @@
             "actions": [
                 "crafts",
                 "uses",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "grass",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "oak sapling",
+            "actions": [
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "wheat seeds",
+            "actions": [
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "porkchop",
+            "actions": [
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "light gray wool",
+            "actions": [
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "mutton",
+            "actions": [
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "white wool",
+            "actions": [
+                "pick-ups",
+                "uses",
+                "mines"
+            ]
+        },
+        {
+            "name": "azure bluet",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "oak door",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "wooden shovel",
+            "actions": [
+                "crafts",
+                "uses",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "stone shovel",
+            "actions": [
+                "crafts",
+                "uses",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "apple",
+            "actions": [
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "jungle log",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "jungle planks",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "wooden axe",
+            "actions": [
+                "crafts",
+                "uses",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "vine",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "jungle leaves",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "jungle slab",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "yellow bed",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses",
+                "crafts"
+            ]
+        },
+        {
+            "name": "hay block",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "dark oak log",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "dark oak planks",
+            "actions": [
+                "crafts",
+                "uses",
+                "pick-ups",
+                "mines"
+            ]
+        },
+        {
+            "name": "dark oak slab",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "dark oak stairs",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "dark oak button",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "dark oak door",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "birch log",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "chest",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "tall grass",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "coal",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "white bed",
+            "actions": [
+                "uses",
+                "crafts",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "coal ore",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "torch",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
                 "pick-ups"
             ]
         },
@@ -81,20 +349,130 @@
             ]
         },
         {
-            "name": "coal ore",
+            "name": "birch planks",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "birch slab",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "birch sapling",
+            "actions": [
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "birch stairs",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "clay",
             "actions": [
                 "mines"
             ]
         },
         {
-            "name": "coal",
+            "name": "clay ball",
             "actions": [
                 "pick-ups"
             ]
         },
         {
-            "name": "salmon",
+            "name": "stone pickaxe",
             "actions": [
+                "crafts",
+                "uses",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "oak slab",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "oak stairs",
+            "actions": [
+                "crafts",
+                "uses",
+                "pick-ups",
+                "mines"
+            ]
+        },
+        {
+            "name": "oak trapdoor",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "spruce log",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "spruce planks",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "birch leaves",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "birch door",
+            "actions": [
+                "crafts",
+                "uses",
+                "pick-ups",
+                "mines"
+            ]
+        },
+        {
+            "name": "dandelion",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "cornflower",
+            "actions": [
+                "mines",
                 "pick-ups",
                 "uses"
             ]
@@ -103,33 +481,80 @@
             "name": "poppy",
             "actions": [
                 "mines",
-                "pick-ups"
+                "pick-ups",
+                "uses"
             ]
         },
         {
-            "name": "lilac",
+            "name": "oak fence",
             "actions": [
+                "crafts",
+                "uses",
                 "mines",
                 "pick-ups"
             ]
         },
         {
-            "name": "mutton",
+            "name": "barrel",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "potato",
             "actions": [
                 "pick-ups"
             ]
         },
         {
-            "name": "brown wool",
-            "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "white wool",
+            "name": "rotten flesh",
             "actions": [
                 "pick-ups",
                 "uses"
+            ]
+        },
+        {
+            "name": "sand",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "charcoal",
+            "actions": [
+                "crafts",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "wheat",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "bread",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "stone hoe",
+            "actions": [
+                "uses",
+                "crafts"
+            ]
+        },
+        {
+            "name": "string",
+            "actions": [
+                "pick-ups"
             ]
         },
         {
@@ -139,59 +564,53 @@
             ]
         },
         {
-            "name": "cooked mutton",
+            "name": "glass",
+            "actions": [
+                "crafts",
+                "pick-ups",
+                "uses",
+                "mines"
+            ]
+        },
+        {
+            "name": "glass pane",
             "actions": [
                 "crafts",
                 "uses",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "porkchop",
-            "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "dandelion",
-            "actions": [
-                "mines",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "oak leaves",
-            "actions": [
                 "mines"
             ]
         },
         {
-            "name": "light gray wool",
+            "name": "oak fence gate",
             "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "grass block",
-            "actions": [
-                "mines"
-            ]
-        },
-        {
-            "name": "dirt",
-            "actions": [
-                "mines",
-                "pick-ups",
+                "crafts",
                 "uses"
             ]
         },
         {
-            "name": "torch",
+            "name": "oak pressure plate",
             "actions": [
                 "crafts",
                 "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "birch fence",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "peony",
+            "actions": [
+                "mines",
                 "pick-ups",
-                "mines"
+                "uses"
             ]
         },
         {
@@ -201,14 +620,21 @@
             ]
         },
         {
-            "name": "iron ore",
+            "name": "stripped birch log",
             "actions": [
                 "mines",
                 "pick-ups"
             ]
         },
         {
-            "name": "andesite",
+            "name": "stripped oak log",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "rose bush",
             "actions": [
                 "mines",
                 "pick-ups",
@@ -216,14 +642,43 @@
             ]
         },
         {
-            "name": "iron ingot",
+            "name": "sugar cane",
             "actions": [
-                "crafts",
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "kelp",
+            "actions": [
+                "mines",
                 "pick-ups"
             ]
         },
         {
-            "name": "iron pickaxe",
+            "name": "brewing stand",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "brown wool",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "composter",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "painting",
             "actions": [
                 "crafts",
                 "uses",
@@ -231,91 +686,45 @@
             ]
         },
         {
-            "name": "bucket",
+            "name": "beef",
             "actions": [
-                "crafts",
+                "pick-ups",
                 "uses"
             ]
         },
         {
-            "name": "water bucket",
-            "actions": [
-                "uses"
-            ]
-        },
-        {
-            "name": "cooked porkchop",
+            "name": "dark oak fence",
             "actions": [
                 "crafts",
                 "uses",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "gold ore",
-            "actions": [
                 "mines",
                 "pick-ups"
             ]
         },
         {
-            "name": "granite",
-            "actions": [
-                "mines",
-                "pick-ups",
-                "uses"
-            ]
-        },
-        {
-            "name": "diorite",
-            "actions": [
-                "mines",
-                "pick-ups",
-                "uses"
-            ]
-        },
-        {
-            "name": "redstone ore",
+            "name": "dark oak leaves",
             "actions": [
                 "mines"
             ]
         },
         {
-            "name": "redstone",
-            "actions": [
-                "pick-ups",
-                "uses"
-            ]
-        },
-        {
-            "name": "infested stone",
-            "actions": [
-                "mines"
-            ]
-        },
-        {
-            "name": "lapis ore",
-            "actions": [
-                "mines"
-            ]
-        },
-        {
-            "name": "lapis lazuli",
+            "name": "leather",
             "actions": [
                 "pick-ups"
             ]
         },
         {
-            "name": "peony",
+            "name": "dark oak pressure plate",
             "actions": [
-                "pick-ups",
-                "mines"
+                "crafts",
+                "uses"
             ]
         },
         {
-            "name": "grass",
+            "name": "stone sword",
             "actions": [
-                "mines"
+                "crafts",
+                "uses"
             ]
         },
         {
@@ -331,32 +740,15 @@
             ]
         },
         {
-            "name": "rotten flesh",
+            "name": "cooked mutton",
             "actions": [
-                "pick-ups",
-                "uses"
-            ]
-        },
-        {
-            "name": "diamond ore",
-            "actions": [
-                "mines"
-            ]
-        },
-        {
-            "name": "diamond",
-            "actions": [
+                "crafts",
+                "uses",
                 "pick-ups"
             ]
         },
         {
-            "name": "diamond pickaxe",
-            "actions": [
-                "crafts"
-            ]
-        },
-        {
-            "name": "gravel",
+            "name": "oxeye daisy",
             "actions": [
                 "pick-ups",
                 "mines",
@@ -364,107 +756,78 @@
             ]
         },
         {
-            "name": "sand",
+            "name": "spruce door",
             "actions": [
-                "mines",
+                "crafts",
+                "uses",
                 "pick-ups",
-                "uses"
-            ]
-        },
-        {
-            "name": "red mushroom block",
-            "actions": [
                 "mines"
             ]
         },
         {
-            "name": "dark oak sapling",
+            "name": "spruce slab",
             "actions": [
+                "crafts",
+                "uses",
+                "mines",
                 "pick-ups"
-            ]
-        },
-        {
-            "name": "mushroom stem",
-            "actions": [
-                "mines"
-            ]
-        },
-        {
-            "name": "bowl",
-            "actions": [
-                "crafts"
             ]
         },
         {
             "name": "sandstone",
             "actions": [
-                "pick-ups",
                 "mines",
+                "pick-ups",
+                "uses",
+                "crafts"
+            ]
+        },
+        {
+            "name": "cut sandstone",
+            "actions": [
+                "mines",
+                "pick-ups",
                 "uses"
             ]
         },
         {
-            "name": "brown mushroom block",
+            "name": "chiseled sandstone",
             "actions": [
-                "mines"
+                "mines",
+                "pick-ups",
+                "uses"
             ]
         },
         {
-            "name": "brown mushroom",
+            "name": "stone pressure plate",
             "actions": [
-                "pick-ups"
+                "mines",
+                "pick-ups",
+                "uses"
             ]
         },
         {
-            "name": "red mushroom",
+            "name": "spruce stairs",
             "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "rose bush",
-            "actions": [
+                "crafts",
+                "uses",
                 "mines",
                 "pick-ups"
             ]
         },
         {
-            "name": "wheat",
+            "name": "cooked beef",
             "actions": [
-                "mines",
+                "crafts",
+                "uses",
                 "pick-ups"
             ]
         },
         {
-            "name": "wheat seeds",
-            "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "potatoes",
-            "actions": [
-                "mines"
-            ]
-        },
-        {
-            "name": "potato",
-            "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "bread",
+            "name": "diamond axe",
             "actions": [
                 "crafts",
                 "uses"
-            ]
-        },
-        {
-            "name": "spruce log",
-            "actions": [
-                "mines",
-                "pick-ups"
             ]
         },
         {
@@ -474,183 +837,30 @@
             ]
         },
         {
-            "name": "spruce planks",
+            "name": "grass path",
             "actions": [
-                "crafts",
-                "pick-ups",
-                "uses",
                 "mines"
             ]
         },
         {
-            "name": "charcoal",
+            "name": "spruce boat",
             "actions": [
                 "crafts",
-                "pick-ups"
+                "uses"
             ]
         },
         {
-            "name": "oak sapling",
+            "name": "egg",
             "actions": [
                 "pick-ups",
                 "uses"
             ]
         },
         {
-            "name": "iron leggings",
-            "actions": [
-                "crafts"
-            ]
-        },
-        {
-            "name": "bone",
-            "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "wooden axe",
-            "actions": [
-                "crafts",
-                "uses",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "stone sword",
-            "actions": [
-                "crafts",
-                "uses",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "iron sword",
-            "actions": [
-                "crafts",
-                "uses"
-            ]
-        },
-        {
-            "name": "shield",
-            "actions": [
-                "crafts",
-                "uses"
-            ]
-        },
-        {
-            "name": "gunpowder",
-            "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "birch log",
+            "name": "pumpkin",
             "actions": [
                 "mines",
                 "pick-ups"
-            ]
-        },
-        {
-            "name": "birch planks",
-            "actions": [
-                "crafts",
-                "uses",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "gray wool",
-            "actions": [
-                "pick-ups",
-                "uses",
-                "mines"
-            ]
-        },
-        {
-            "name": "rail",
-            "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "oak fence",
-            "actions": [
-                "pick-ups",
-                "mines"
-            ]
-        },
-        {
-            "name": "birch trapdoor",
-            "actions": [
-                "crafts",
-                "uses",
-                "mines",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "flint",
-            "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "apple",
-            "actions": [
-                "pick-ups",
-                "uses"
-            ]
-        },
-        {
-            "name": "stone shovel",
-            "actions": [
-                "crafts",
-                "uses"
-            ]
-        },
-        {
-            "name": "wooden shovel",
-            "actions": [
-                "uses",
-                "crafts",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "spruce trapdoor",
-            "actions": [
-                "pick-ups",
-                "crafts",
-                "mines",
-                "uses"
-            ]
-        },
-        {
-            "name": "large fern",
-            "actions": [
-                "mines"
-            ]
-        },
-        {
-            "name": "carrots",
-            "actions": [
-                "mines"
-            ]
-        },
-        {
-            "name": "carrot",
-            "actions": [
-                "pick-ups",
-                "uses"
-            ]
-        },
-        {
-            "name": "mossy cobblestone",
-            "actions": [
-                "mines",
-                "pick-ups",
-                "uses"
             ]
         },
         {
@@ -661,147 +871,47 @@
             ]
         },
         {
+            "name": "ladder",
+            "actions": [
+                "uses",
+                "crafts",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "large fern",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "white tulip",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "orange tulip",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "gray wool",
+            "actions": [
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
             "name": "fern",
             "actions": [
                 "mines"
-            ]
-        },
-        {
-            "name": "string",
-            "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "coarse dirt",
-            "actions": [
-                "crafts"
-            ]
-        },
-        {
-            "name": "oak trapdoor",
-            "actions": [
-                "crafts",
-                "uses",
-                "mines",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "birch leaves",
-            "actions": [
-                "mines"
-            ]
-        },
-        {
-            "name": "tall grass",
-            "actions": [
-                "mines"
-            ]
-        },
-        {
-            "name": "fire",
-            "actions": [
-                "mines"
-            ]
-        },
-        {
-            "name": "arrow",
-            "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "yellow bed",
-            "actions": [
-                "mines",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "hay block",
-            "actions": [
-                "mines",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "grass path",
-            "actions": [
-                "mines"
-            ]
-        },
-        {
-            "name": "dead bush",
-            "actions": [
-                "mines"
-            ]
-        },
-        {
-            "name": "cut sandstone",
-            "actions": [
-                "pick-ups",
-                "mines"
-            ]
-        },
-        {
-            "name": "chiseled sandstone",
-            "actions": [
-                "mines",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "stone pressure plate",
-            "actions": [
-                "mines",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "acacia log",
-            "actions": [
-                "mines",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "acacia leaves",
-            "actions": [
-                "mines",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "acacia planks",
-            "actions": [
-                "crafts",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "acacia sapling",
-            "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "cornflower",
-            "actions": [
-                "mines",
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "birch sapling",
-            "actions": [
-                "pick-ups"
-            ]
-        },
-        {
-            "name": "golden axe",
-            "actions": [
-                "uses"
             ]
         },
         {
@@ -818,146 +928,2123 @@
             ]
         },
         {
-            "name": "beef",
+            "name": "iron ore",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "brick",
             "actions": [
                 "pick-ups"
             ]
         },
         {
-            "name": "leather",
+            "name": "dark oak sapling",
+            "actions": [
+                "pick-ups",
+                "uses",
+                "mines"
+            ]
+        },
+        {
+            "name": "flower pot",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "smoker",
+            "actions": [
+                "pick-ups",
+                "crafts",
+                "mines",
+                "uses"
+            ]
+        },
+        {
+            "name": "blue bed",
+            "actions": [
+                "uses",
+                "crafts",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "blue dye",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "spruce fence",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "spruce trapdoor",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "oak boat",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "lily of the valley",
+            "actions": [
+                "pick-ups",
+                "mines"
+            ]
+        },
+        {
+            "name": "jungle door",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "jungle stairs",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "oak sign",
+            "actions": [
+                "crafts",
+                "uses",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "oak wall sign",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "birch pressure plate",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "lilac",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "gravel",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "diorite",
+            "actions": [
+                "pick-ups",
+                "mines",
+                "uses"
+            ]
+        },
+        {
+            "name": "iron axe",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "seagrass",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "salmon",
             "actions": [
                 "pick-ups"
             ]
         },
         {
-            "name": "cooked beef",
+            "name": "iron ingot",
             "actions": [
+                "crafts",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "dead bush",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "dispenser",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "arrow",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "mossy cobblestone",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "redstone wire",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "redstone",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "tripwire hook",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "granite",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "tall seagrass",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "spruce pressure plate",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "pink tulip",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "cobblestone slab",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "andesite",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "dark oak trapdoor",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "campfire",
+            "actions": [
+                "uses",
+                "crafts"
+            ]
+        },
+        {
+            "name": "cooked porkchop",
+            "actions": [
+                "uses",
+                "pick-ups",
+                "crafts"
+            ]
+        },
+        {
+            "name": "birch wood",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "snow",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "snowball",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "spruce fence gate",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "ink sac",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "lever",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "iron shovel",
+            "actions": [
+                "uses",
+                "crafts"
+            ]
+        },
+        {
+            "name": "bone",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "ender pearl",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "spider eye",
+            "actions": [
+                "uses",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "iron pickaxe",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "cooked chicken",
+            "actions": [
+                "crafts",
+                "uses",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "dark oak fence gate",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "oak wood",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "blast furnace",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "obsidian",
+            "actions": [
+                "uses"
+            ]
+        },
+        {
+            "name": "pink dye",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "yellow dye",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "pink bed",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "leather chestplate",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "acacia log",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "acacia planks",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "acacia leaves",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "acacia sapling",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "acacia door",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "acacia fence",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "black wool",
+            "actions": [
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "bamboo",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "jungle fence",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "stripped spruce log",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "wooden sword",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "jungle fence gate",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "bookshelf",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "birch sign",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "golden shovel",
+            "actions": [
+                "uses"
+            ]
+        },
+        {
+            "name": "allium",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "blue orchid",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "gunpowder",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "flint",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "lime bed",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "smooth stone",
+            "actions": [
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "smooth sandstone",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "cooked salmon",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "fire",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "red dye",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "red bed",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "red tulip",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "magenta dye",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "magenta bed",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "birch boat",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "jungle pressure plate",
+            "actions": [
+                "crafts",
+                "uses",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "jungle trapdoor",
+            "actions": [
+                "uses",
+                "crafts",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "white carpet",
+            "actions": [
+                "crafts",
+                "mines",
+                "uses",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "podzol",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "packed ice",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "pumpkin stem",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "purple bed",
+            "actions": [
+                "mines",
+                "uses",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "fire charge",
+            "actions": [
+                "uses"
+            ]
+        },
+        {
+            "name": "cocoa beans",
+            "actions": [
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "sunflower",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "orange bed",
+            "actions": [
+                "mines",
+                "pick-ups",
+                "uses"
+            ]
+        },
+        {
+            "name": "acacia stairs",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "acacia fence gate",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "acacia pressure plate",
+            "actions": [
+                "crafts",
+                "uses",
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "golden axe",
+            "actions": [
+                "uses"
+            ]
+        },
+        {
+            "name": "golden pickaxe",
+            "actions": [
+                "uses"
+            ]
+        },
+        {
+            "name": "netherrack",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "magma block",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "experience bottle",
+            "actions": [
+                "uses"
+            ]
+        },
+        {
+            "name": "baked potato",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "golden apple",
+            "actions": [
+                "uses"
+            ]
+        },
+        {
+            "name": "red mushroom block",
+            "actions": [
+                "mines"
+            ]
+        },
+        {
+            "name": "bone meal",
+            "actions": [
+                "crafts",
+                "uses"
+            ]
+        },
+        {
+            "name": "stripped dark oak log",
+            "actions": [
+                "mines",
+                "pick-ups"
+            ]
+        },
+        {
+            "name": "iron helmet",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "iron leggings",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "iron boots",
+            "actions": [
+                "crafts"
+            ]
+        },
+        {
+            "name": "diamond shovel",
+            "actions": [
+                "uses",
                 "crafts"
             ]
         }
     ],
     "inventory": [
-        "iron_pickaxe",
-        "stone_axe",
-        "cooked_porkchop",
-        "gold_ore",
-        "cobblestone",
-        "furnace",
-        "water_bucket",
-        "iron_ingot",
-        "stone_pickaxe",
-        "granite",
-        "white_wool",
-        "dandelion",
-        "mutton",
-        "light_gray_wool",
-        "redstone",
-        "wooden_pickaxe",
-        "iron_ore",
-        "diorite",
-        "salmon",
-        "coal",
-        "crafting_table",
-        "lapis_lazuli",
-        "oak_planks",
         "dirt",
-        "feather",
+        "stone axe",
+        "light gray wool",
         "stick",
-        "chicken",
-        "poppy",
-        "rotten_flesh",
-        "diamond",
-        "diamond_pickaxe",
-        "oak_log",
-        "rose_bush",
-        "lilac",
-        "wheat",
-        "wheat_seeds",
-        "torch",
-        "potato",
-        "andesite",
-        "spruce_log",
-        "spruce_planks",
-        "gravel",
-        "bone",
-        "oak_sapling",
-        "iron_sword",
-        "gunpowder",
-        "wooden_axe",
-        "stone_sword",
-        "birch_planks",
-        "birch_trapdoor",
-        "cooked_mutton",
-        "gray_wool",
-        "rail",
-        "oak_fence",
-        "flint",
-        "gold_ingot",
-        "apple",
-        "stone_shovel",
-        "peony",
-        "wooden_shovel",
+        "oak planks",
+        "wooden shovel",
+        "wheat seeds",
+        "oak door",
+        "wooden pickaxe",
         "porkchop",
-        "spruce_sapling",
-        "carrot",
-        "string",
-        "oak_trapdoor",
-        "coarse_dirt",
-        "arrow",
-        "yellow_bed",
-        "bread",
-        "hay_block",
+        "mutton",
+        "white wool",
+        "oak log",
+        "stone axe",
+        "stone shovel",
+        "crafting table",
+        "oak log",
+        "oak sapling",
+        "wooden pickaxe",
+        "apple",
+        "oak planks",
+        "crafting table",
+        "jungle log",
+        "jungle slab",
+        "wooden shovel",
+        "wooden axe",
+        "jungle planks",
+        "yellow bed",
+        "hay block",
+        "dark oak door",
+        "dark oak slab",
+        "wooden axe",
+        "dark oak button",
+        "dark oak stairs",
+        "dark oak planks",
+        "wooden shovel",
+        "wooden axe",
+        "wooden shovel",
+        "wooden pickaxe",
+        "torch",
+        "clay ball",
+        "stone axe",
+        "stone pickaxe",
+        "coal",
+        "oak door",
+        "oak slab",
+        "oak trapdoor",
+        "wheat seeds",
+        "oak stairs",
+        "white wool",
+        "oak planks",
+        "wooden pickaxe",
+        "cobblestone",
+        "wooden pickaxe",
+        "stone pickaxe",
+        "oak planks",
+        "birch slab",
+        "stone axe",
+        "birch door",
+        "oak sapling",
+        "spruce planks",
+        "birch planks",
+        "oak log",
+        "birch log",
+        "wooden axe",
+        "wooden shovel",
+        "oak slab",
+        "potato",
+        "oak fence",
+        "birch planks",
+        "wheat seeds",
+        "oak door",
+        "oak sapling",
+        "rotten flesh",
         "sand",
-        "sandstone",
-        "cut_sandstone",
-        "chiseled_sandstone",
-        "golden_apple",
-        "stone_pressure_plate",
-        "birch_log",
-        "acacia_log",
-        "acacia_planks",
-        "acacia_sapling",
-        "cornflower",
-        "birch_sapling",
-        "golden_horse_armor",
-        "flint_and_steel",
-        "acacia_leaves",
-        "golden_axe",
-        "golden_sword",
+        "birch sapling",
+        "wooden shovel",
+        "wooden axe",
+        "birch slab",
+        "oak sapling",
+        "oak log",
+        "birch log",
+        "oak planks",
+        "birch planks",
+        "oak slab",
+        "oak log",
+        "rotten flesh",
+        "oak fence",
+        "wooden shovel",
+        "wooden axe",
+        "oak planks",
+        "oak door",
+        "oak sapling",
+        "crafting table",
+        "oak planks",
+        "birch log",
+        "stone axe",
+        "stone pickaxe",
+        "wooden pickaxe",
+        "stone axe",
+        "wooden pickaxe",
+        "oak stairs",
+        "oak door",
+        "oak planks",
+        "bread",
+        "oak sapling",
+        "wheat seeds",
+        "stone axe",
+        "birch planks",
+        "peony",
+        "oak sapling",
+        "wheat seeds",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "furnace",
+        "stone pickaxe",
+        "poppy",
+        "oak planks",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "oak planks",
+        "birch planks",
+        "dandelion",
+        "white wool",
+        "stripped birch log",
+        "crafting table",
+        "stripped oak log",
+        "oak log",
+        "oak sapling",
+        "rose bush",
+        "wooden pickaxe",
+        "oak fence",
+        "oak stairs",
+        "stone axe",
+        "iron pickaxe",
+        "hay block",
+        "birch log",
+        "oak planks",
+        "stone axe",
+        "stone pickaxe",
+        "stone shovel",
+        "birch slab",
+        "oak slab",
+        "birch planks",
+        "wooden pickaxe",
+        "white wool",
+        "wheat seeds",
+        "oak planks",
+        "stone axe",
+        "stone pickaxe",
+        "oak planks",
+        "oak log",
+        "wheat seeds",
+        "oak sapling",
+        "yellow bed",
+        "wooden pickaxe",
+        "hay block",
+        "oak planks",
+        "birch door",
+        "birch planks",
+        "chicken",
+        "stone axe",
+        "cooked mutton",
+        "oak stairs",
+        "birch log",
+        "light gray wool",
+        "wheat seeds",
+        "stone sword",
+        "wooden pickaxe",
+        "feather",
+        "oak log",
+        "wooden pickaxe",
+        "stone axe",
+        "oak log",
+        "birch planks",
+        "oak door",
+        "wheat seeds",
+        "oak planks",
+        "oxeye daisy",
+        "wheat seeds",
+        "birch planks",
+        "oak planks",
+        "wooden shovel",
+        "wooden axe",
+        "birch log",
+        "cooked beef",
+        "diamond axe",
+        "stone pickaxe",
+        "oak log",
+        "oak planks",
+        "golden apple",
+        "oak stairs",
+        "wooden pickaxe",
+        "birch door",
+        "oak fence",
+        "stone axe",
+        "birch fence",
+        "oak planks",
+        "string",
+        "egg",
         "leather",
-        "cooked_beef"
+        "beef",
+        "birch planks",
+        "stone shovel",
+        "oak planks",
+        "stone shovel",
+        "stone axe",
+        "white tulip",
+        "orange tulip",
+        "azure bluet",
+        "gray wool",
+        "birch sapling",
+        "wooden pickaxe",
+        "pumpkin",
+        "oak door",
+        "oak sapling",
+        "wheat seeds",
+        "stone axe",
+        "stone pickaxe",
+        "crafting table",
+        "spruce log",
+        "sweet berries",
+        "wooden pickaxe",
+        "oak planks",
+        "wooden axe",
+        "white wool",
+        "stone shovel",
+        "spruce planks",
+        "stone axe",
+        "oak planks",
+        "wooden pickaxe",
+        "stone axe",
+        "stone pickaxe",
+        "oak planks",
+        "oak door",
+        "cooked mutton",
+        "stone shovel",
+        "wheat seeds",
+        "iron ore",
+        "wooden pickaxe",
+        "wooden axe",
+        "crafting table",
+        "oak log",
+        "oak planks",
+        "wooden pickaxe",
+        "stone axe",
+        "spruce log",
+        "spruce planks",
+        "oak planks",
+        "oak fence",
+        "oak slab",
+        "wooden shovel",
+        "stone pickaxe",
+        "stone axe",
+        "oak trapdoor",
+        "crafting table",
+        "oak stairs",
+        "oak log",
+        "rotten flesh",
+        "oak sapling",
+        "oak door",
+        "wooden pickaxe",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "jungle planks",
+        "jungle log",
+        "oak fence",
+        "oak stairs",
+        "stone axe",
+        "oak door",
+        "stone shovel",
+        "lilac",
+        "birch sapling",
+        "oak sapling",
+        "wooden pickaxe",
+        "birch log",
+        "oak log",
+        "stone shovel",
+        "stone axe",
+        "stone pickaxe",
+        "wooden pickaxe",
+        "crafting table",
+        "oak sapling",
+        "birch sapling",
+        "oak planks",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "crafting table",
+        "oak log",
+        "oak sapling",
+        "oak planks",
+        "oak door",
+        "wheat seeds",
+        "oak planks",
+        "white wool",
+        "wooden axe",
+        "stone axe",
+        "stone shovel",
+        "spruce door",
+        "spruce planks",
+        "spruce log",
+        "granite",
+        "sweet berries",
+        "wooden pickaxe",
+        "spruce slab",
+        "stone axe",
+        "stone shovel",
+        "oak slab",
+        "oak planks",
+        "wooden pickaxe",
+        "birch planks",
+        "pink tulip",
+        "white wool",
+        "wheat seeds",
+        "oak log",
+        "birch slab",
+        "oak sapling",
+        "birch fence",
+        "oak sapling",
+        "cobblestone slab",
+        "oak planks",
+        "stone axe",
+        "stone shovel",
+        "dark oak stairs",
+        "dark oak slab",
+        "cooked mutton",
+        "dark oak door",
+        "stone pickaxe",
+        "wheat seeds",
+        "dark oak planks",
+        "birch sapling",
+        "birch door",
+        "wheat seeds",
+        "birch stairs",
+        "birch planks",
+        "wooden axe",
+        "oak stairs",
+        "oak fence",
+        "oak planks",
+        "stone axe",
+        "stone shovel",
+        "rotten flesh",
+        "stone pickaxe",
+        "wooden pickaxe",
+        "oak sapling",
+        "oak door",
+        "wheat seeds",
+        "birch planks",
+        "stone pickaxe",
+        "stone axe",
+        "stone shovel",
+        "oak door",
+        "oak planks",
+        "oak stairs",
+        "oak sapling",
+        "wheat seeds",
+        "wooden pickaxe",
+        "white wool",
+        "spruce slab",
+        "oak planks",
+        "stone shovel",
+        "stone pickaxe",
+        "stone axe",
+        "wooden pickaxe",
+        "spruce sapling",
+        "wheat seeds",
+        "oak slab",
+        "spruce door",
+        "andesite",
+        "birch wood",
+        "stone axe",
+        "oak door",
+        "wooden shovel",
+        "wooden pickaxe",
+        "oak fence",
+        "oak slab",
+        "birch log",
+        "oak log",
+        "birch sapling",
+        "oak sapling",
+        "oak stairs",
+        "oak planks",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "snowball",
+        "spruce fence",
+        "charcoal",
+        "spruce log",
+        "dark oak planks",
+        "dark oak stairs",
+        "stone axe",
+        "stone shovel",
+        "stone pickaxe",
+        "oak sapling",
+        "wooden pickaxe",
+        "oak slab",
+        "oak door",
+        "dark oak sapling",
+        "birch planks",
+        "birch sapling",
+        "oxeye daisy",
+        "oak planks",
+        "dark oak log",
+        "dark oak fence",
+        "stone axe",
+        "oak log",
+        "oak planks",
+        "wheat seeds",
+        "crafting table",
+        "birch sapling",
+        "oak sapling",
+        "wooden pickaxe",
+        "oxeye daisy",
+        "white wool",
+        "ink sac",
+        "stone shovel",
+        "birch log",
+        "oak log",
+        "oak door",
+        "stone axe",
+        "stone shovel",
+        "stone pickaxe",
+        "birch stairs",
+        "wooden pickaxe",
+        "wheat seeds",
+        "birch planks",
+        "oak planks",
+        "stone axe",
+        "birch door",
+        "oak planks",
+        "birch planks",
+        "oak sapling",
+        "wooden pickaxe",
+        "stone shovel",
+        "oak fence",
+        "stone axe",
+        "stone pickaxe",
+        "glass pane",
+        "oak stairs",
+        "oak planks",
+        "stone axe",
+        "stone shovel",
+        "crafting table",
+        "birch log",
+        "oak log",
+        "wooden pickaxe",
+        "birch sapling",
+        "oak sapling",
+        "oak planks",
+        "stone axe",
+        "stone pickaxe",
+        "stone shovel",
+        "birch log",
+        "dark oak fence",
+        "cooked chicken",
+        "iron pickaxe",
+        "iron axe",
+        "dark oak planks",
+        "oak stairs",
+        "stone pickaxe",
+        "stone axe",
+        "oak log",
+        "oak planks",
+        "birch log",
+        "crafting table",
+        "oak log",
+        "oak sapling",
+        "stone axe",
+        "wooden pickaxe",
+        "oak planks",
+        "stone axe",
+        "stone shovel",
+        "wooden pickaxe",
+        "barrel",
+        "birch door",
+        "birch fence",
+        "oak planks",
+        "oak sapling",
+        "white wool",
+        "wheat seeds",
+        "oxeye daisy",
+        "birch slab",
+        "birch planks",
+        "oak slab",
+        "birch fence",
+        "stone axe",
+        "stone shovel",
+        "oak slab",
+        "wheat seeds",
+        "birch door",
+        "oak sapling",
+        "wooden pickaxe",
+        "pink dye",
+        "birch planks",
+        "oak planks",
+        "stone axe",
+        "birch door",
+        "birch slab",
+        "oak fence",
+        "birch sapling",
+        "wooden pickaxe",
+        "wheat seeds",
+        "stone shovel",
+        "oak planks",
+        "birch planks",
+        "stone axe",
+        "stone pickaxe",
+        "stone shovel",
+        "cooked porkchop",
+        "dark oak slab",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "acacia door",
+        "acacia log",
+        "hay block",
+        "acacia planks",
+        "oak log",
+        "stone shovel",
+        "stone axe",
+        "stone pickaxe",
+        "wooden pickaxe",
+        "oak sapling",
+        "oak door",
+        "wheat seeds",
+        "oxeye daisy",
+        "birch planks",
+        "pink tulip",
+        "stone axe",
+        "stone shovel",
+        "stone pickaxe",
+        "birch stairs",
+        "wheat seeds",
+        "oak sapling",
+        "oxeye daisy",
+        "birch planks",
+        "oak log",
+        "birch slab",
+        "oak door",
+        "iron axe",
+        "stone pickaxe",
+        "stone shovel",
+        "spruce trapdoor",
+        "cooked porkchop",
+        "black wool",
+        "spruce door",
+        "spruce sapling",
+        "spruce slab",
+        "wooden pickaxe",
+        "spruce planks",
+        "oak sapling",
+        "wheat seeds",
+        "wooden shovel",
+        "oak door",
+        "oak planks",
+        "cornflower",
+        "crafting table",
+        "jungle planks",
+        "wooden shovel",
+        "jungle fence",
+        "stone axe",
+        "wooden pickaxe",
+        "jungle door",
+        "wheat seeds",
+        "jungle stairs",
+        "ladder",
+        "stone axe",
+        "stone pickaxe",
+        "spruce slab",
+        "cooked mutton",
+        "spruce log",
+        "oak planks",
+        "spruce planks",
+        "wooden pickaxe",
+        "stone shovel",
+        "white bed",
+        "wheat seeds",
+        "spruce door",
+        "wooden axe",
+        "stripped spruce log",
+        "oak sapling",
+        "oak door",
+        "wooden shovel",
+        "wooden sword",
+        "oak planks",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "jungle door",
+        "jungle stairs",
+        "jungle fence",
+        "jungle planks",
+        "wheat seeds",
+        "stone axe",
+        "stone pickaxe",
+        "stone shovel",
+        "cooked beef",
+        "oak fence",
+        "wooden pickaxe",
+        "iron axe",
+        "iron shovel",
+        "oak slab",
+        "experience bottle",
+        "wooden pickaxe",
+        "stone shovel",
+        "oak planks",
+        "wheat seeds",
+        "iron ingot",
+        "birch slab",
+        "birch planks",
+        "filled map",
+        "stone axe",
+        "emerald",
+        "gold nugget",
+        "lapis lazuli",
+        "wheat seeds",
+        "birch sapling",
+        "oak sapling",
+        "birch door",
+        "oak planks",
+        "birch planks",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "cooked porkchop",
+        "spruce planks",
+        "oak planks",
+        "oak door",
+        "stone shovel",
+        "stone axe",
+        "stone pickaxe",
+        "birch sapling",
+        "oak sapling",
+        "birch stairs",
+        "wheat seeds",
+        "birch planks",
+        "birch log",
+        "oak sapling",
+        "oak planks",
+        "wooden axe",
+        "stone axe",
+        "oak stairs",
+        "oak door",
+        "oak planks",
+        "oak sapling",
+        "wooden pickaxe",
+        "stone shovel",
+        "dark oak planks",
+        "dark oak sapling",
+        "dark oak slab",
+        "white bed",
+        "dark oak door",
+        "wooden axe",
+        "wooden pickaxe",
+        "wooden shovel",
+        "oak door",
+        "oak planks",
+        "oak log",
+        "oak sapling",
+        "wooden axe",
+        "oak planks",
+        "stone axe",
+        "stone pickaxe",
+        "oak log",
+        "crafting table",
+        "oak slab",
+        "oak stairs",
+        "oak planks",
+        "cooked porkchop",
+        "wheat seeds",
+        "allium",
+        "sugar cane",
+        "oak sapling",
+        "birch log",
+        "stone shovel",
+        "oak door",
+        "oak stairs",
+        "birch planks",
+        "oak planks",
+        "oak sapling",
+        "blue orchid",
+        "wheat seeds",
+        "stone shovel",
+        "wooden pickaxe",
+        "stone axe",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "crafting table",
+        "spruce log",
+        "spruce sapling",
+        "azure bluet",
+        "wheat seeds",
+        "spruce planks",
+        "stone axe",
+        "stone shovel",
+        "wooden pickaxe",
+        "azure bluet",
+        "birch fence",
+        "white wool",
+        "birch sapling",
+        "birch door",
+        "wheat seeds",
+        "birch planks",
+        "birch slab",
+        "stripped birch log",
+        "oak door",
+        "stone axe",
+        "birch planks",
+        "oak stairs",
+        "wooden pickaxe",
+        "stone shovel",
+        "stone axe",
+        "stone shovel",
+        "oak fence",
+        "oak planks",
+        "wooden pickaxe",
+        "wheat seeds",
+        "white wool",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "glass pane",
+        "cooked beef",
+        "oak planks",
+        "oak log",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "cooked beef",
+        "oak planks",
+        "stone axe",
+        "stone shovel",
+        "cooked mutton",
+        "wooden pickaxe",
+        "birch fence",
+        "brown wool",
+        "black wool",
+        "birch slab",
+        "wheat seeds",
+        "oak planks",
+        "oak slab",
+        "oak log",
+        "birch door",
+        "birch planks",
+        "cooked chicken",
+        "stone pickaxe",
+        "stone axe",
+        "wooden pickaxe",
+        "oak planks",
+        "wooden axe",
+        "wooden shovel",
+        "oak door",
+        "oak fence",
+        "birch stairs",
+        "birch planks",
+        "oak planks",
+        "wheat seeds",
+        "birch sapling",
+        "oak sapling",
+        "oak sapling",
+        "smooth sandstone",
+        "stone axe",
+        "stone pickaxe",
+        "stone shovel",
+        "wheat seeds",
+        "birch door",
+        "jungle log",
+        "crafting table",
+        "bamboo",
+        "stone axe",
+        "wooden pickaxe",
+        "jungle planks",
+        "spruce stairs",
+        "spruce door",
+        "spruce slab",
+        "wheat seeds",
+        "spruce sapling",
+        "stone axe",
+        "wooden pickaxe",
+        "gravel",
+        "spruce planks",
+        "spruce trapdoor",
+        "sweet berries",
+        "flint",
+        "stone axe",
+        "stone shovel",
+        "cooked mutton",
+        "birch planks",
+        "birch fence",
+        "oak planks",
+        "oak log",
+        "wheat seeds",
+        "birch sapling",
+        "oak sapling",
+        "birch slab",
+        "wooden pickaxe",
+        "red dye",
+        "birch door",
+        "stone axe",
+        "birch fence",
+        "oak door",
+        "oak stairs",
+        "oak planks",
+        "oak sapling",
+        "stone shovel",
+        "wooden pickaxe",
+        "wheat seeds",
+        "birch planks",
+        "oak planks",
+        "oak stairs",
+        "stone axe",
+        "birch sapling",
+        "oak sapling",
+        "stone shovel",
+        "wooden pickaxe",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "oak planks",
+        "oak log",
+        "cooked porkchop",
+        "diorite",
+        "wheat seeds",
+        "spruce door",
+        "wooden pickaxe",
+        "stone shovel",
+        "spruce sapling",
+        "spruce fence",
+        "spruce slab",
+        "stone axe",
+        "spruce planks",
+        "stone axe",
+        "arrow",
+        "stone shovel",
+        "birch fence",
+        "oak log",
+        "white wool",
+        "wooden pickaxe",
+        "wheat seeds",
+        "birch door",
+        "oak slab",
+        "birch planks",
+        "oak planks",
+        "pink dye",
+        "stone axe",
+        "stone shovel",
+        "birch door",
+        "birch slab",
+        "oak planks",
+        "birch fence",
+        "birch sapling",
+        "wheat seeds",
+        "wooden pickaxe",
+        "birch planks",
+        "oak slab",
+        "jungle fence",
+        "jungle planks",
+        "jungle slab",
+        "jungle pressure plate",
+        "jungle trapdoor",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "birch planks",
+        "oak planks",
+        "spider eye",
+        "birch door",
+        "stone axe",
+        "stone shovel",
+        "wooden pickaxe",
+        "oak planks",
+        "wheat seeds",
+        "birch slab",
+        "birch sapling",
+        "oak sapling",
+        "oak log",
+        "spruce slab",
+        "stone shovel",
+        "stone axe",
+        "stone pickaxe",
+        "spruce fence",
+        "spruce sapling",
+        "spruce door",
+        "sweet berries",
+        "spruce planks",
+        "stone axe",
+        "stone shovel",
+        "dark oak slab",
+        "dark oak door",
+        "dark oak fence",
+        "wheat seeds",
+        "wooden pickaxe",
+        "dark oak stairs",
+        "dark oak planks",
+        "stone axe",
+        "stone shovel",
+        "spruce door",
+        "bone",
+        "spruce fence",
+        "wheat seeds",
+        "wooden pickaxe",
+        "oak door",
+        "white carpet",
+        "birch planks",
+        "oak sapling",
+        "wheat seeds",
+        "oak trapdoor",
+        "wooden pickaxe",
+        "oak slab",
+        "birch fence",
+        "rotten flesh",
+        "oak fence",
+        "stone axe",
+        "oak stairs",
+        "oak planks",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "crafting table",
+        "oak log",
+        "oak sapling",
+        "white wool",
+        "oak planks",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "cooked mutton",
+        "oak planks",
+        "stone axe",
+        "spruce door",
+        "cooked mutton",
+        "spruce planks",
+        "spruce stairs",
+        "wooden pickaxe",
+        "spruce sapling",
+        "light gray wool",
+        "spruce fence",
+        "spruce slab",
+        "stone shovel",
+        "sweet berries",
+        "stone axe",
+        "cooked mutton",
+        "oak planks",
+        "sweet berries",
+        "spruce log",
+        "spruce door",
+        "spruce planks",
+        "stone pickaxe",
+        "stone axe",
+        "white wool",
+        "iron axe",
+        "stone pickaxe",
+        "oak log",
+        "crafting table",
+        "oak planks",
+        "wooden pickaxe",
+        "stone axe",
+        "iron ingot",
+        "stone axe",
+        "stone pickaxe",
+        "white wool",
+        "wooden pickaxe",
+        "jungle log",
+        "jungle planks",
+        "oak sapling",
+        "spruce planks",
+        "cocoa beans",
+        "sweet berries",
+        "oak door",
+        "wooden shovel",
+        "oak planks",
+        "stone shovel",
+        "stone axe",
+        "stone pickaxe",
+        "spruce door",
+        "spruce sapling",
+        "wheat seeds",
+        "spruce planks",
+        "oak planks",
+        "dark oak planks",
+        "rose bush",
+        "stone axe",
+        "wooden pickaxe",
+        "oak stairs",
+        "oak sapling",
+        "oak slab",
+        "dark oak fence",
+        "oak trapdoor",
+        "oak fence",
+        "stone axe",
+        "wooden pickaxe",
+        "oak door",
+        "oak sapling",
+        "rose bush",
+        "dark oak door",
+        "oak stairs",
+        "oak planks",
+        "sunflower",
+        "dark oak sapling",
+        "wheat seeds",
+        "dark oak slab",
+        "dark oak door",
+        "dark oak planks",
+        "stone pickaxe",
+        "stone axe",
+        "stone shovel",
+        "oak door",
+        "oak fence",
+        "azure bluet",
+        "oak sapling",
+        "wheat seeds",
+        "wooden pickaxe",
+        "acacia planks",
+        "stone axe",
+        "birch planks",
+        "birch door",
+        "oak planks",
+        "map",
+        "compass",
+        "paper",
+        "wooden pickaxe",
+        "stone shovel",
+        "wheat seeds",
+        "oak sapling",
+        "cooked porkchop",
+        "stone pickaxe",
+        "stone axe",
+        "acacia planks",
+        "stone axe",
+        "oak planks",
+        "oak stairs",
+        "oak door",
+        "wooden pickaxe",
+        "wheat seeds",
+        "stone shovel",
+        "white wool",
+        "oak log",
+        "stone pickaxe",
+        "stone axe",
+        "stone shovel",
+        "birch sapling",
+        "wooden pickaxe",
+        "oak door",
+        "birch planks",
+        "oak sapling",
+        "oak planks",
+        "spruce stairs",
+        "stone shovel",
+        "stone axe",
+        "stone pickaxe",
+        "spruce sapling",
+        "oak door",
+        "oak sapling",
+        "spruce planks",
+        "oak planks",
+        "stone axe",
+        "crafting table",
+        "acacia log",
+        "white wool",
+        "wooden pickaxe",
+        "oak planks",
+        "stone axe",
+        "iron shovel",
+        "cooked beef",
+        "glistering melon slice",
+        "birch door",
+        "iron ingot",
+        "oak planks",
+        "rose bush",
+        "birch fence",
+        "birch sapling",
+        "gold nugget",
+        "wheat seeds",
+        "golden pickaxe",
+        "iron nugget",
+        "white bed",
+        "birch planks",
+        "stone pickaxe",
+        "stone axe",
+        "stone shovel",
+        "crafting table",
+        "oak planks",
+        "white wool",
+        "oak sapling",
+        "wooden pickaxe",
+        "stone pickaxe",
+        "iron axe",
+        "iron shovel",
+        "oak planks",
+        "baked potato",
+        "wooden pickaxe",
+        "iron ingot",
+        "cooked mutton",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "crafting table",
+        "oak log",
+        "oak planks",
+        "white wool",
+        "oak sapling",
+        "crafting table",
+        "stone axe",
+        "wooden pickaxe",
+        "stone shovel",
+        "oak log",
+        "birch log",
+        "wheat seeds",
+        "birch sapling",
+        "oak planks",
+        "crafting table",
+        "oak log",
+        "oak sapling",
+        "wooden pickaxe",
+        "wooden axe",
+        "oak planks",
+        "oak stairs",
+        "oak log",
+        "stone shovel",
+        "stone axe",
+        "stone pickaxe",
+        "wooden pickaxe",
+        "wheat seeds",
+        "oak planks",
+        "birch sapling",
+        "birch slab",
+        "oak door",
+        "birch planks",
+        "stone pickaxe",
+        "stone axe",
+        "stone shovel",
+        "spruce stairs",
+        "wheat seeds",
+        "wooden pickaxe",
+        "spruce door",
+        "spruce fence",
+        "stone pickaxe",
+        "stone axe",
+        "stone shovel",
+        "spruce fence",
+        "spruce stairs",
+        "spruce planks",
+        "sweet berries",
+        "wooden pickaxe",
+        "spruce door",
+        "birch fence",
+        "stone axe",
+        "oak log",
+        "iron shovel",
+        "oak planks",
+        "wooden pickaxe",
+        "birch door",
+        "birch slab",
+        "oak slab",
+        "wheat seeds",
+        "wooden shovel",
+        "fire charge",
+        "golden chestplate",
+        "iron nugget",
+        "gold nugget",
+        "birch door",
+        "stone axe",
+        "stone shovel",
+        "birch fence",
+        "oak slab",
+        "rotten flesh",
+        "oak planks",
+        "birch slab",
+        "wooden pickaxe",
+        "wheat seeds",
+        "birch planks",
+        "stone axe",
+        "dark oak slab",
+        "dark oak planks",
+        "dark oak fence",
+        "cooked mutton",
+        "wooden pickaxe",
+        "white wool",
+        "dark oak log",
+        "wheat seeds",
+        "stone shovel",
+        "dark oak door",
+        "stone axe",
+        "stone shovel",
+        "dark oak door",
+        "cooked mutton",
+        "dark oak slab",
+        "oxeye daisy",
+        "stripped dark oak log",
+        "dark oak planks",
+        "stone pickaxe",
+        "stone axe",
+        "stone shovel",
+        "oak fence",
+        "oak door",
+        "oak slab",
+        "oak planks",
+        "wooden pickaxe",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "crafting table",
+        "oak log",
+        "oak planks",
+        "stone axe",
+        "oxeye daisy",
+        "wheat seeds",
+        "oak trapdoor",
+        "spruce door",
+        "spruce planks",
+        "spruce slab",
+        "stone shovel",
+        "oak planks",
+        "cooked beef",
+        "glass pane",
+        "oak planks",
+        "stone pickaxe",
+        "stone axe",
+        "oak boat",
+        "oak log",
+        "wooden pickaxe",
+        "stone axe",
+        "stone shovel",
+        "oak planks",
+        "hay block",
+        "rotten flesh",
+        "oak planks",
+        "stone pickaxe",
+        "stone axe",
+        "oak log",
+        "acacia log",
+        "wooden pickaxe",
+        "acacia planks",
+        "stone axe",
+        "wheat seeds"
     ],
     "keys": [
-        "right.control",
         "keyboard.w",
-        "left.control",
         "keyboard.space",
         "keyboard.a",
         "keyboard.d",
-        "keyboard.e",
         "left.shift",
-        "keyboard.1",
-        "keyboard.escape",
-        "keyboard.2",
         "keyboard.s",
-        "keyboard.f3",
-        "keyboard.f",
+        "keyboard.e",
+        "keyboard.escape",
+        "keyboard.1",
+        "keyboard.2",
         "keyboard.3",
-        "keyboard.m",
-        "keyboard.comma",
+        "keyboard.f3",
         "keyboard.q",
         "keyboard.4",
-        "keyboard.f2",
-        "caps.lock",
-        "keyboard.f1",
-        "keyboard.f6",
-        "keyboard.f5",
+        "left.control",
+        "keyboard.l",
+        "keyboard.5",
+        "keyboard.b",
+        "keyboard.t",
         "keyboard.r",
+        "keyboard.p",
+        "left.alt",
+        "keyboard.6",
+        "keyboard.7",
+        "keyboard.8",
+        "keyboard.9",
         "grave.accent",
-        "left.win",
-        "keypad.enter",
-        "keyboard.f4",
-        "keypad.subtract",
-        "keyboard.b"
+        "keyboard.c",
+        "keyboard.x",
+        "keyboard.f",
+        "keypad.1",
+        "keyboard.0",
+        "keyboard.backspace",
+        "keyboard.o",
+        "keyboard.n",
+        "caps.lock",
+        "scancode.0",
+        "keyboard.i",
+        "keyboard.menu",
+        "keyboard.f2",
+        "keyboard.f1",
+        "keyboard.tab",
+        "keyboard.u",
+        "keypad.2",
+        "keyboard.f8",
+        "keyboard.f9",
+        "keyboard.f7",
+        "keyboard.f10",
+        "keyboard.k"
     ]
 }

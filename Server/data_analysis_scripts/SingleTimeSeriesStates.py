@@ -18,22 +18,15 @@ def transform_game_name(file_path):
     else:
         raise ValueError("Invalid file name format.")
 
-def get_files_by_percentage(directory_path, percentage, game_name=None):
-    if percentage == 0 and game_name:
-        # Handle special case for single game analysis
-        specific_dir = os.path.join(directory_path, '100')  # Assuming single game data is in '100'
-        file_path = os.path.join(specific_dir, game_name)
-        logging.info(f'file_path: {file_path}')
-
-        if not os.path.exists(file_path):
-            raise ValueError(f"File {file_path} does not exist.")
-        return [file_path]
-    else:
-        # Normal operation for other percentages
-        specific_dir = os.path.join(directory_path, str(percentage))
-        if not os.path.exists(specific_dir):
-            raise ValueError(f"Directory {specific_dir} does not exist.")
-        return [os.path.join(specific_dir, f) for f in os.listdir(specific_dir) if f.endswith('.json')]
+def get_single_game_file(directory_path, game_name):
+    specific_dir = os.path.join(directory_path, '100')  # Assuming single game data is in '100'
+    file_path = os.path.join(specific_dir, game_name)
+    if not file_path.endswith('.json'):
+        file_path += '.json'
+    logging.info(f"Single game file path: {file_path}")
+    if not os.path.exists(file_path):
+        raise ValueError(f"File {file_path} does not exist.")
+    return [file_path]
 
 def load_parsed_json_data(file_paths):
     all_data = []
@@ -44,56 +37,54 @@ def load_parsed_json_data(file_paths):
                 if 'timelines' in data:
                     all_data.append(data['timelines'])
             except json.JSONDecodeError as e:
-                print(f"Error decoding JSON in file {file_path}: {e}")
+                logging.error(f"Error decoding JSON in file {file_path}: {e}")
     return all_data
 
 def time_string_to_seconds(time_str):
-    minutes, seconds = map(int, time_str.split(':'))
-    return minutes * 60 + seconds * 1
+    try:
+        minutes, seconds = map(int, time_str.split(':'))
+        return minutes * 60 + seconds
+    except ValueError:
+        logging.error(f"Invalid time string format: {time_str}")
+        return 0
 
-def calculate_action_frequencies_from_timelines(aggregated_actions, specified_actions, num_points=15):
+def calculate_action_frequencies_from_timelines(aggregated_actions, specified_actions, num_points=10):
     action_frequencies = pd.DataFrame()
     
-    min_time = 0
+    min_time = float('inf')
     max_time = 0
-    count = 0
-    # logging.info(f"aggregated_actions.values(): {aggregated_actions.values()}")
 
     for item_timeline in aggregated_actions.values():
-        if count > 0:
-            break
-        count += 1
-        # logging.info(f"item_timeline: {item_timeline}")
         for timeline in item_timeline.values():
             for pair in timeline:
                 time_str, _ = pair
                 time_value = time_string_to_seconds(time_str)
                 if time_value > max_time:
                     max_time = time_value
-    regular_time_points = np.linspace(min_time, 900, num_points)
+                if time_value < min_time:
+                    min_time = time_value
+
+    if min_time == float('inf'):
+        min_time = 0
+
+    regular_time_points = np.linspace(min_time, max_time, num_points)
     action_frequencies['time'] = regular_time_points
-    
-    count = 0
-    logging.info(f"specified_actions: {specified_actions}")
+
     for action in specified_actions:
-        p_action = action.replace('_', ' ')
-        category, item = p_action.split('.')
+        category, item = action.split('.')
         item_timelines = aggregated_actions.get(category, {}).get(item, [])
         action_counts = [0] * num_points
-
-        logging.info(f"category, item: {category}, {item}")
-        # logging.info(f"item_timelines: {item_timelines}")
 
         for i, time_point in enumerate(regular_time_points):
             counts_at_time = []
             for time_str, count in item_timelines:
-                time_seconds = sum(x * int(t) for x, t in zip([60, 1], time_str.split(":"))) # time_string_to_seconds(time_str)
+                time_seconds = time_string_to_seconds(time_str)
                 if time_seconds <= time_point and time_seconds > 0:
                     counts_at_time.append(count)
-            logging.info(f"time_seconds: {time_point}")
-            logging.info(f"time_point: {time_point}")
-            logging.info(f"counts_at_time: {counts_at_time}")
-            action_counts[i] = np.mean(counts_at_time)
+            if counts_at_time:
+                action_counts[i] = np.mean(counts_at_time)
+            else:
+                action_counts[i] = 0
 
         action_frequencies[action] = action_counts
 
@@ -111,10 +102,9 @@ def aggregate_actions(parsed_data):
                     aggregated_actions[action_category][item] = timelines
                 else:
                     aggregated_actions[action_category][item].extend(timelines)
-    # logging.info(f"Aggregated actions: {aggregated_actions}")
     return aggregated_actions
 
-def plot_action_frequencies(action_frequencies_df, percentage, items):
+def plot_action_frequencies(action_frequencies_df, game_name, items):
     plt.figure(figsize=(12, 8))
     for action in items:
         if action in action_frequencies_df.columns:
@@ -124,43 +114,33 @@ def plot_action_frequencies(action_frequencies_df, percentage, items):
             logging.warning(f"Data for action {action} is not available in the DataFrame.")
     plt.xlabel('Time (seconds)')
     plt.ylabel('Frequency')
-    plt.title(f'Action Frequencies Over Time - {percentage}% of Data')
+    plt.title(f'Action Frequencies Over Time - {game_name}')
     plt.legend()
     plt.grid(True)
     plt.xticks(rotation=45)
     plt.tight_layout()
-    graph_path = f'action_frequencies_{percentage}pct.png'
+    graph_path = f'action_frequencies_{game_name}.png'
     plt.savefig(graph_path)
     plt.close()
     return graph_path
 
 def parse_custom_format(data_str):
-    pattern = r"\{name:(?P<name>[^,]+),actions:\[(?P<actions>[^\]]+)\]\}"
-    matches = re.finditer(pattern, data_str)
-    formatted_actions = []
-
-    for match in matches:
-        item = match.group('name').strip().replace(" ", "_")  # Remove spaces and format
-        actions = match.group('actions').strip().split(',')
-        for action in actions:
-            action = action.strip()  # Clean action string
-            formatted_actions.append(f"{action}.{item}")  # Format as 'action.item'
-
+    # Simplified parsing for actions in the format "action.item"
+    formatted_actions = data_str.split(',')
     return formatted_actions
 
 def main():
     # Configure logging to a file
     logging.basicConfig(filename='script.log', level=logging.INFO, 
                         format='%(asctime)s - %(levelname)s - %(message)s')
-    parser = argparse.ArgumentParser(description='Process some integers.')
-    parser.add_argument('--percentage', type=int, help='Percentage of data to process')
+    parser = argparse.ArgumentParser(description='Process single game data.')
     parser.add_argument('--actions', type=str, required=True, help='Custom formatted string of actions')
-    parser.add_argument('--game_name', help='Specific game file to analyze', default=None)
+    parser.add_argument('--game_name', required=True, help='Specific game file to analyze')
     parser.add_argument('--task', required=True, help='The task type (Diamonds, House_Building_rng, House_Building)')  # Added argument for task
 
     args = parser.parse_args()
-    percentage = args.percentage
     logging.info(f'Received actions: {args.actions}')
+    logging.info(f'Received game name: {args.game_name}')
     logging.info(f'Received task: {args.task}')  # Log the task type
 
     # Determine the directory based on the task type
@@ -174,30 +154,25 @@ def main():
     else:
         raise ValueError("Invalid task type. Choose from 'Diamonds', 'House_Building_rng', or 'House_Building'.")
 
-    # Parse the custom formatted string
+    # Parse the actions string
     try:
-        if percentage == 0:
-            actions_split = args.actions.split(',')
-            actions = [action.strip() for action in actions_split]
-        else:
-            actions = parse_custom_format(args.actions)
-        logging.info(f'actions after parse: {actions}')
+        actions = parse_custom_format(args.actions)
+        logging.info(f'Actions after parse: {actions}')
     except Exception as e:
-        logging.error(f"Failed to parse custom formatted actions: {e}")
+        logging.error(f"Failed to parse actions: {e}")
         raise
 
-    if args.game_name:
-        transformed_game_name = transform_game_name(args.game_name)
-    else:
-        transformed_game_name = None
-    
-    file_paths = get_files_by_percentage(directory, percentage, transformed_game_name)  # Pass the determined directory
+    transformed_game_name = transform_game_name(args.game_name)
+
+    file_paths = get_single_game_file(directory, transformed_game_name)  # Pass the determined directory
+    logging.info(f'File paths: {file_paths}')
     parsed_data = load_parsed_json_data(file_paths)
     aggregated_actions = aggregate_actions(parsed_data)
     action_frequencies_df = calculate_action_frequencies_from_timelines(aggregated_actions, actions)
     
-    graph_path = plot_action_frequencies(action_frequencies_df, percentage, actions)
+    graph_path = plot_action_frequencies(action_frequencies_df, transformed_game_name, actions)
     
+    logging.info(f"Generated graph at: {graph_path}")
     print(json.dumps({
         'actions_points': action_frequencies_df.to_json(orient='records'),
         'actions_path': graph_path
