@@ -26,13 +26,20 @@ def json_get_games_durations(task, percentage):
     durations = []
     # Properly format the path with the percentage
     #directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data\100'
-    directory = os.path.join("Parsed_Data", str(percentage))
+        # code before change:
+    # directory = os.path.join("Parsed_Data", str(percentage))
+    # my try:
+    base = 'C:\Data'
+    actual_task = task.split('.')[0]
+    specific_path = f'\{actual_task}\{percentage}'
+    directory = base+specific_path
+    #end of change
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
         with open(filepath, 'r') as f:
             json_content = json.load(f)
-        if json_content['stats']['time'][0]!='-':
+        if json_content['stats']['time'][0]!='-' and int(json_content['stats']['time'].split(':')[0])<30:
             durations.append(json_content['stats']['time'])
     return durations
 
@@ -154,7 +161,14 @@ def json_get_games_item(task, item, percentage):
     item_freq = []
     # Properly format the path with the percentage
     # directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data\100'
-    directory = os.path.join("Parsed_Data", str(percentage))
+    # code before change:
+    # directory = os.path.join("Parsed_Data", str(percentage))
+    # my try:
+    base = 'C:\Data'
+    actual_task = task.split('.')[0]
+    specific_path = f'\{actual_task}\{percentage}'
+    directory = base+specific_path
+    #end of change
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
@@ -168,6 +182,11 @@ def json_get_games_item(task, item, percentage):
 
 
 def create_game_item_distribution(task, item, percentage):
+    filename = "tests.txt"
+
+# Save the string to the text file
+    with open(filename, 'w') as file:
+        file.write(item)
     item_freq = json_get_games_item(task, item, percentage)
     clean_name = item.replace('_', ' ')
     bin_edges = np.linspace(min(item_freq) - 1, max(item_freq) + 1, 6)
@@ -203,7 +222,14 @@ def json_get_games_key(task, key, percentage):
     key_freq = []
     # Properly format the path with the percentage
     #directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data\100'
-    directory = os.path.join("Parsed_Data", str(percentage))
+    # code before change:
+    # directory = os.path.join("Parsed_Data", str(percentage))
+    # my try:
+    base = 'C:\Data'
+    actual_task = task.split('.')[0]
+    specific_path = f'\{actual_task}\{percentage}'
+    directory = base+specific_path
+    #end of change
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         # Open the JSON file and load its content
@@ -251,18 +277,17 @@ def create_all_keys_distribution(task, keys, percentage):
 import json
 
 def create_all_game_data(task, actions, items, keys, percentage):
-    # for item in actions:
-    #     item['name'] = item['name'].replace('_', ' ')
-    items_edited = items
+    items_edited = items.split(',')
+    edited_keys = keys.split(',')
 
     data = {
         'game_duration_graph': create_game_time_distribution(task, percentage),
         'actions_graphs': {action_dict['name']: create_game_action_distribution(task, action_dict, percentage) for action_dict in actions},
         'inventory_graphs': {item: create_game_item_distribution(task, item, percentage) for item in items_edited},
-        'keys_graphs': {key: create_game_key_distribution(task, key, percentage) for key in keys}
+        'keys_graphs': {key: create_game_key_distribution(task, key, percentage) for key in edited_keys}
     }
 
-    json_data = json.dumps(data, indent=4)  # Use indent for pretty-printing if desired
+    json_data = json.dumps(data, indent=4) 
     return json_data
 
 

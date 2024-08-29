@@ -1,2 +1,12 @@
 node_modules/
 FrontEndNew/
+Server/tests.json
+Server/tests.txt
+Server/task_name.txt
+Server/script2.log
+Server/script.log
+Server/histograms.zip
+Server/filters_single.json
+Server/filters_dataset.json
+Server/action_frequencies.log
+FrontEndNew/Frontend/.angular/cache/17.2.1/final-project/.tsbuildinfo

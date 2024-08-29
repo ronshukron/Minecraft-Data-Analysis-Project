@@ -24,9 +24,9 @@ def get_filters(task, percentage):
     # old code
     directory = os.path.join("Parsed_Data", str(percentage))
     # my try:
-    base = 'C:\Data'
+    base = 'C:\\Data'
     actual_task = task.split('.')[0]
-    specific_path = f'\{actual_task}\{percentage}'
+    specific_path = f'\\{actual_task}\\{percentage}'
     directory = base+specific_path
     #end of change
     for filename in os.listdir(directory):
@@ -62,28 +62,26 @@ def get_filters(task, percentage):
 
     return res
 
-def main():
-    
-    parser = argparse.ArgumentParser(description='Process some integers.')
-    parser.add_argument('--task', type=str, default='House Building from Scratch Task', help='name of a task')
-    parser.add_argument('--percentage', type=int, default=10, help='Percentage of data to process')
-
-    
-    args = parser.parse_args()
-    task = args.task
-    percentage= args.percentage
-    
-    res= get_filters(task, percentage)
-
-    file_path = f'filters_dataset.json'
-
-    try:
-        with open(file_path, 'w') as json_file:
-            json.dump(res, json_file, indent=4)
-    except Exception as e:
-        print(f"Error writing to {file_path}: {e}")
-
+def run():
+    for task in ['House_Building_rng', 'House_Building', 'Diamonds']:
+        for percentage in ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100']:
+            res = get_filters(task, percentage)
+            if not res['actions'] and not res['inventory'] and not res['keys']:
+                continue  # Skip saving if no data is found
+            
+            base = r'C:\Data\Filters'  # Use a raw string for the base path
+            specific_path = os.path.join(base, task, percentage)
+            
+            # Create the directory if it doesn't exist
+            os.makedirs(specific_path, exist_ok=True)
+            
+            file_path = os.path.join(specific_path, 'filters_dataset.json')
+            
+            try:
+                with open(file_path, 'w') as json_file:
+                    json.dump(res, json_file, indent=4)
+            except Exception as e:
+                print(f"Error writing to {file_path}: {e}")
 
 if __name__ == "__main__":
-    main()
-
+    run()

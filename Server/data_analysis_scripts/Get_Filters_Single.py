@@ -27,7 +27,18 @@ def get_filters_single_game(task, name):
     # directory = r'C:\Users\Shira\PycharmProjects\Minecraft-Data-Analysis-Project\Server\Parsed_Data\100'
     # Properly format the path with the percentage
     # directory = os.path.join(base_directory, str(percentage))
-    directory = os.path.join("Parsed_Data", str(100))
+    # old:
+    # directory = os.path.join("Parsed_Data", str(100))
+        # my try:
+    base = 'C:\Data'
+    actual_task = task.split('.')[0]
+    # The file path where you want to save the string
+
+    # Open the file in write mode ('w') and write the string into it
+
+    specific_path = f'\\{actual_task}\\100'
+    directory = base+specific_path
+    #end of change
     # for filename in os.listdir(directory):
     base = 'merged_run_'
     parsed_name = extract_date_time(name)
