@@ -7,6 +7,8 @@ import { Mp4PageComponent } from './pages/mp4/mp4-page/mp4-page.component';
 
 export const routes: Routes = [
   { path: 'Dataset', component: DatasetMainComponent, title: 'Dataset Page' },
+  { path: '', component: DatasetMainComponent, title: 'Dataset Page' },
+
   { path: 'About', component: AboutComponent, title: 'About Page' },
   {
     path: 'SingleGame',

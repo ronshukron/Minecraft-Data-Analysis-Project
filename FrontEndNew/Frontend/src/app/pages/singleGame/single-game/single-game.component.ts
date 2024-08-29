@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { Mp4PageComponent } from '../../mp4/mp4-page/mp4-page.component';
 import { RouterModule } from '@angular/router';
-import { concatAll, filter } from 'rxjs';
+import { Subscription, concatAll, filter } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
@@ -45,6 +45,7 @@ export class SingleGameComponent {
   public afterApply: boolean = false;
   public loading: boolean = false;
   public afterApply_image: boolean = true;
+  private sub: Subscription | undefined;
   private filters: ISingleGameFilters = {
     selectedTask: '',
     game: '',
@@ -56,18 +57,24 @@ export class SingleGameComponent {
     data_points: [],
   };
 
+  ngOnDestroy(): void {
+    if (this.sub) this.sub.unsubscribe();
+    this.restart_args;
+  }
+
   constructor(
     public dataService: DataService,
     private router: Router,
   ) {}
 
   public onFilterChanged(filters: ISingleGameFilters) {
+    if (this.sub) this.sub.unsubscribe();
     if (!filters) return;
     this.filters = filters;
     this.dataService.gameName = filters.game;
     this.restart_args();
     this.loading = true;
-    this.dataService.getSingleGameData(filters).subscribe(
+    this.sub = this.dataService.getSingleGameData(filters).subscribe(
       (data: IsingleGameDataFromAPI) => {
         this.data.data_points = data.data_points;
         this.setImageFromAPI(data);

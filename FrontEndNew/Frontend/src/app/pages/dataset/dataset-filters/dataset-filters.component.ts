@@ -6,7 +6,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { IDatasetFilters } from '../../../Interfaces/IdatasetFilters';
 import { DataService } from '../../data-service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { iTask } from '../../../Interfaces/Itask';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,6 +32,8 @@ export class DatasetFiltersComponent implements OnInit {
   public afterApply: boolean = false;
   public disabled: boolean = false;
   public afterSelectTaskAndSize: boolean = false;
+
+  private sub: Subscription | undefined;
 
   public inventoryOptions: string[] = [];
 
@@ -59,6 +61,10 @@ export class DatasetFiltersComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  ngOnDestroy(): void {
+    if (this.sub) this.sub.unsubscribe();
+  }
+
   constructor(public dataService: DataService) {}
 
   public analyze(): void {
@@ -78,15 +84,22 @@ export class DatasetFiltersComponent implements OnInit {
   }
 
   private getListOfInventoryActionsAndKeys(): void {
+    if (this.sub) this.sub.unsubscribe();
+
     if (!this.filters.selectedTask) return;
     this.clearListOfInventoryAndActions();
-    this.dataService
+    this.sub = this.dataService
       .getDataSetFilters(this.filters)
       .pipe(takeUntil(this.unsubscribeList))
       .subscribe(
         (data: any) => {
-          this.inventoryOptions = data.inventory;
-          this.actionsOptions = data.actions;
+          data.inventory = Array.from(new Set(data.inventory));
+          this.inventoryOptions = data.inventory.sort((a: string, b: string) =>
+            a > b ? 1 : -1,
+          );
+          this.actionsOptions = data.actions.sort((a: any, b: any) =>
+            a.name > b.name ? 1 : -1,
+          );
           this.keysOptions = data.keys;
           this.afterSelectTaskAndSize = true;
         },

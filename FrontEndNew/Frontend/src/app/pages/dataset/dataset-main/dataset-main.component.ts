@@ -14,6 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ZipOpenComponent } from '../../zip-open/zip-open.component';
 import { publishFacade } from '@angular/compiler';
 import JSZip from 'jszip';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dataset-main',
@@ -26,6 +27,7 @@ export class DatasetMainComponent implements OnInit {
   public afterApply: boolean = false;
   public afterApply_image: boolean = false;
   public loading: boolean = false;
+  private sub: Subscription | undefined;
 
   public data: IDatasetData = {
     images: [],
@@ -47,24 +49,30 @@ export class DatasetMainComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public sData: string[] = [];
+  ngOnDestroy(): void {
+    if (this.sub) this.sub.unsubscribe();
+    this.restart_args;
+  }
 
   public onFilterChanged(filters: IDatasetFilters) {
     if (!filters) return;
     this.filters = filters;
     this.restart_args();
     this.loading = true;
-    this.dataService.getDataSetDataGraphAndStatistics(filters).subscribe(
-      (data: getIDataset) => {
-        this.data.stats = data.stats;
-        this.setImageFromAPI(data);
-        this.afterApply = true;
-        this.loading = false;
-      },
-      (error) => {
-        console.error('Error fetching data from ron graphs:', error);
-      },
-    );
+    if (this.sub) this.sub.unsubscribe();
+    this.sub = this.dataService
+      .getDataSetDataGraphAndStatistics(filters)
+      .subscribe(
+        (data: getIDataset) => {
+          this.data.stats = data.stats;
+          this.setImageFromAPI(data);
+          this.afterApply = true;
+          this.loading = false;
+        },
+        (error) => {
+          console.error('Error fetching data from ron graphs:', error);
+        },
+      );
 
     this.dataService.getDataSetDataZipGraph(filters).subscribe((blob) => {
       const zip = new JSZip();
